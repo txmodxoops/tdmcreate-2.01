@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
+use Xoops\Core\Database\Connection;
 /**
  * tdmcreate module
  *
@@ -19,8 +19,10 @@
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: fieldkey.php 10665 2012-12-27 10:14:15Z timgno $
  */
-defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
 
+/**
+ * Class TDMCreateFieldkey
+ */
 class TDMCreateFieldkey extends XoopsObject
 { 
 	/**
@@ -28,12 +30,14 @@ class TDMCreateFieldkey extends XoopsObject
      */
 	public function __construct()
 	{
-		$this->XoopsObject();
-		$this->initVar("fieldkey_value",XOBJ_DTYPE_TXTBOX, null, false);		
-		$this->initVar("fieldkey_name",XOBJ_DTYPE_TXTBOX, null, false);		
+		$this->initVar('fieldkey_id', XOBJ_DTYPE_INT);
+        $this->initVar('fieldkey_name', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('fieldkey_value', XOBJ_DTYPE_TXTBOX);		
 	}
 }
-
+/**
+ * Class TDMCreateFieldkeyHandler
+ */
 class TDMCreateFieldkeyHandler extends XoopsPersistableObjectHandler 
 {
     /**
@@ -41,7 +45,6 @@ class TDMCreateFieldkeyHandler extends XoopsPersistableObjectHandler
      */
 	public function __construct(XoopsDatabase $db = null)
     {
-        parent::__construct($db, "tdmcreate_fieldkey", 'tdmcreatefieldkey', 'fieldkey_value', 'fieldkey_name');
+        parent::__construct($db, 'tdmcreate_fieldkey', 'tdmcreatefieldkey', 'fieldkey_id', 'fieldkey_name');
     }
 }
-?>

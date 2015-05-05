@@ -19,9 +19,7 @@
  * @version         $Id: helper.php 10665 2012-12-27 10:14:15Z timgno $
  */
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
-
-class TDMCreate extends Xoops_Module_Helper_Abstract
+ class TDMCreate extends Xoops\Module\Helper\HelperAbstract
 {
     /**
      * Init the module
@@ -44,7 +42,7 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
     /**
      * @return TDMCreateTDMCreate_modulesHandler
      */
-    public function getHandlerModules()
+    public function getModulesHandler()
     {
         return $this->getHandler('modules');
     }
@@ -52,7 +50,7 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
     /**
      * @return TDMCreateTDMCreate_tablesHandler
      */
-    public function getHandlerTables()
+    public function getTablesHandler()
     {
         return $this->getHandler('tables');
     }
@@ -60,23 +58,23 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
     /**
      * @return TDMCreateTDMCreate_fieldsHandler
      */
-    public function getHandlerFields()
+    public function getFieldsHandler()
     {
         return $this->getHandler('fields');
     }   
 	
 	/**
-     * @return TDMCreateTDMCreate_importHandler
+     * @return TDMCreateTDMCreate_importsHandler
      */
-    public function getHandlerImport()
+    public function getImportsHandler()
     {
-        return $this->getHandler('import');
+        return $this->getHandler('imports');
     }   
 	
 	/**
      * @return TDMCreateTDMCreate_fieldtypeHandler
      */
-    public function getHandlerFieldType()
+    public function getFieldTypeHandler()
     {
         return $this->getHandler('fieldtype');
     }   
@@ -84,7 +82,7 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
 	/**
      * @return TDMCreateTDMCreate_fieldattributesHandler
      */
-    public function getHandlerFieldAttributes()
+    public function getFieldAttributesHandler()
     {
         return $this->getHandler('fieldattributes');
     }   
@@ -92,7 +90,7 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
 	/**
      * @return TDMCreateTDMCreate_fieldnullHandler
      */
-    public function getHandlerFieldNull()
+    public function getFieldNullHandler()
     {
         return $this->getHandler('fieldnull');
     }   
@@ -100,7 +98,7 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
 	/**
      * @return TDMCreateTDMCreate_fieldkeyHandler
      */
-    public function getHandlerFieldKey()
+    public function getFieldKeyHandler()
     {
         return $this->getHandler('fieldkey');
     }   
@@ -108,7 +106,7 @@ class TDMCreate extends Xoops_Module_Helper_Abstract
 	/**
      * @return TDMCreateTDMCreate_fieldelementsHandler
      */
-    public function getHandlerFieldElements()
+    public function getFieldElementsHandler()
     {
         return $this->getHandler('fieldelements');
     } 	

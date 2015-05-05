@@ -19,36 +19,36 @@
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: index.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include dirname(__FILE__) . '/header.php';
-// Heaser
+include __DIR__ . '/header.php';
+// header
 $xoops->header();
 // tdmcreate modules
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('mod_id', 0, '!='));
-$tdmcreate_modules = $modules_Handler->getCount($criteria);
+$tdmcreateModules = $modulesHandler->getCount($criteria);
 // tdmcreate tables
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('table_mid', 0, '!='));
-$tdmcreate_tables = $tables_Handler->getCount($criteria);
+$tdmcreateTables = $tablesHandler->getCount($criteria);
 // tdmcreate import
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('import_id', 0, '!='));
-$tdmcreate_import = $import_Handler->getCount($criteria);
+$tdmcreateImport = $importHandler->getCount($criteria);
 
 $r = "red"; $g = "green";
-$modules_color = $tdmcreate_modules == 0 ? $r : $g;
-$tables_color = $tdmcreate_tables == 0 ? $r : $g;
-$import_color = $tdmcreate_import == 0 ? $r : $g;
+$modulesColor = $tdmcreateModules == 0 ? $r : $g;
+$tablesColor = $tdmcreateTables == 0 ? $r : $g;
+$importColor = $tdmcreateImport == 0 ? $r : $g;
 
-$admin_menu->displayNavigation('index.php');
+$adminMenu->displayNavigation('index.php');
 
-$admin_menu->addInfoBox(TDMCreateLocale::INDEX_STATISTICS);
-$admin_menu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NMTOTAL, '<span class="'.$modules_color.'">' . $tdmcreate_modules . '</span>'));
-$admin_menu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NTTOTAL, '<span class="'.$tables_color.'">' . $tdmcreate_tables . '</span>'));
-$admin_menu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NITOTAL, '<span class="'.$import_color.'">' . $tdmcreate_import . '</span>'));
+$adminMenu->addInfoBox(TDMCreateLocale::INDEX_STATISTICS);
+$adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NMTOTAL, '<span class="'.$modulesColor.'">' . $tdmcreateModules . '</span>'));
+$adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NTTOTAL, '<span class="'.$tablesColor.'">' . $tdmcreateTables . '</span>'));
+$adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NITOTAL, '<span class="'.$importColor.'">' . $tdmcreateImport . '</span>'));
 
 // folder path
-$folder_path = array(
+$folderPath = array(
    XOOPS_UPLOAD_PATH . '/tdmcreate/', 
    XOOPS_UPLOAD_PATH . '/tdmcreate/files',
    XOOPS_UPLOAD_PATH . '/tdmcreate/repository',   
@@ -56,16 +56,17 @@ $folder_path = array(
    XOOPS_UPLOAD_PATH . '/tdmcreate/images/modules',
    XOOPS_UPLOAD_PATH . '/tdmcreate/images/tables'
 );
-foreach ($folder_path as $folder) {
-	$admin_menu->addConfigBoxLine($folder, 'folder');
-	$admin_menu->addConfigBoxLine(array($folder, '777'), 'chmod');
+foreach ($folderPath as $folder) {
+	$adminMenu->addConfigBoxLine($folder, 'folder');
+	$adminMenu->addConfigBoxLine(array($folder, '777'), 'chmod');
 }
 // extension
 $extensions = array('xtranslator' => 'extension');
 
 foreach ($extensions as $module => $type) {
-    $admin_menu->addConfigBoxLine(array($module, 'warning'), $type);
+    $adminMenu->addConfigBoxLine(array($module, 'warning'), $type);
 }
 
-$admin_menu->displayIndex();
-$xoops->footer();
+$adminMenu->displayIndex();
+
+include __DIR__ . '/footer.php';
