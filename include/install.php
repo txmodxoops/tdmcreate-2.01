@@ -22,10 +22,10 @@
 
 function xoops_module_install_tdmcreate($module)
 {
-    /*$xoops = Xoops::getInstance();
+    $xoops = Xoops::getInstance();
     $xoops->loadLanguage('modinfo');
     $xoops->registry()->set('tdmcreate_id', $module->getVar('mid'));
-		
+	
     $indexFile = XOOPS_UPLOAD_PATH.'/index.html';
 	$blankFile = XOOPS_UPLOAD_PATH.'/blank.gif';
 	
@@ -99,7 +99,7 @@ function xoops_module_install_tdmcreate($module)
 		chmod($extensions_uploads, 0777);
 	}
 	copy($indexFile, $extensions_uploads.'/index.html');
-	copy($blankFile, $extensions_uploads.'/blank.gif');*/
+	copy($blankFile, $extensions_uploads.'/blank.gif');
 	
     return true;
 }

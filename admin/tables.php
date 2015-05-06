@@ -18,48 +18,58 @@
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: tables.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__ . '/header.php';
+include dirname(__FILE__) . '/header.php';
 // Preferences Limit
-$tableId = Request::getInt('table_id', 0);
-// header
-$xoops->header('admin:tdmcreate/tdmcreate_tables.html');
-//
-$adminMenu->renderNavigation('tables.php');
-//
+$nb_pager = $xoops->getModuleConfig('adminpager');
+// Get Action type
+$op = $system->cleanVars($_REQUEST, 'op', 'list', 'string');
+$table_id = $system->cleanVars($_REQUEST, 'table_id', 0, 'int');
+// Get start pager
+$start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
+// heaser
+$xoops->header('tdmcreate_tables.html');
+// Get handler
+/* @var $modules_handler TDMCreateModulesHandler */
+$modules_Handler = $xoops->getModuleHandler('modules');
+/* @var $tables_handler TDMCreateTablesHandler */
+$tables_Handler = $xoops->getModuleHandler('tables');
+
+$admin_menu->renderNavigation('tables.php');
 switch ($op) 
 {   
     case 'list': 
     default:               
-	    $adminMenu->addItemButton(TDMCreateLocale::ADD_TABLE, 'tables.php?op=new', 'add');            
-	    $adminMenu->renderButton();        
+	    $admin_menu->addItemButton(TDMCreateLocale::ADD_TABLE, 'tables.php?op=new', 'add');            
+	    $admin_menu->renderButton();        
 		// Get modules list
         $criteria = new CriteriaCompo();
         $criteria->setSort('mod_name');
         $criteria->setOrder('ASC'); 
         $criteria->setStart($start);
-        $criteria->setLimit($limit);		
-        $numRowsMods = $modules_Handler->getCount($criteria);
-		$moduleArray = $modules_Handler->getAll($criteria);
-		$xoops->tpl()->assign('modules_count', $numRowsMods);
+        $criteria->setLimit($nb_pager);		
+        $numrows_mods = $modules_Handler->getCount($criteria);
+		$mod_arr = $modules_Handler->getAll($criteria);
+		$xoops->tpl()->assign('modules_count', $numrows_mods);
 		$xoops->tpl()->assign('mimg_path', TDMC_MODULES_URL_IMG);
 		unset($criteria);
 		// Redirect if there aren't modules
-        /*if ( $numRowsMods == 0 ) {
+       /* if ( $numrows_mods == 0 ) {
             $xoops->redirect('modules.php?op=new', 2, TDMCreateLocale::NOTMODULES );
-        }*/                	
+        }*/ 			
+                	
         // Assign Template variables
-        $xoops->tpl()->assign('mods_count', $numRowsMods);		
-        if ($numRowsMods > 0) {
-            foreach (array_keys($moduleArray) as $i) {
-                $mod['id']            = $moduleArray[$i]->getVar('mod_id');
-                $mod['name']          = $moduleArray[$i]->getVar('mod_name'); 
-				$mod['image']         = $moduleArray[$i]->getVar('mod_image');
-                $mod['admin']         = $moduleArray[$i]->getVar('mod_admin');
-                $mod['user']          = $moduleArray[$i]->getVar('mod_user'); 
-				$mod['submenu']       = $moduleArray[$i]->getVar('mod_submenu');  
-                $mod['search']        = $moduleArray[$i]->getVar('mod_search');
-                $mod['comments']      = $moduleArray[$i]->getVar('mod_comments'); 
-                $mod['notifications'] = $moduleArray[$i]->getVar('mod_notifications');            
+        $xoops->tpl()->assign('mods_count', $numrows_mods);		
+        if ($numrows_mods > 0) {
+            foreach (array_keys($mod_arr) as $i) {
+                $mod['id'] = $mod_arr[$i]->getVar('mod_id');
+                $mod['name'] = $mod_arr[$i]->getVar('mod_name'); 
+				$mod['image'] = $mod_arr[$i]->getVar('mod_image');
+                $mod['admin'] = $mod_arr[$i]->getVar('mod_admin');
+                $mod['user'] = $mod_arr[$i]->getVar('mod_user'); 
+				$mod['submenu'] = $mod_arr[$i]->getVar('mod_submenu');  
+                $mod['search'] = $mod_arr[$i]->getVar('mod_search');
+                $mod['comments'] = $mod_arr[$i]->getVar('mod_comments'); 
+                $mod['notifications'] = $mod_arr[$i]->getVar('mod_notifications');            
 				/*if (file_exists($timage = XOOPS_URL ."/uploads/tdmcreate/images/tables/".$table_image)) {
 					$table['image'] =  $timage; 
 				} elseif (file_exists($timage = XOOPS_URL ."/media/xoops/images/icons/32/".$table_image)) { 
@@ -70,27 +80,27 @@ switch ($op)
 				$criteria->setSort('table_name');
 				$criteria->setOrder('ASC');	
 				$criteria->setStart($start);
-				$criteria->setLimit($limit);
-				$numRowsTables = $tablesHandler->getCount($criteria);
-				$tablesArray   = $tablesHandler->getAll($criteria);	
-				$xoops->tpl()->assign('tables_count', $numRowsTables);	
+				$criteria->setLimit($nb_pager);
+				$numrows_tables = $tables_Handler->getCount($criteria);
+				$tables_arr = $tables_Handler->getAll($criteria);	
+				$xoops->tpl()->assign('tables_count', $numrows_tables);	
 				$xoops->tpl()->assign('timg_path', TDMC_TABLES_URL_IMG);
 				unset($criteria);
                 $tables = array();				
-				if ($numRowsTables > 0) {
-					foreach (array_keys($tablesArray) as $i)
+				if ($numrows_tables > 0) {
+					foreach (array_keys($tables_arr) as $i) 
 					{
-						$table['id'] 			= $tablesArray[$i]->getVar('table_id');
-						$table['name'] 			= $tablesArray[$i]->getVar('table_name');											
-						$table['image'] 		= $tablesArray[$i]->getVar('table_image');					
-						$table['nbfields'] 		= $tablesArray[$i]->getVar('table_nbfields'); 
-						$table['blocks'] 		= $tablesArray[$i]->getVar('table_blocks');
-						$table['admin'] 		= $tablesArray[$i]->getVar('table_admin');                
-						$table['user'] 			= $tablesArray[$i]->getVar('table_user'); 
-						$table['submenu'] 		= $tablesArray[$i]->getVar('table_submenu');	
-						$table['search'] 		= $tablesArray[$i]->getVar('table_search');                
-						$table['comments'] 		= $tablesArray[$i]->getVar('table_comments'); 
-						$table['notifications'] = $tablesArray[$i]->getVar('table_notifications');						
+						$table['id'] = $tables_arr[$i]->getVar('table_id');
+						$table['name'] = $tables_arr[$i]->getVar('table_name');											
+						$table['image'] = $tables_arr[$i]->getVar('table_image');					
+						$table['nbfields'] = $tables_arr[$i]->getVar('table_nbfields'); 
+						$table['blocks'] = $tables_arr[$i]->getVar('table_blocks');
+						$table['admin'] = $tables_arr[$i]->getVar('table_admin');                
+						$table['user'] = $tables_arr[$i]->getVar('table_user'); 
+						$table['submenu'] = $tables_arr[$i]->getVar('table_submenu');	
+						$table['search'] = $tables_arr[$i]->getVar('table_search');                
+						$table['comments'] = $tables_arr[$i]->getVar('table_comments'); 
+						$table['notifications'] = $tables_arr[$i]->getVar('table_notifications');						
 						//$xoops->tpl()->append_by_ref('tables', $table);
 						$tables[] = $table;
 						unset($table);
@@ -101,8 +111,8 @@ switch ($op)
                 unset($mod);
 			}
             // Display Page Navigation
-			if ($numRowsMods > $limit) {
-				$nav = new XoopsPageNav($numRowsMods, $limit, $start, 'start');
+			if ($numrows_mods > $nb_pager) {
+				$nav = new XoopsPageNav($numrows_mods, $nb_pager, $start, 'start');
 				$xoops->tpl()->assign('pagenav', $nav->renderNav(4));
 			}
         } else {
@@ -111,11 +121,11 @@ switch ($op)
     break;
 
     case 'new':        
-        $adminMenu->addItemButton(TDMCreateLocale::TABLES_LIST, 'tables.php', 'application-view-detail');
-        $adminMenu->renderButton();
+        $admin_menu->addItemButton(TDMCreateLocale::TABLES_LIST, 'tables.php', 'application-view-detail');
+        $admin_menu->renderButton();
         	
-		$tablesObj  = $tablesHandler->create($tableId);
-        $form 		= $xoops->getModuleForm($tablesObj, 'tables');
+		$obj = $tables_Handler->create($table_id);
+        $form = $xoops->getModuleForm($obj, 'tables');
         $xoops->tpl()->assign('form', $form->render());
     break;	
 		
@@ -124,92 +134,90 @@ switch ($op)
 			$xoops->redirect('tables.php', 3, implode(',', $xoops->security()->getErrors()));
 		}
 		
-        if ($tableId > 0) {
-            $tablesObj = $tablesHandler->get($tableId);
+        if ($table_id > 0) {
+            $obj = $tables_Handler->get($table_id);
         } else {
-            $tablesObj = $tablesHandler->create();
+            $obj = $tables_Handler->create();
         }
-		$tableMid 	     = Request::getInt('table_mid', 0);
-		$tableNumbFields = Request::getInt('table_nbfields', 0);
-		$tableFieldname  = Request::getStr('table_fieldname', '');
+		$table_mid = $request->asInt('table_mid', 0);
+		$table_nbfields = $request->asInt('table_nbfields', 0);
+		$table_fieldname = $request->asStr('table_fieldname', '');
 		//Form tables		
-		$tablesObj->setVars(array('table_mid' 		=> $tableMid, 
-								'table_name' 		=> $_POST['table_name'], 
-								'table_nbfields' 	=> $tableNumbFields, 
-								'table_fieldname' 	=> $tableFieldname));
+		$obj->setVars(array('table_mid' => $table_mid, 'table_name' => $_POST['table_name'], 
+		                    'table_nbfields' => $table_nbfields, 'table_fieldname' => $table_fieldname));
 		//Form table_image
-	    $uploaddir  = ( is_dir(XOOPS_ICONS32_PATH) && XoopsLoad::fileExists(XOOPS_ICONS32_PATH) ) ? XOOPS_ICONS32_PATH : TDMC_TABLES_PATH_IMG;	
-        $uploader   = new XoopsMediaUploader( $uploaddir, $xoops->getModuleConfig('mimetypes'), 
+        $pathIcon32 = XOOPS_ROOT_PATH . '/media/xoops/images/icons/32';		
+	    $uploaddir = ( is_dir($pathIcon32) && XoopsLoad::fileExists($pathIcon32) ) ? $pathIcon32 : TDMC_TABLES_PATH_IMG;	
+        $uploader = new XoopsMediaUploader( $uploaddir, $xoops->getModuleConfig('mimetypes'), 
 											   $xoops->getModuleConfig('maxuploadsize'), null, null);
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 		    $extension = preg_replace( '/^.+\.([^.]+)$/sU' , '\\1' , $_FILES['attachedfile']['name']);
-            $imgName = $_GET['table_name'].'.'.$extension;
-			$uploader->setPrefix($imgName);
+            $img_name = $_GET['table_name'].'.'.$extension;
+			$uploader->setPrefix($img_name);
 			$uploader->fetchMedia($_POST['xoops_upload_file'][0]);
 			if (!$uploader->upload()) {
 				$xoops->redirect('javascript:history.go(-1)',3, $uploader->getErrors());
 			} else {
-				$tablesObj->setVar('table_image', $uploader->getSavedFileName());
+				$obj->setVar('table_image', $uploader->getSavedFileName());
 			}
 		} else {
 			if ($_POST['tables_image'] == 'blank.gif') {
-                $tablesObj->setVar('table_image', $_POST['table_image']);
+                $obj->setVar('table_image', $_POST['table_image']);
             } else {
-                $tablesObj->setVar('table_image', $_POST['tables_image']);
+                $obj->setVar('table_image', $_POST['tables_image']);
             }
 		}		
 		//Form tables
-		$tablesObj->setVars(array('table_blocks'    	=> Request::getInt('table_blocks', 0), 
-								'table_admin' 			=> Request::getInt('table_admin', 0), 
-								'table_user' 			=> Request::getInt('table_user', 0), 
-								'table_submenu' 		=> Request::getInt('table_submenu', 0), 
-								'table_search' 			=> Request::getInt('table_search', 0), 
-								'table_comments' 		=> Request::getInt('table_comments', 0), 
-								'table_notifications' 	=> Request::getInt('table_notifications', 0)));
+		$obj->setVars(array('table_blocks' => (($_REQUEST['table_blocks'] == 1) ? '1' : '0'), 
+		                    'table_admin' => (($_REQUEST['table_admin'] == 1) ? '1' : '0'), 
+		                    'table_user' => (($_REQUEST['table_user'] == 1) ? '1' : '0'), 
+							'table_submenu' => (($_REQUEST['table_submenu'] == 1) ? '1' : '0'), 
+							'table_search' => (($_REQUEST['table_search'] == 1) ? '1' : '0'), 
+							'table_comments' => (($_REQUEST['table_comments'] == 1) ? '1' : '0'), 
+							'table_notifications' => (($_REQUEST['table_notifications'] == 1) ? '1' : '0')));
 				
-        if( $tablesHandler->insert($tablesObj) ) {	 
-			if( $tablesObj->isNew() ) {
+        if( $tables_Handler->insert($obj) ) {	 
+			if( $obj->isNew() ) {
 				$tid = $xoops->db()->getInsertId();			
-				$xoops->redirect('fields.php?op=new&amp;field_mid='.$mid.'&amp;field_tid='.$tid.'&amp;field_numb='.$tableNumbFields.'&amp;field_name='.$tableFieldname, 3, XoopsLocale::S_DATA_INSERTED);			
+				$xoops->redirect('fields.php?op=new&amp;field_mid='.$mid.'&amp;field_tid='.$tid.'&amp;field_numb='.$table_nbfields.'&amp;field_name='.$table_fieldname, 3, XoopsLocale::S_DATA_INSERTED);			
 			} else {
 				$xoops->redirect('tables.php', 3, XoopsLocale::S_DATABASE_UPDATED);
 			}
 		}
 
-        $xoops->error($tablesObj->getHtmlErrors());
-        $form = $xoops->getModuleForm($tablesObj, 'tables');
+        $xoops->error($obj->getHtmlErrors());
+        $form = $xoops->getModuleForm($obj, 'tables');
         $xoops->tpl()->assign('form', $form->render());
 	break;
 	
 	case 'edit':       
-		$adminMenu->addItemButton(TDMCreateLocale::TABLE_ADD, 'tables.php?op=new', 'add');
-		$adminMenu->addItemButton(TDMCreateLocale::TABLES_LIST, 'tables.php', 'application-view-detail');
-        $adminMenu->renderButton();			
+		$admin_menu->addItemButton(TDMCreateLocale::TABLE_ADD, 'tables.php?op=new', 'add');
+		$admin_menu->addItemButton(TDMCreateLocale::TABLES_LIST, 'tables.php', 'application-view-detail');
+        $admin_menu->renderButton();			
 
-		$tablesObj = $tablesHandler->get($tableId);
-		$form = $xoops->getModuleForm($tablesObj, 'tables');
+		$obj = $tables_Handler->get($table_id);
+		$form = $xoops->getModuleForm($obj, 'tables');
 		$xoops->tpl()->assign('form', $form->render());        
 	break;	
 		
 	case 'delete':	        	
-        if ($tableId > 0) {
-            $tablesObj = $tablesHandler->get($tableId);			
+        if ($table_id > 0) {
+            $obj = $tables_Handler->get($table_id);			
 			if (isset($_POST['ok']) && $_POST['ok'] == 1) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('tables.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
-                if ($tablesHandler->delete($tablesObj)) {
+                if ($tables_Handler->delete($obj)) {
                     $xoops->redirect('tables.php', 2, sprintf(TDMCreateLocale::S_DELETED, TDMCreateLocale::TABLE));
                 } else {
-                    $xoops->error($tablesObj->getHtmlErrors());
+                    $xoops->error($obj->getHtmlErrors());
                 }
             } else {			
-				$xoops->confirm(array('ok' => 1, 'id' => $tableId, 'op' => 'delete'), 'tables.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $tablesObj->getVar('table_name')) . '<br />');
+				$xoops->confirm(array('ok' => 1, 'id' => $table_id, 'op' => 'delete'), 'tables.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $obj->getVar('table_name')) . '<br />');
 			}
 		} else {
 		    $xoops->redirect('tables.php', 1, TDMCreateLocale::E_DATABASE_ERROR);
 		}
 	break; 	
 }
-
-include __DIR__ . '/footer.php';
+$xoops->footer();

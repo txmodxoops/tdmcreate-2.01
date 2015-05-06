@@ -19,7 +19,9 @@
  * @version         $Id: helper.php 10665 2012-12-27 10:14:15Z timgno $
  */
 
- class TDMCreate extends Xoops\Module\Helper\HelperAbstract
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
+
+class TDMCreate extends Xoops_Module_Helper_Abstract
 {
     /**
      * Init the module
@@ -42,7 +44,7 @@
     /**
      * @return TDMCreateTDMCreate_modulesHandler
      */
-    public function getModulesHandler()
+    public function getHandlerModules()
     {
         return $this->getHandler('modules');
     }
@@ -50,7 +52,7 @@
     /**
      * @return TDMCreateTDMCreate_tablesHandler
      */
-    public function getTablesHandler()
+    public function getHandlerTables()
     {
         return $this->getHandler('tables');
     }
@@ -58,23 +60,23 @@
     /**
      * @return TDMCreateTDMCreate_fieldsHandler
      */
-    public function getFieldsHandler()
+    public function getHandlerFields()
     {
         return $this->getHandler('fields');
     }   
 	
 	/**
-     * @return TDMCreateTDMCreate_importsHandler
+     * @return TDMCreateTDMCreate_importHandler
      */
-    public function getImportsHandler()
+    public function getHandlerImport()
     {
-        return $this->getHandler('imports');
+        return $this->getHandler('import');
     }   
 	
 	/**
      * @return TDMCreateTDMCreate_fieldtypeHandler
      */
-    public function getFieldTypeHandler()
+    public function getHandlerFieldType()
     {
         return $this->getHandler('fieldtype');
     }   
@@ -82,7 +84,7 @@
 	/**
      * @return TDMCreateTDMCreate_fieldattributesHandler
      */
-    public function getFieldAttributesHandler()
+    public function getHandlerFieldAttributes()
     {
         return $this->getHandler('fieldattributes');
     }   
@@ -90,7 +92,7 @@
 	/**
      * @return TDMCreateTDMCreate_fieldnullHandler
      */
-    public function getFieldNullHandler()
+    public function getHandlerFieldNull()
     {
         return $this->getHandler('fieldnull');
     }   
@@ -98,7 +100,7 @@
 	/**
      * @return TDMCreateTDMCreate_fieldkeyHandler
      */
-    public function getFieldKeyHandler()
+    public function getHandlerFieldKey()
     {
         return $this->getHandler('fieldkey');
     }   
@@ -106,7 +108,7 @@
 	/**
      * @return TDMCreateTDMCreate_fieldelementsHandler
      */
-    public function getFieldElementsHandler()
+    public function getHandlerFieldElements()
     {
         return $this->getHandler('fieldelements');
     } 	

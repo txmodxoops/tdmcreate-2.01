@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Core\Database\Connection;
+
 /**
  * tdmcreate module
  *
@@ -19,6 +19,7 @@ use Xoops\Core\Database\Connection;
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: fieldelements.php 10665 2012-12-27 10:14:15Z timgno $
  */
+defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
 
 class TDMCreateFieldelements extends XoopsObject
 { 
@@ -27,22 +28,27 @@ class TDMCreateFieldelements extends XoopsObject
      */
 	public function __construct()
 	{
-		$this->initVar('fieldelement_id', XOBJ_DTYPE_INT);
-        $this->initVar('fieldelement_mid', XOBJ_DTYPE_INT);
-        $this->initVar('fieldelement_tid', XOBJ_DTYPE_INT);
-        $this->initVar('fieldelement_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('fieldelement_value', XOBJ_DTYPE_TXTBOX);			
+		$this->XoopsObject();
+		$this->initVar("fieldelements_id",XOBJ_DTYPE_INT, null, false, 5);
+        $this->initVar("fieldelements_value",XOBJ_DTYPE_TXTBOX, null, false, 25);		
+		$this->initVar("fieldelements_name",XOBJ_DTYPE_TXTBOX, null, false, 255);	
+        $this->initVar("fieldelements_admin",XOBJ_DTYPE_INT, null, false, 1);	
+		$this->initVar("fieldelements_user",XOBJ_DTYPE_INT, null, false, 1);	
+		$this->initVar("fieldelements_block",XOBJ_DTYPE_INT, null, false, 1);	
+		$this->initVar("fieldelements_mfield",XOBJ_DTYPE_INT, null, false, 1);	
+		$this->initVar("fieldelements_search",XOBJ_DTYPE_INT, null, false, 1);	
+		$this->initVar("fieldelements_required",XOBJ_DTYPE_INT, null, false, 1);			
 	}
 }
 
 class TDMCreateFieldelementsHandler extends XoopsPersistableObjectHandler 
 {
     /**
-     * @param null|Connection $db
+     * @param null|XoopsDatabase $db
      */
-	public function __construct(Connection $db = null)
+	public function __construct(XoopsDatabase $db = null)
     {
-        parent::__construct($db, 'tdmcreate_fieldelements', 'tdmcreatefieldelements', 'fieldelements_id', 'fieldelements_name');
+        parent::__construct($db, "tdmcreate_fieldelements", 'tdmcreatefieldelements', 'fieldelements_id', 'fieldelements_name');
     }
 }
 ?>

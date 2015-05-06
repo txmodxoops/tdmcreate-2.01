@@ -19,9 +19,10 @@
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: about.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__ . '/header.php';
+include dirname(__FILE__) . '/header.php';
+// Header
+$xoops->header();
 // About
 $admin_menu->displayNavigation('about.php');
-$admin_menu->displayAbout(true);
-
-include __DIR__ . '/footer.php';
+$admin_menu->displayAbout('6KJ7RW5DR3VTJ', true);
+$xoops->footer();

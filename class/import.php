@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Core\Database\Connection;
+
 /**
  * tdmcreate module
  *
@@ -17,12 +17,11 @@ use Xoops\Core\Database\Connection;
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: imports.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: import.php 10665 2012-12-27 10:14:15Z timgno $
  */
-/**
- * Class TDMCreateImports
- */
-class TDMCreateImports extends XoopsObject
+defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
+
+class TDMCreateImport extends XoopsObject
 { 
     /*
 	 *  @public regexp $search
@@ -44,13 +43,13 @@ class TDMCreateImports extends XoopsObject
      */
 	public function __construct()
 	{		
-		$this->initVar('import_id',XOBJ_DTYPE_INT);
-		$this->initVar('import_name',XOBJ_DTYPE_TXTBOX);
-		$this->initVar('import_mid',XOBJ_DTYPE_INT);
-        $this->initVar('import_nbtables',XOBJ_DTYPE_INT);
-        $this->initVar('import_tablename',XOBJ_DTYPE_TXTBOX);
-        $this->initVar('import_nbfields',XOBJ_DTYPE_INT);
-        $this->initVar('import_fieldelements',XOBJ_DTYPE_TXTBOX);
+		$this->initVar('import_id',XOBJ_DTYPE_INT, null, true);	
+		$this->initVar('import_name',XOBJ_DTYPE_TXTBOX, null);
+		$this->initVar('import_mid',XOBJ_DTYPE_INT, null);		
+        $this->initVar('import_nbtables',XOBJ_DTYPE_INT, null);		
+        $this->initVar('import_tablename',XOBJ_DTYPE_TXTBOX, null);
+        $this->initVar('import_nbfields',XOBJ_DTYPE_INT, null);		
+        $this->initVar('import_fieldelements',XOBJ_DTYPE_TXTBOX, null);	        
 	}
 	
 	/**
@@ -82,7 +81,7 @@ class TDMCreateImports extends XoopsObject
      */
 	public function getWordsReplace($search, $replace, $text)
 	{	    
-        $result = preg_replace($search, $replace, $text);
+        $result = preg_replace($search, $replace, $text);					
 		return $result;
 	}
 	
@@ -97,21 +96,19 @@ class TDMCreateImports extends XoopsObject
      */
 	public function getStrReplace($search, $replace, $text, $char = '')
 	{	
-        $pos = strpos($text, $char);
-        $res = str_replace($search, $replace, $text);
+        $pos = strpos($text, $char);    
+        $res = str_replace($search, $replace, $text);					
 		return $res;
 	}
 }
-/**
- * Class TDMCreateImportsHandler
- */
-class TDMCreateImportsHandler extends XoopsPersistableObjectHandler
+
+class TDMCreateImportHandler extends XoopsPersistableObjectHandler 
 {
     /**
-     * @param null|Connection $db
+     * @param null|XoopsDatabase $db
      */
-	public function __construct(Connection $db = null)
+	public function __construct(XoopsDatabase $db = null)
     {
-        parent::__construct($db, 'tdmcreate_imports', 'tdmcreateimports', 'import_id', 'import_name');
+        parent::__construct($db, 'tdmcreate_import', 'tdmcreateimport', 'import_id', 'import_name');
     }
 }

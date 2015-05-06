@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Core\Database\Connection;
+
 /**
  * tdmcreate module
  *
@@ -19,6 +19,7 @@ use Xoops\Core\Database\Connection;
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: fieldattributes.php 10665 2012-12-27 10:14:15Z timgno $
  */
+defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
 
 class TDMCreateFieldattributes extends XoopsObject
 { 
@@ -27,19 +28,20 @@ class TDMCreateFieldattributes extends XoopsObject
      */
 	public function __construct()
 	{
-		$this->initVar('fieldattribute_id', XOBJ_DTYPE_INT);
-        $this->initVar('fieldattribute_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('fieldattribute_value', XOBJ_DTYPE_TXTBOX);	       		
+		$this->XoopsObject();		
+        $this->initVar("fieldattributes_value",XOBJ_DTYPE_TXTBOX, null, false, 25);		
+		$this->initVar("fieldattributes_name",XOBJ_DTYPE_TXTBOX, null, false, 255);	       		
 	}
 }
 
 class TDMCreateFieldattributesHandler extends XoopsPersistableObjectHandler 
 {
     /**
-     * @param null|Connection $db
+     * @param null|XoopsDatabase $db
      */
-    public function __construct(Connection $db = null) 
+    public function __construct(XoopsDatabase $db = null) 
     {
-        parent::__construct($db, 'tdmcreate_fieldattributes', 'tdmcreatefieldattributes', 'fieldattributes_id', 'fieldattributes_name');
+        parent::__construct($db, "tdmcreate_fieldattributes", 'tdmcreatefieldattributes', 'fieldattributes_value', 'fieldattributes_name');
     }
 }
+?>

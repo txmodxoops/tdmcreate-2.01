@@ -16,16 +16,16 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: imports.php 10607 2012-12-30 00:36:57Z timgno $
+ * @version         $Id: import.php 10607 2012-12-30 00:36:57Z timgno $
  */
 defined('XOOPS_ROOT_PATH') or die('XOOPS root path not defined');
 
-class TDMCreateImportsForm extends XoopsThemeForm
+class TDMCreateImportForm extends XoopsThemeForm
 { 
 	/**
-     * @param TDMCreateImports|XoopsObject $obj
+     * @param TDMCreateImport|XoopsObject $obj
      */
-	public function __construct(TDMCreateImports &$obj)
+	public function __construct(TDMCreateImport &$obj)
 	{
 		$xoops = Xoops::getInstance();
 		

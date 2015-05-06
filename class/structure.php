@@ -19,6 +19,7 @@
  * @author          Timgno <txmodxoops@gmail.com>
  * @version         $Id: structure.php 10665 2012-12-27 10:14:15Z timgno $
  */
+defined('XOOPS_ROOT_PATH') or die("Restricted access");
 
 class TDMCreateStructure extends TDMCreateFile 
 {

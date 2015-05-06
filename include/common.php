@@ -18,10 +18,9 @@
  * @author 	    XOOPS Development Team
  * @version	    $Id common.php 10900 2013-01-19 13:00:30Z timgno $
 **/
+defined( 'XOOPS_ROOT_PATH' ) or die( "XOOPS root path not defined" );
 
-define('XOOPS_ICONS32_PATH', XOOPS_ROOT_PATH . '/media/xoops/images/icons/32');
-
-define('TDMC_DIRNAME', basename(dirname(__DIR__)));
+define('TDMC_DIRNAME', basename(dirname(dirname(__FILE__))));
 define('TDMC_URL', XOOPS_URL . '/modules/' . TDMC_DIRNAME);
 define('TDMC_ADMIN_URL', TDMC_URL . '/admin');
 define('TDMC_UPLOAD_URL', XOOPS_URL . '/uploads/' . TDMC_DIRNAME);
@@ -39,3 +38,6 @@ define('TDMC_UPLOAD_PATH_REPO', TDMC_UPLOAD_PATH . '/repository');
 define('TDMC_MODULES_PATH_IMG', TDMC_UPLOAD_PATH_IMG . '/modules');
 define('TDMC_EXTENSIONS_PATH_IMG', TDMC_UPLOAD_PATH_IMG . '/extensions');
 define('TDMC_TABLES_PATH_IMG', TDMC_UPLOAD_PATH_IMG . '/tables');
+
+$path = dirname(dirname(__FILE__));
+XoopsLoad::addMap(array( 'tdmcreatehelper' => $path . '/class/helper.php'));
