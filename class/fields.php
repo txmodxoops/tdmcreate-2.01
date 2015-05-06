@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
+use Xoops\Core\Database\Connection;
 /**
  * tdmcreate module
  *
@@ -19,8 +19,9 @@
  * @author          TDM Xoops (AKA Developers)
  * @version         $Id: fields.php 10665 2012-12-27 10:14:15Z timgno $
  */	
-defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
-
+/**
+ * Class TDMCreateFields
+ */
 class TDMCreateFields extends XoopsObject
 { 
 	/**
@@ -28,33 +29,38 @@ class TDMCreateFields extends XoopsObject
      */
 	public function __construct()
 	{		
-		$this->initVar('field_id', XOBJ_DTYPE_INT, null, true);
-		$this->initVar('field_mid', XOBJ_DTYPE_INT, null);
-		$this->initVar('field_tid', XOBJ_DTYPE_INT, null);
-		$this->initVar('field_numb', XOBJ_DTYPE_INT, null);
-		$this->initVar('field_name', XOBJ_DTYPE_TXTBOX, null);		
-		$this->initVar('field_type', XOBJ_DTYPE_TXTBOX, null);
-		$this->initVar('field_value', XOBJ_DTYPE_TXTBOX, null);
-		$this->initVar('field_attribute', XOBJ_DTYPE_TXTBOX, null);
-		$this->initVar('field_null', XOBJ_DTYPE_TXTBOX, null);
-		$this->initVar('field_default', XOBJ_DTYPE_TXTBOX, null);
-		$this->initVar('field_key', XOBJ_DTYPE_TXTBOX, null);
-		$this->initVar('field_auto_increment', XOBJ_DTYPE_INT);
-		$this->initVar('field_admin', XOBJ_DTYPE_INT);
-		$this->initVar('field_user', XOBJ_DTYPE_INT);
-		$this->initVar('field_block', XOBJ_DTYPE_INT);
-		$this->initVar('field_mainfield', XOBJ_DTYPE_INT);
-		$this->initVar('field_search', XOBJ_DTYPE_INT);
-		$this->initVar('field_required', XOBJ_DTYPE_INT);        
+		$this->initVar('field_id', XOBJ_DTYPE_INT);
+        $this->initVar('field_mid', XOBJ_DTYPE_INT);
+        $this->initVar('field_tid', XOBJ_DTYPE_INT);
+        $this->initVar('field_order', XOBJ_DTYPE_INT);
+        $this->initVar('field_name', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_type', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_value', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_attribute', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_null', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_default', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_key', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_element', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('field_parent', XOBJ_DTYPE_INT);
+        $this->initVar('field_inlist', XOBJ_DTYPE_INT);
+        $this->initVar('field_inform', XOBJ_DTYPE_INT);
+        $this->initVar('field_admin', XOBJ_DTYPE_INT);
+        $this->initVar('field_user', XOBJ_DTYPE_INT);
+        $this->initVar('field_block', XOBJ_DTYPE_INT);
+        $this->initVar('field_main', XOBJ_DTYPE_INT);
+        $this->initVar('field_search', XOBJ_DTYPE_INT);
+        $this->initVar('field_required', XOBJ_DTYPE_INT);    
 	}	
 }
-
+/**
+ * Class TDMCreateFieldsHandler
+ */
 class TDMCreateFieldsHandler extends XoopsPersistableObjectHandler 
 {
 	/**
-     * @param null|XoopsDatabase $db
+     * @param null|Connection $db
      */
-	public function __construct(XoopsDatabase $db = null)
+	public function __construct(Connection $db = null)
 	{
 		parent::__construct($db, 'tdmcreate_fields', 'tdmcreatefields', 'field_id', 'field_name');
 	}

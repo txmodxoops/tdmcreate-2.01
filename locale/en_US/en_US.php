@@ -27,6 +27,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const ADD_FIELDS = "Add Fields";
 	const ADD_MODULE = "Add Module";
 	const ADD_TABLE = "Add Table";
+	const ADD_LOCALE = "Add Module";
 	const EDIT_EXTENSION = "Edit Extension";
 	const EDIT_FIELDS = "Edit Fields";
 	const EDIT_MODULE = "Edit Module";
@@ -36,9 +37,10 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const ADMIN_MENU2 = "Modules";
 	const ADMIN_MENU3 = "Tables";
 	const ADMIN_MENU4 = "Fields";
-	const ADMIN_MENU5 = "Import";
-	const ADMIN_MENU6 = "Building";
-	const ADMIN_MENU7 = "Information";
+	const ADMIN_MENU5 = "Locale";
+	const ADMIN_MENU6 = "Import";
+	const ADMIN_MENU7 = "Building";
+	const ADMIN_MENU8 = "Information";
 	
 	const BUILD_EXTENSION  = "Build Extension";
 	const BUILD_MODULE  = "Build Module";
@@ -174,9 +176,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const E_FILE_NOT_OPEN_READING = "File Error: Could not open file for reading!";
 	const E_FILE_NOT_UPLOADING = "File Error: upload in file: %s";
 	
-	const FIELDS_NUMBER = "Number of fields";
-	
-	
+	const FIELDS_NUMBER = "Number of fields";	
 	
 	const F_FILES_PATH = "Files in %s ";
 	const F_EDIT = "Modification";
@@ -188,6 +188,8 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const F_INDEX_NMTOTAL = "There are %s modules in the Database";
 	const F_INDEX_NETOTAL = "There are %s extensions in the Database";
 	const F_INDEX_NTTOTAL = "There are %s tables in the Database";
+	const F_INDEX_NFTOTAL = "There are %s fields in the Database";
+	const F_INDEX_NLTOTAL = "There are %s total defines locales in the Database";
 	const F_INDEX_NITOTAL = "There are %s old modules imported in the Database";
 	
 	const INDEX_STATISTICS = "Statistics";
@@ -330,12 +332,21 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const IMPORT_FIELDS_NUMBER = "Fields Number";
 	const IMPORT_FIELD_NAME = "Field Name";
 	const IMPORT_ERROR_NOIMPORTS = "There are not old modules imported";
+	
+	const LOCALE_TITLE = "Form locale";
+	
+	const LOCALE_ID = "Id";
+	const LOCALE_MID = "Module";
+	const LOCALE_FILE_NAME = "File Name";
+	const LOCALE_DEFINE = "Tables Number";
+	const LOCALE_DESCRIPTION = "Table Name";
+	const LOCALE_ERROR_NOLOCALE = "There are not old defines imported";
 
 	const BUILDING_TITLE = "Building";
 	const BUILDING_MODULES = "Building modules";
 	const BUILDING_EXTENSIONS = "Building Extensions";
-	const BUILDING_SELDEFMOD = "Select Module";
-	const BUILDING_SELDEFEXT = "Select Extension";
+	const BUILDING_SELECT_DEFAULT_MODULES = "Select Module";
+	const BUILDING_SELECT_DEFAULT_EXTENSION = "Select Extension";
 	const BUILDING_EXECUTED = "Build Executed";
 	const BUILDING_SUCCESS = "Success";
 	const BUILDING_ERROR = "Error";

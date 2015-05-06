@@ -17,12 +17,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          TDM Xoops (AKA Developers)
- * @version         $Id: about.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: footer.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__ . '/header.php';
-$xoops->header();
-// About
-$adminMenu->displayNavigation('about.php');
-$adminMenu->displayAbout(true);
 
-include __DIR__ . '/footer.php';
+$xoops->footer();

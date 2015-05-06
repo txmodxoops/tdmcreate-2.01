@@ -16,35 +16,36 @@ use Xoops\Core\Database\Connection;
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         tdmcreate
  * @since           2.6.0
- * @author          TDM Xoops (AKA Developers)
- * @version         $Id: fieldkey.php 10665 2012-12-27 10:14:15Z timgno $
+ * @author          Timgno <txmodxoops@gmail.com>
+ * @version         $Id: locales.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 /**
- * Class TDMCreateFieldkey
+ * Class TDMCreateLocales
  */
-class TDMCreateFieldkey extends XoopsObject
-{ 
+class TDMCreateLocales extends XoopsObject
+{	
 	/**
      * Constructor
      */
 	public function __construct()
-	{
-		$this->initVar('fieldkey_id', XOBJ_DTYPE_INT);
-        $this->initVar('fieldkey_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('fieldkey_value', XOBJ_DTYPE_TXTBOX);		
-	}
+	{		
+		$this->initVar('loc_id',XOBJ_DTYPE_INT);
+		$this->initVar('loc_mid',XOBJ_DTYPE_INT);
+        $this->initVar('loc_file',XOBJ_DTYPE_TXTBOX);
+        $this->initVar('loc_define',XOBJ_DTYPE_TXTBOX);
+        $this->initVar('loc_description',XOBJ_DTYPE_TXTBOX);
+	}	
 }
 /**
- * Class TDMCreateFieldkeyHandler
+ * Class TDMCreateLocalesHandler
  */
-class TDMCreateFieldkeyHandler extends XoopsPersistableObjectHandler 
+class TDMCreateLocalesHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param null|Connection $db
      */
-	public function __construct(XoopsDatabase $db = null)
+	public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_fieldkey', 'tdmcreatefieldkey', 'fieldkey_id', 'fieldkey_name');
+        parent::__construct($db, 'tdmcreate_locales', 'tdmcreatelocales', 'loc_id', 'loc_mid');
     }
 }
