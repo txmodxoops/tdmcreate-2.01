@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+use Xoops\Core\Request;
 /**
  * tdmcreate module
  *
@@ -19,44 +20,35 @@
  * @version     $Id: modules.php 10665 2012-12-27 10:14:15Z timgno $
  */
 include __DIR__ . '/header.php';
+// Get $_POST, $_GET, $_REQUEST
+$op = Request::getCmd('op', 'list');
+$start = Request::getInt('start', 0);
+// Parameters
+$limit = $helper->getConfig('adminpager');
 // Get Action type
-//$modId = Request::getInt('mod_id');
+$modId = Request::getInt('mod_id');
 // Get handler
 $xoops->header('admin:tdmcreate/tdmcreate_modules.tpl');
 $adminMenu->renderNavigation('modules.php');
 switch ($op) 
 {   
     case 'list': 
-    default:	
-		$adminMenu->addItemButton(TDMCreateLocale::ADD_MODULE, 'modules.php?op=new', 'add');            
+    default:
+		$adminMenu->addTips(TDMCreateLocale::MODULE_TIPS);
+		$adminMenu->addItemButton(TDMCreateLocale::ADD_MODULE, 'modules.php?op=new', 'add');
+		$adminMenu->renderTips();
 		$adminMenu->renderButton();
 		// Get modules list
-        $criteria = new CriteriaCompo();
-        $criteria->setSort('mod_name');
-        $criteria->setOrder('ASC'); 
-        $criteria->setStart($start);
-        $criteria->setLimit($limit);		
-        $numRowsMods  = $modulesHandler->getCount($criteria);
-		$modulesArray = $modulesHandler->getAll($criteria);
+        $numRowsMods  = $modulesHandler->getCountModules();
+		$modulesArray = $modulesHandler->getAllModules($start, $limit);
         // Assign Template variables
-        $xoops->tpl()->assign('modules_count', $numRowsMods);		
-		unset($criteria);          
+        $xoops->tpl()->assign('modules_count', $numRowsMods);
+		unset($criteria);
         if ($numRowsMods > 0) {
             foreach (array_keys($modulesArray) as $i) {
-                $mod['id'] = $modulesArray[$i]->getVar('mod_id');
-                $mod['name'] = $modulesArray[$i]->getVar('mod_name'); 
-                $mod['version'] = $modulesArray[$i]->getVar('mod_version');
-				$mod['image'] = $modulesArray[$i]->getVar('mod_image');
-				$mod['release'] = $modulesArray[$i]->getVar('mod_release'); 
-                $mod['status'] = $modulesArray[$i]->getVar('mod_status'); 
-                $mod['admin'] = $modulesArray[$i]->getVar('mod_admin');
-                $mod['user'] = $modulesArray[$i]->getVar('mod_user'); 
-				$mod['submenu'] = $modulesArray[$i]->getVar('mod_submenu');  
-                $mod['search'] = $modulesArray[$i]->getVar('mod_search');
-                $mod['comments'] = $modulesArray[$i]->getVar('mod_comments'); 
-                $mod['notifications'] = $modulesArray[$i]->getVar('mod_notifications');
-				$xoops->tpl()->append_by_ref('modules', $mod);
-                unset($mod);				
+                $module = $modulesArray[$i]->getValues();
+				$xoops->tpl()->appendByRef('modules', $module);
+                unset($module);
             }
             // Display Page Navigation
 			if ($numRowsMods > $limit) {

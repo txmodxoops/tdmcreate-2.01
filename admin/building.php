@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
+use Xoops\Core\Request;
 /**
  * tdmcreate module
  *
@@ -20,6 +20,8 @@
  * @version         $Id: building.php 10665 2012-12-27 10:14:15Z timgno $
  */
 include __DIR__ . '/header.php';
+// Get $_POST, $_GET, $_REQUEST
+$op = Request::getCmd('op', 'default');
 // header
 $xoops->header('admin:tdmcreate/tdmcreate_building.tpl');
 
@@ -28,10 +30,13 @@ switch ($op)
 {
 	case 'default':
 	default:
-		$form = new XoopsSimpleForm(TDMCreateLocale::BUILDING_TITLE, 'building', 'building.php', 'post', true);
+		$adminMenu->addTips(TDMCreateLocale::BUILDING_TIPS);
+		$adminMenu->renderTips();
+		
+		$form = new XoopsSimpleForm('', 'building', 'building.php', 'post', true);
 
-		$mods_select = new XoopsFormSelect(TDMCreateLocale::BUILDING_MODULES, 'mod_name', 'mod_name');
-		$mods_select->addOption(0, TDMCreateLocale::BUILDING_SELDEFMOD);
+		$mods_select = new XoopsFormSelect('', 'mod_name', 'mod_name');
+		$mods_select->addOption(0, TDMCreateLocale::BUILDING_SELECT_DEFAULT);
 		$mods_select->addOptionArray($modulesHandler->getList());
 		$form->addElement($mods_select);	
 		
@@ -41,8 +46,8 @@ switch ($op)
 	break;
 	
 	case 'build':
-	    $admin_menu->addItemButton(TDMCreateLocale::BUILDING_FORM, 'building.php', 'application-view-detail');
-        $admin_menu->renderButton();
+	    $adminMenu->addItemButton(TDMCreateLocale::BUILDING_FORM, 'building.php', 'application-view-detail');
+        $adminMenu->renderButton();
 		
 		$mods =& $modulesHandler->get($_REQUEST['mod_name']);
 		$mods_name = $mods->getVar('mod_name');	    

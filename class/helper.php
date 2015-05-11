@@ -64,11 +64,11 @@
     }   
 	
 	/**
-     * @return TDMCreateTDMCreate_localesHandler
+     * @return TDMCreateTDMCreate_localeHandler
      */
-    public function getLocalesHandler()
+    public function getLocaleHandler()
     {
-        return $this->getHandler('locales');
+        return $this->getHandler('locale');
     }
 
 	/**

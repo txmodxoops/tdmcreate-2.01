@@ -37,7 +37,7 @@ $adminmenu[$i]['link'] = 'admin/fields.php';
 $adminmenu[$i]['icon'] = 'editfields.png'; 
 $i++;
 $adminmenu[$i]['title'] = TDMCreateLocale::ADMIN_MENU5;
-$adminmenu[$i]['link'] = 'admin/locales.php';
+$adminmenu[$i]['link'] = 'admin/locale.php';
 $adminmenu[$i]['icon'] = 'languages.png';
 $i++;
 $adminmenu[$i]['title'] = TDMCreateLocale::ADMIN_MENU6;

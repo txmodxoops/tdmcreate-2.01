@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+use Xoops\Core\Request;
 /**
  * tdmcreate module
  *
@@ -19,8 +20,13 @@
  * @version         $Id: tables.php 10665 2012-12-27 10:14:15Z timgno $
  */
 include __DIR__ . '/header.php';
+// Get $_POST, $_GET, $_REQUEST
+$op = Request::getCmd('op', 'list');
+$start = Request::getInt('start', 0);
+// Parameters
+$limit = $helper->getConfig('adminpager');
 // Preferences Limit
-//$tableId = Request::getInt('table_id', 0);
+$tableId = Request::getInt('table_id', 0);
 // header
 $xoops->header('admin:tdmcreate/tdmcreate_tables.tpl');
 //
@@ -29,8 +35,10 @@ $adminMenu->renderNavigation('tables.php');
 switch ($op) 
 {   
     case 'list': 
-    default:               
-	    $adminMenu->addItemButton(TDMCreateLocale::ADD_TABLE, 'tables.php?op=new', 'add');            
+    default:   
+		$adminMenu->addTips(TDMCreateLocale::TABLE_TIPS);
+	    $adminMenu->addItemButton(TDMCreateLocale::A_ADD_TABLE, 'tables.php?op=new', 'add'); 
+		$adminMenu->renderTips();
 	    $adminMenu->renderButton();        
 		// Get modules list
         $criteria = new CriteriaCompo();
@@ -41,7 +49,7 @@ switch ($op)
         $numRowsMods = $modulesHandler->getCount($criteria);
 		$moduleArray = $modulesHandler->getAll($criteria);
 		$xoops->tpl()->assign('modules_count', $numRowsMods);
-		$xoops->tpl()->assign('mimg_path', TDMC_MODULES_URL_IMG);
+		$xoops->tpl()->assign('module_image_url', TDMC_UPLOAD_IMAGES_MODULES_URL);
 		unset($criteria);
 		// Redirect if there aren't modules
         /*if ( $numRowsMods == 0 ) {
@@ -74,7 +82,7 @@ switch ($op)
 				$numRowsTables = $tablesHandler->getCount($criteria);
 				$tablesArray   = $tablesHandler->getAll($criteria);	
 				$xoops->tpl()->assign('tables_count', $numRowsTables);	
-				$xoops->tpl()->assign('timg_path', TDMC_TABLES_URL_IMG);
+				$xoops->tpl()->assign('table_image_url', TDMC_UPLOAD_IMAGES_TABLES_URL);
 				unset($criteria);
                 $tables = array();				
 				if ($numRowsTables > 0) {
@@ -91,13 +99,13 @@ switch ($op)
 						$table['search'] 		= $tablesArray[$i]->getVar('table_search');                
 						$table['comments'] 		= $tablesArray[$i]->getVar('table_comments'); 
 						$table['notifications'] = $tablesArray[$i]->getVar('table_notifications');						
-						//$xoops->tpl()->append_by_ref('tables', $table);
+						//$xoops->tpl()->appendByRef('tables', $table);
 						$tables[] = $table;
 						unset($table);
 					}
 				}
 				$mod['tables'] = $tables;	
-				$xoops->tpl()->append_by_ref('modules', $mod);
+				$xoops->tpl()->appendByRef('modules', $mod);
                 unset($mod);
 			}
             // Display Page Navigation
@@ -106,12 +114,12 @@ switch ($op)
 				$xoops->tpl()->assign('pagenav', $nav->renderNav(4));
 			}
         } else {
-            $xoops->tpl()->assign('error_message', TDMCreateLocale::TABLE_ERROR_NOMODULES);
+            $xoops->tpl()->assign('error_message', TDMCreateLocale::E_NO_MODULES);
         }		
     break;
 
     case 'new':        
-        $adminMenu->addItemButton(TDMCreateLocale::TABLES_LIST, 'tables.php', 'application-view-detail');
+        $adminMenu->addItemButton(TDMCreateLocale::A_LIST_TABLES, 'tables.php', 'application-view-detail');
         $adminMenu->renderButton();
         	
 		$tablesObj  = $tablesHandler->create($tableId);
@@ -138,12 +146,12 @@ switch ($op)
 								'table_nbfields' 	=> $tableNumbFields, 
 								'table_fieldname' 	=> $tableFieldname));
 		//Form table_image
-	    $uploaddir  = ( is_dir(XOOPS_ICONS32_PATH) && XoopsLoad::fileExists(XOOPS_ICONS32_PATH) ) ? XOOPS_ICONS32_PATH : TDMC_TABLES_PATH_IMG;	
+	    $uploaddir  = ( is_dir(XOOPS_ICONS32_PATH) && XoopsLoad::fileExists(XOOPS_ICONS32_PATH) ) ? XOOPS_ICONS32_PATH : TDMC_TABLES_IMAGES_PATH;	
         $uploader   = new XoopsMediaUploader( $uploaddir, $xoops->getModuleConfig('mimetypes'), 
 											   $xoops->getModuleConfig('maxuploadsize'), null, null);
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 		    $extension = preg_replace( '/^.+\.([^.]+)$/sU' , '\\1' , $_FILES['attachedfile']['name']);
-            $imgName = $_GET['table_name'].'.'.$extension;
+            $imgName = $_POST['table_name'].'.'.$extension;
 			$uploader->setPrefix($imgName);
 			$uploader->fetchMedia($_POST['xoops_upload_file'][0]);
 			if (!$uploader->upload()) {
@@ -182,8 +190,8 @@ switch ($op)
 	break;
 	
 	case 'edit':       
-		$adminMenu->addItemButton(TDMCreateLocale::TABLE_ADD, 'tables.php?op=new', 'add');
-		$adminMenu->addItemButton(TDMCreateLocale::TABLES_LIST, 'tables.php', 'application-view-detail');
+		$adminMenu->addItemButton(TDMCreateLocale::A_ADD_TABLE, 'tables.php?op=new', 'add');
+		$adminMenu->addItemButton(TDMCreateLocale::A_LIST_TABLES, 'tables.php', 'application-view-detail');
         $adminMenu->renderButton();			
 
 		$tablesObj = $tablesHandler->get($tableId);

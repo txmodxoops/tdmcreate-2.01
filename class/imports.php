@@ -53,6 +53,26 @@ class TDMCreateImports extends XoopsObject
         $this->initVar('import_fieldelements',XOBJ_DTYPE_TXTBOX);
 	}
 	
+	public function getValues($keys = null, $format = null, $maxDepth = null)
+    {
+        $ret 					= parent::getValues($keys, $format, $maxDepth);
+        $ret['id'] 				= $this->getVar('import_id');
+		$ret['name']	 		= $this->getVar('import_name');
+		$ret['mid'] 			= $this->getVar('import_mid');
+        $ret['nbtables'] 		= number_format($this->getVar('import_nbtables'), 1);
+        $ret['tablename'] 		= $this->getVar('import_tablename');
+		$ret['nbfields'] 		= number_format($this->getVar('import_nbfields'), 1);
+		$ret['fieldelements'] 	= $this->getVar('import_fieldelements');
+        return $ret;
+    }
+	
+	public function toArray()
+    {
+        $ret = parent::getValues();
+        unset($ret['dohtml']);
+        return $ret;
+    }
+	
 	/**
 	 * Perform a global regular expression
 	 *
@@ -113,5 +133,25 @@ class TDMCreateImportsHandler extends XoopsPersistableObjectHandler
 	public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'tdmcreate_imports', 'tdmcreateimports', 'import_id', 'import_name');
+    }
+	
+	public function getAllImports($start = 0, $limit = 0, $sort = 'import_id ASC, import_name', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getAll($criteria);
+    }
+
+    public function getCountImports($start = 0, $limit = 0, $sort = 'import_id ASC, import_name', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getCount($criteria);
     }
 }

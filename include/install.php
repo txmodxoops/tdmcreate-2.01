@@ -38,12 +38,12 @@ function xoops_module_install_tdmcreate($module)
 	copy($indexFile, $tdmcreate.'/index.html');
 	
 	//Creation of the 'files' folder in uploads
-	$files_uploads = $tdmcreate.'/files';
-	if(!is_dir($files_uploads)) {
-		mkdir($files_uploads, 0777);
-		chmod($files_uploads, 0777);
+	$files = $tdmcreate.'/files';
+	if(!is_dir($files)) {
+		mkdir($files, 0777);
+		chmod($files, 0777);
 	}
-	copy($indexFile, $files_uploads.'/index.html');
+	copy($indexFile, $files.'/index.html');
 	
 	//Creation of the 'repository' folder in uploads
 	$repository = $tdmcreate.'/repository';
@@ -89,7 +89,7 @@ function xoops_module_install_tdmcreate($module)
 	copy($indexFile, $modules.'/index.html');
 	copy($blankFile, $modules.'/blank.gif');
 	copy($naked, $modules.'/naked.png');
-	copy($default, $modules.'/default_slogo.png');
+	copy($default, $modules.'/default.png');
 	
 	//Creation of the folder 'images/tables' in uploads
 	$tables = $images.'/tables';

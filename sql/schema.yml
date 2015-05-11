@@ -1,9 +1,9 @@
 tables:
-    profile_category:
+    tdmcreate_modules:
         options: {  }
         columns:
-            cat_id:
-                name: cat_id
+            mod_id:
+                name: mod_id
                 type: smallint
                 default: null
                 notnull: true
@@ -15,8 +15,8 @@ tables:
                 autoincrement: true
                 columnDefinition: null
                 comment: ''
-            cat_title:
-                name: cat_title
+            mod_name:
+                name: mod_name
                 type: string
                 default: ''
                 notnull: true
@@ -28,8 +28,8 @@ tables:
                 autoincrement: false
                 columnDefinition: null
                 comment: ''
-            cat_description:
-                name: cat_description
+            mod_description:
+                name: mod_description
                 type: text
                 default: null
                 notnull: false
@@ -41,8 +41,8 @@ tables:
                 autoincrement: false
                 columnDefinition: null
                 comment: ''
-            cat_weight:
-                name: cat_weight
+            mod_weight:
+                name: mod_weight
                 type: smallint
                 default: '0'
                 notnull: true

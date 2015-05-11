@@ -66,17 +66,21 @@ $adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NITOTAL, '<span clas
 
 // folder path
 $folderPath = array(
-   XOOPS_UPLOAD_PATH . '/tdmcreate/', 
-   XOOPS_UPLOAD_PATH . '/tdmcreate/files',
-   XOOPS_UPLOAD_PATH . '/tdmcreate/repository',   
-   XOOPS_UPLOAD_PATH . '/tdmcreate/images',
-   XOOPS_UPLOAD_PATH . '/tdmcreate/images/modules',
-   XOOPS_UPLOAD_PATH . '/tdmcreate/images/tables'
-);
+				TDMC_UPLOAD_PATH,
+				TDMC_UPLOAD_FILES_PATH,
+				TDMC_UPLOAD_REPOSITORY_PATH,
+				TDMC_UPLOAD_REPOSITORY_EXTENSIONS_PATH,
+				TDMC_UPLOAD_REPOSITORY_MODULES_PATH,
+				TDMC_UPLOAD_IMAGES_PATH,
+				TDMC_UPLOAD_IMAGES_EXTENSIONS_PATH,
+				TDMC_UPLOAD_IMAGES_MODULES_PATH,
+				TDMC_UPLOAD_IMAGES_TABLES_PATH
+			);
 foreach ($folderPath as $folder) {
 	$adminMenu->addConfigBoxLine($folder, 'folder');
 	$adminMenu->addConfigBoxLine(array($folder, '777'), 'chmod');
 }
+$adminMenu->addConfigBoxLine('thumbnail', 'service');
 // extension
 $extensions = array('xtranslator' => 'extension');
 

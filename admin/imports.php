@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+use Xoops\Core\Request;
 /**
  * tdmcreate module
  *
@@ -19,21 +20,28 @@
  * @version         $Id: imports.php 10665 2012-12-27 10:14:15Z timgno $
  */
 include __DIR__ . '/header.php';
+// Get $_POST, $_GET, $_REQUEST
+$op = Request::getCmd('op', 'list');
+$start = Request::getInt('start', 0);
+// Parameters
+$limit = $helper->getConfig('adminpager');
 // heaser
 $xoops->header('admin:tdmcreate/tdmcreate_imports.tpl');
 //
-//$importId = Request::getInt('import_id', 0);
+$importId = Request::getInt('import_id', 0);
 //
 $adminMenu->renderNavigation('imports.php');
 //
 switch ($op) 
 {  	
-	case 'list':     
-	    $adminMenu->addItemButton(TDMCreateLocale::IMPORT_OLD_MODULE, 'imports.php?op=new', 'add');            
+	case 'list': 
+		$adminMenu->addTips(TDMCreateLocale::IMPORT_TIPS);
+        $adminMenu->addItemButton(TDMCreateLocale::IMPORT_OLD_MODULE, 'imports.php?op=new', 'add');
+		$adminMenu->renderTips();
 		$adminMenu->renderButton();		
 		// Get modules list
         $criteria = new CriteriaCompo();
-        $criteria->setSort('import_name');
+        $criteria->setSort('import_id');
         $criteria->setOrder('ASC'); 
         $criteria->setStart($start);
         $criteria->setLimit($limit);		
@@ -55,10 +63,10 @@ switch ($op)
             // Display Page Navigation
 			if ($numrows > $limit) {
 				$nav = new XoopsPageNav($numrows, $limit, $start, 'start');
-				$xoops->tpl()->assign('pagenav', $nav->renderNav(4));
+				$xoops->tpl()->assign('pagenav', $nav->renderNav(4, 'small'));
 			}
         } else {
-            $xoops->tpl()->assign('error_message', TDMCreateLocale::IMPORT_ERROR_NOIMPORTS);
+            $xoops->tpl()->assign('error_message', TDMCreateLocale::E_NO_IMPORTS);
         }	
     break;
     	 
@@ -67,7 +75,7 @@ switch ($op)
         $adminMenu->renderButton();
 
 		$obj = $importHandler->create();
-        $form = $xoops->getModuleForm($obj, 'import');
+        $form = $xoops->getModuleForm($obj, 'imports');
         $xoops->tpl()->assign('form', $form->render());	
 	break;
 	
@@ -81,28 +89,28 @@ switch ($op)
 			//Form imported edited save		
 			$obj->setVar('import_mid', $_POST['import_mid']);
 			$obj->setVar('import_name', $_POST['import_name']);
-			$obj->setVar('import_nbtables', $_POST['import_nbtables']); 	
-			$obj->setVar('import_tablename', $_POST['import_mid']);
+			$obj->setVar('import_nbtables', $_POST['import_nbtables']);			
+			$obj->setVar('import_tablename', $_POST['import_tablename']);
 			$obj->setVar('import_nbfields', $_POST['import_nbfields']);
-			$obj->setVar('import_fieldelements', $_POST['import_fieldelements']);			
+			$obj->setVar('import_fieldelements', $_POST['import_fieldelements']);
         } else {
             $obj = $importHandler->create();
 			//Form imported save			
-			$obj->setVar('import_name', $_POST['import_name']);	
+			$obj->setVar('import_name', $_POST['import_name']);
 			$obj->setVar('import_mid', $_POST['import_mid']);
         	$files = $_FILES['importfile'];
 			// If incoming data have been entered correctly
 			if($_POST['upload'] == XoopsLocale::A_SUBMIT && isset($files['tmp_name']) && (substr($files['name'], -4) == '.sql'))
 			{	
 				// File recovery
-				$dir = TDMC_UPLOAD_PATH_FILES; 
+				$dir = TDMC_UPLOAD_PATH_FILES;
 				$file = $_FILES['importfile'];
 				$tmpName = $file['tmp_name'];
 				// Copy files to the server
-				if (is_uploaded_file($tmpName)) {				
+				if (is_uploaded_file($tmpName)) {	
 					readfile($tmpName);
 					// The directory where you saved the file
-					if ($file['error'] == UPLOAD_ERR_OK) {					
+					if ($file['error'] == UPLOAD_ERR_OK) {
 						if (move_uploaded_file($tmpName, $dir.'/'.$file['name']));
 						$xoops->redirect('imports.php', 3, sprintf(TDMCreateLocale::E_FILE_UPLOADING, $file['name']));
 					}
@@ -111,24 +119,24 @@ switch ($op)
 				}           
 					 
 				// Copies data in the db         
-				$filename = $dir.'/'.$file['name'];			
+				$filename = $dir.'/'.$file['name'];
 				// File size
-				$filesize = $files['size'];			
+				$filesize = $files['size'];
 				// Check that the file was inserted and that there is
-				if ( ($handle = fopen($filename, 'r') ) !== false) {			    							
-					// File reading until at the end				
+				if ( ($handle = fopen($filename, 'r') ) !== false) {
+					// File reading until at the end
 					while ( !feof( $handle ))
 					{ 	
-						$buffer = fgets($handle, filesize($filename));			    				
+						$buffer = fgets($handle, filesize($filename));
 						if(strlen($buffer) > 1)
 						{ 						
 							// search all comments
-							$search = array ( '/\/\*.*(\n)*.*(\*\/)?/', '/\s*--.*\n/', '/\s*#.*\n/' );  
+							$search = array ( '/\/\*.*(\n)*.*(\*\/)?/', '/\s*--.*\n/', '/\s*#.*\n/' );
 							// and replace with null
 							$replace = array ( "\n" );
-							$buffer = preg_replace($search, $replace, $buffer);							
+							$buffer = preg_replace($search, $replace, $buffer);
 							$buffer = str_replace('`', '', $buffer);
-                            $buffer = str_replace(',', '', $buffer);							
+                            $buffer = str_replace(',', '', $buffer);
 							
 							preg_match_all('/((\s)*(CREATE TABLE)(\s)+(.*)(\s)+(\())/', $buffer, $tableMatch); // table name ... (match)
 							if(count($tableMatch[0]) > 0) {
@@ -140,14 +148,14 @@ switch ($op)
 					}	
 					
 					// Insert query 
-					if(strlen($resultTable[0]) > 0) 
+					if(strlen($resultTable[0]) > 0)
 					{			
                         $t = 0;                         						
-						foreach(array_keys($resultTable) as $table) 
+						foreach(array_keys($resultTable) as $table)
 						{	
 						    $obj->setVar('import_tablename', $resultTable[$table]); //$_POST['import_tablename']	
 							$obj->setVar('import_nbtables', $t); $t++;	//$_POST['import_nbtables']	
-                            if(strlen($resultTable[0]) > 0) 
+                            if(strlen($resultTable[0]) > 0)
 							{	
 							    $f = 0;						
 								foreach(array_keys($resultFields) as $field)

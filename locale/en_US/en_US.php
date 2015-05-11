@@ -23,15 +23,23 @@ defined("XOOPS_ROOT_PATH") or die("Restricted access");
 
 class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 {    
-	const ADD_EXTENSION = "Add Extension";
-	const ADD_FIELDS = "Add Fields";
-	const ADD_MODULE = "Add Module";
-	const ADD_TABLE = "Add Table";
-	const ADD_LOCALE = "Add Module";
-	const EDIT_EXTENSION = "Edit Extension";
-	const EDIT_FIELDS = "Edit Fields";
-	const EDIT_MODULE = "Edit Module";
-	const EDIT_TABLE = "Edit Table";
+	const A_ADD_EXTENSION = "Add Extension";
+	const A_ADD_LOCALE = "Add Locale";
+	const A_ADD_FIELDS = "Add Fields";
+	const A_ADD_MODULE = "Add Module";
+	const A_ADD_TABLE = "Add Table";
+
+	const A_EDIT_EXTENSION = "Edit Extension";
+	const A_EDIT_FIELDS = "Edit Fields";
+	const A_EDIT_LOCALE = "Edit Locale";
+	const A_EDIT_MODULE = "Edit Module";
+	const A_EDIT_TABLE = "Edit Table";	
+	
+	const A_LIST_EXTENSIONS = "List of Extensions";
+	const A_LIST_FIELDS = "List of Fields";
+	const A_LIST_LOCALE = "List of Locale";
+	const A_LIST_MODULES = "List of Modules";
+	const A_LIST_TABLES = "List of Tables";
 	
     const ADMIN_MENU1 = "Dashboard";
 	const ADMIN_MENU2 = "Modules";
@@ -50,28 +58,35 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const C_ADMIN = "Visible Admin:";
 	const C_AUTHOR_MAIL = "Author Email:";
 	const C_AUTHOR_WEBSITE_URL = "Author Site Url:";
-	const C_AUTHOR_WEBSITE_NAME = "Author Site Name:";		
+	const C_AUTHOR_WEBSITE_NAME = "Author Site Name:";
+	const C_BLOCKS = "Enable Blocks:";
+	const C_CHECK_ALL = "Check All:";
 	const C_COMMENTS = "Enable Comments:";
-	const C_CREDITS = "Credits:";	
-	const C_DEMO_SITE_URL = "Demo Site Url:";	
-	const C_DEMO_SITE_NAME = "Demo Site Name:";		
+	const C_CREDITS = "Credits:";
+	const C_DEMO_SITE_URL = "Demo Site Url:";
+	const C_DEMO_SITE_NAME = "Demo Site Name:";
+	const C_DONATIONS = "Button Donations:";
 	const C_IMAGE = "Image:";
 	const C_LICENSE = "License:";
-	const C_MANUAL = "Manual:";	
-	const C_MANUAL_FILE = "Manual File";
+	const C_MANUAL = "Manual:";
+	const C_MANUAL_FILE = "Manual File:";
+	const C_NAME = "Name:";
+	const C_PERMISSIONS = "Enable Permissions:";
 	const C_NOTIFICATIONS = "Enable Notifications:";
-	const C_PAYPAL_BUTTON = "Button for Donations:";
+	const C_IN_ROOT = "Copy of this module in root/modules:";
+	const C_OPTIONS = "Options:";	
 	const C_RELEASE = "Release:";
 	const C_RELEASE_FILE = "Release File:";
 	const C_RELEASE_INFO = "Release Info:";	
 	const C_SEARCH = "Enable Search:";
 	const C_STATUS = "Status:";
-	const C_SUBMENU = "Submenu module:";
+	const C_SUBMENU = "View Submenu:";	
 	const C_SUBVERSION = "Subversion module:";
 	const C_SUPPORT_URL = "Support URL:";
 	const C_SUPPORT_NAME = "Support Name:";
 	const C_UPLOAD_FILE = "Upload file:";
 	const C_USER = "Visible User:";
+	const C_VERSION = "Version:";
 	const C_WEBSITE_URL = "Module Website URL:";
 	const C_WEBSITE_NAME = "Module Website Name:";
 	const C_MODULE_OR_EXTENSION = "Module or extension:";
@@ -79,6 +94,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	
 	const CH_NUMBER_ID = "N&176;&nbsp;ID";
 	
+	const CONF_ACTIVE_BLOCKS = "Allow Blocks";
 	const CONF_ACTIVE_SEARCH = "Allow Search";
 	const CONF_ACTIVE_COMMENTS = "Allow Comments";
 	const CONF_ADMIN_PAGER = "Admin per page";
@@ -88,9 +104,12 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONF_AUTHOR_WEBSITE_URL = "Author's Website URL";
 	const CONF_AUTHOR_WEBSITE_NAME = "Author's Website Name";
 	const CONF_ACTIVE_NOTIFICATIONS = "Allow Notifications";
+	const CONF_ACTIVE_PERMISSIONS = "Allow Permissions";
+	const CONF_INROOT_COPY = "Copy this module also in root/modules";
 	const CONF_BREAK_GENERAL = "General settings";
 	const CONF_BREAK_MODULE = "Module settings";
 	const CONF_CREDITS = "Credits";
+	const CONF_DATE_FORMAT = "Date Format";
 	const CONF_DEMO_SITE_URL = "Demo Website URL";
 	const CONF_DEMO_SITE_NAME = "Demo Website Name";
 	const CONF_DESCRIPTION = "Module Description";
@@ -100,7 +119,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONF_EDITOR = "Editor";
 	const CONF_EDITOR_DESC = "Select an editor to write";
 	const CONF_IMAGE = "Modules Image";
-	const CONF_IS_EXTENSION = "If the beginning is an extension, set Yes";
+	const CONF_IS_EXTENSION = "If from beginning is an extension, set Yes";
 	const CONF_LICENSE = "License";
 	const CONF_LICENSE_URL = "License URL";
 	const CONF_MANUAL = "Modules Manual";
@@ -111,7 +130,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONF_MIMETYPES_DESC = "Mime Types for images";	
 	const CONF_MODULE_DESCRIPTION = "Module Description";
 	const CONF_NAME = "Module Name";	
-	const CONF_PAYPAL_BUTTON = "Paypal Button Donations";
+	const CONF_DONATIONS = "Paypal Donations";
 	const CONF_RELEASE_DATE = "Release Date";
 	const CONF_RELEASE_INFO = "Modules Release Info";
 	const CONF_RELEASE_FILE = "Module Release File";	
@@ -161,14 +180,16 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const DISPLAY_ADMIN = "Visible Admin";
 	const DISPLAY_USER = "Visible User";	
 
-	const IMPORTANT = "Information";
+	const IMPORTANT = "Required Information";
 	const NOT_IMPORTANT = "Optional Information";	
 	
-	const E_NO_EXTENSIONS = "There are no extensions";
-	const E_NO_FIELDS = "There are no fields";
-	const E_NO_FIELDS_FORM = "There are no form fields";
-	const E_NO_MODULES = "There are no modules";
-	const E_NO_TABLES = "There are no tables";
+	const E_NO_EXTENSIONS = "There aren't extensions";
+	const E_NO_FIELDS = "There aren't fields";
+	const E_NO_FIELDS_FORM = "There aren't form fields";
+	const E_NO_IMPORTS = "There aren't old modules imported";
+	const E_NO_LOCALES = "There aren't old defines imported";
+	const E_NO_MODULES = "There aren't modules";
+	const E_NO_TABLES = "There aren't tables";
 	
 	const E_DATABASE_ERROR = "Database Error";	
 	const E_DATABASE_SQL_FILE_NOT_IMPORTED = "Database Error: Not sql file or data entered!";
@@ -201,6 +222,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	
 	const MODULE_FIELDS_NUMBER = "Fields Number";
 	const MODULE_BLOCKS = "Blocks";
+	const MODULE_TIPS = "<ul><li>Add, edit or delete modules</li></ul>";
 	
 	const QF_ARE_YOU_SURE_TO_DELETE = "Are you sure you want to delete: <span class='red bold'>%s</span>?";
 	const QF_ARE_YOU_SURE_TO_RENEW = "Are you sure you want to renew: <span class='red bold'>%s</span>?";
@@ -233,6 +255,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 
 	const TABLE_ADMIN = "Display Admin";
 	const TABLE_USER = "Display User";
+	const TABLE_TIPS = "<ul><li>Add, edit or delete tables</li></ul>";
 	
 	const TABLE_ID = "Id";
 	const TABLE_ADMIN_LIST = "Display Admin";
@@ -245,10 +268,11 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const TABLE_IMAGE_DESC = "<span class='red bold'>Attention</span>: If you want to choose a new image, is best to name it with the module name before and follow with the name of the image so as not to overwrite any images with the same name, in the <span class='bold'>Frameworks/moduleclasses/moduleadmin/icons/32/</span>. Otherwise an other solution, would be to insert the images in the module, a new folder is created, with the creation of the same module - <span class='bold'>images/32</span>.";
 
 	const TABLE_NOTIFICATIONS = "Enable Notifications";
-	const TABLE_ERROR_NOTABLES = "There are no tables";
-	const TABLE_ERROR_NOMODULES = "There are no modules";
+	const TABLE_ERROR_NOTABLES = "There aren't tables";
+	const TABLE_ERROR_NOMODULES = "There aren't modules";
 	
 	const FIELD_ADD = "Add fields";
+	const FIELD_TIPS = "<ul><li>List, edit of field </li></ul>";
 	const FIELD_EDIT = "Edit fields";
 	const FIELD_NUMBER = "N&#176;";
 	const FIELD_NAME = "Field Name";
@@ -269,7 +293,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const C_FIELD_MAINFIELD = "Table: Main Field";
 	const C_FIELD_SEARCH = "Search: Index";
 	const C_FIELD_REQUIRED = "Field: Required";
-	const FIELD_ERROR_NOFIELDS = "There are no fields";
+	const FIELD_ERROR_NOFIELDS = "There aren't fields";
 	
 	const ADMIN_SUBMIT = "Send";
 	
@@ -318,6 +342,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const F_MAINTAINEDBY = "<span class='bold green'>%s</span><span class='small italic'> is maintained by the </span><a href='%s' title='Visit %s' class='tooltip' rel='external'>%s</a><span class='small italic'> and by </span><a href='http://www.xoops.org/modules/newbb/' title='Visit Xoops Community' class='tooltip' rel='external'>Xoops Community</a>";
 
 	const IMPORT = "Import";
+	const IMPORT_TIPS = "<ul><li>Import or delete tables of old modules</li></ul>";
 	const IMPORT_OLD_MODULE = "Import old module";
 	const IMPORTED = "Imported";
 	const IMPORT_TITLE = "Form Import old module";
@@ -331,22 +356,20 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const IMPORT_TABLE_NAME = "Table Name";
 	const IMPORT_FIELDS_NUMBER = "Fields Number";
 	const IMPORT_FIELD_NAME = "Field Name";
-	const IMPORT_ERROR_NOIMPORTS = "There are not old modules imported";
 	
 	const LOCALE_TITLE = "Form locale";
-	
+	const LOCALE_TIPS = "<ul><li>Import, add, edit or delete defines for locale files</li></ul>";
 	const LOCALE_ID = "Id";
 	const LOCALE_MID = "Module";
 	const LOCALE_FILE_NAME = "File Name";
 	const LOCALE_DEFINE = "Tables Number";
 	const LOCALE_DESCRIPTION = "Table Name";
-	const LOCALE_ERROR_NOLOCALE = "There are not old defines imported";
-
+	
 	const BUILDING_TITLE = "Building";
+	const BUILDING_TIPS = "<ul><li>Build modules or extensions</li></ul>";
 	const BUILDING_MODULES = "Building modules";
 	const BUILDING_EXTENSIONS = "Building Extensions";
-	const BUILDING_SELECT_DEFAULT_MODULES = "Select Module";
-	const BUILDING_SELECT_DEFAULT_EXTENSION = "Select Extension";
+	const BUILDING_SELECT_DEFAULT = "Select Module or Extension";
 	const BUILDING_EXECUTED = "Build Executed";
 	const BUILDING_SUCCESS = "Success";
 	const BUILDING_ERROR = "Error";

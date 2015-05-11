@@ -71,7 +71,34 @@ class TDMCreateModules extends XoopsObject
         $this->initVar('mod_inroot_copy', XOBJ_DTYPE_INT, $helper->getConfig('inroot_copy'));
         $this->initVar('mod_donations', XOBJ_DTYPE_TXTBOX, $helper->getConfig('donations'));
         $this->initVar('mod_subversion', XOBJ_DTYPE_TXTBOX, $helper->getConfig('subversion'));
-	}	
+	}
+
+	public function getValues($keys = null, $format = null, $maxDepth = null)
+    {
+        $tdmcreate 				= TDMCreate::getInstance();
+        $ret 					= parent::getValues($keys, $format, $maxDepth);
+        $ret['id']	 			= $this->getVar('mod_id');
+		$ret['name']	 		= $this->getVar('mod_name');
+        $ret['version'] 		= number_format($this->getVar('mod_version'), 2);
+        $ret['image'] 			= $this->getVar('mod_image');
+        $ret['release'] 		= XoopsLocale::formatTimestamp($this->getVar('mod_release'), $tdmcreate->getConfig('release_date'));
+        $ret['status'] 			= $this->getVar('mod_status');
+        $ret['admin'] 			= $this->getVar('mod_admin');
+		$ret['user'] 			= $this->getVar('mod_user');
+		$ret['blocks'] 			= $this->getVar('mod_blocks');
+		$ret['search'] 			= $this->getVar('mod_search');
+		$ret['comments'] 		= $this->getVar('mod_comments');
+		$ret['notifications'] 	= $this->getVar('mod_notifications');
+		$ret['permissions'] 	= $this->getVar('mod_permissions');
+        return $ret;
+    }
+	
+	public function toArray()
+    {
+        $ret = parent::getValues();
+        unset($ret['dohtml']);
+        return $ret;
+    }
 }
 /**
  * Class TDMCreateModulesHandler
@@ -85,4 +112,24 @@ class TDMCreateModulesHandler extends XoopsPersistableObjectHandler
 	{
 		parent::__construct($db, 'tdmcreate_modules', 'tdmcreatemodules', 'mod_id', 'mod_name');
 	}
+	
+	public function getAllModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getAll($criteria);
+    }
+
+    public function getCountModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getCount($criteria);
+    }
 }

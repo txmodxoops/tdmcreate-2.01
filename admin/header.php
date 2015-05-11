@@ -8,7 +8,6 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Core\Request;
 /**
  * tdmcreate module
  *
@@ -33,13 +32,8 @@ XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/functions.php'));
 $modulesHandler = $helper->getModulesHandler();
 $tablesHandler = $helper->getTablesHandler();
 $fieldsHandler = $helper->getFieldsHandler();
-$localeHandler = $helper->getLocalesHandler();
+$localeHandler = $helper->getLocaleHandler();
 $importHandler = $helper->getImportsHandler();
-// Get $_POST, $_GET, $_REQUEST
-$op = Request::getCmd('op');
-$start = Request::getInt('start', 0);
-// Parameters
-$limit = $helper->getConfig('adminpager');
 // Add Script
 $xoops->theme()->addScript('media/xoops/xoops.js');
 $xoops->theme()->addScript('modules/system/js/admin.js');

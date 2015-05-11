@@ -1,7 +1,7 @@
 <{include file="admin:system/admin_navigation.tpl"}>
 <{include file="admin:system/admin_tips.tpl"}>
 <{include file="admin:system/admin_buttons.tpl"}>
-<{if $modules_count}>	
+<{if $modules_count|default:false}>
 	<table width='100%' cellspacing='1' class='outer'>
 		<thead>
 			<tr>
@@ -51,14 +51,14 @@
 			<{/foreach}>
 		</tbody>
 	</table><br />
-    <{if $pagenav != ''}>
+    <{if $pagenav|default:false}>
 		<{$pagenav}>	   
 	<{/if}>	
 <{/if}>
 <!-- Display form (add,edit) -->
-<{if $error_message}>
+<{if $error_message|default:false}>
 <div class="alert alert-error">
     <strong><{$error_message}></strong>
 </div>
 <{/if}>
-<{$form}>
+<{$form|default:''}>

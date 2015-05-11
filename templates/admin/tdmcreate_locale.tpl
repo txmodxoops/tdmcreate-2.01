@@ -1,30 +1,30 @@
 <{include file="admin:system/admin_navigation.tpl"}>
 <{include file="admin:system/admin_tips.tpl"}>
 <{include file="admin:system/admin_buttons.tpl"}>
-<{if $imports_count|default:false}>
+<{if $locales_count}>
 	<table width='100%' cellspacing='1' class='outer'>
 		<thead>
 			<tr>
 				<th class='txtcenter'><{translate key="ID"}></th>
-				<th class='txtcenter'><{translate key="IMPORT_MID"}></th>
-				<th class='txtcenter'><{translate key="IMPORT_NAME"}></th>
-				<th class='txtcenter'><{translate key="IMPORT_TABLES_NUMBER"}></th>
-				<th class='txtcenter'><{translate key="IMPORT_FIELDS_NUMBER"}></th>
+				<th class='txtcenter'><{translate key="LOCALE_MID"}></th>
+				<th class='txtcenter'><{translate key="LOCALE_FILE_NAME"}></th>
+				<th class='txtcenter'><{translate key="LOCALE_DEFINE"}></th>
+				<th class='txtcenter'><{translate key="LOCALE_DESCRIPTION"}></th>
 				<th class='txtcenter'><{translate key="ACTION"}></th>
 			</tr>
 		</thead>
 		<tbody>
-			<{foreach item=import from=$imports}>
+			<{foreach item=locale from=$locales}>
 				<tr class="<{cycle values='even,odd'}>">
-					<td class='txtcenter'><{$import.id}></td>
-					<td class='txtcenter'><{$import.mid}></td>
-					<td class='txtcenter'><{$import.name}></td>					
-					<td class='txtcenter'><{$import.nbtables}></td>
-					<td class='txtcenter'><{$import.nbfields}></td>
+					<td class='txtcenter'><{$locale.id}></td>
+					<td class='txtcenter'><{$locale.mid}></td>
+					<td class='txtcenter'><{$locale.file}></td>					
+					<td class='txtcenter'><{$locale.define}></td>
+					<td class='txtcenter'><{$locale.description}></td>
 					<td class='xo-actions txtcenter width6'>
-						<a href='import.php?op=edit&amp;id=<{$import.id}>' title='<{translate key="A_EDIT"}>'>
+						<a href='locale.php?op=edit&amp;id=<{$locale.id}>' title='<{translate key="A_EDIT"}>'>
 							<img src="<{xoAdminIcons 'edit.png'}>" alt='<{translate key="A_EDIT"}>' /></a>
-						<a href='import.php?op=delete&amp;id=<{$import.id}>' title='<{translate key="A_DELETE"}>'>
+						<a href='locale.php?op=delete&amp;id=<{$locale.id}>' title='<{translate key="A_DELETE"}>'>
 							<img src="<{xoAdminIcons 'delete.png'}>" alt='<{translate key="A_DELETE"}>' /></a>
 					</td>
 				</tr>
@@ -41,4 +41,4 @@
     <strong><{$error_message}></strong>
 </div>
 <{/if}>
-<{$form|default:''}>
+<{$form}>
