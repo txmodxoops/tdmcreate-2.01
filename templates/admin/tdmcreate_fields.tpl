@@ -1,9 +1,9 @@
 <{include file="admin:system/admin_navigation.tpl"}>
 <{include file="admin:system/admin_tips.tpl"}>
 <{include file="admin:system/admin_buttons.tpl"}>
-<{if $fields_list}>
-	<{if $tables_count}>
-		<table width='100%' cellspacing='1' class='outer'>
+<{if $fields_list|default:false}>
+	<{if $tables_count|default:false}>
+		<table class="outer tablesorter">
 			<thead>
 				<tr>
 					<th class='txtcenter'><{translate key="ID"}></th>
@@ -73,15 +73,15 @@
 				<{/foreach}>
 			</tbody>
 		</table><br />
-		<{if $pagenav != ''}>
+		<{if $pagenav|default:false}>
 			<{$pagenav}>	   
 		<{/if}>	
 	<{/if}>
 <{else}>    
 	<!-- Display form (add,edit) -->
-	<{$form}>
+	<{$form|default:''}>
 <{/if}>
-<{if $error_message}>
+<{if $error_message|default:false}>
 <div class="alert alert-error">
     <strong><{$error_message}></strong>
 </div>

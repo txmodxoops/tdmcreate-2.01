@@ -16,12 +16,12 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
- * @version         $Id: en_US.php 10956 2013-01-31 18:09:50Z timgno $
+ * @version         $Id: en_US.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
 
 defined("XOOPS_ROOT_PATH") or die("Restricted access");
 
-class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
+class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 {    
 	const A_ADD_EXTENSION = "Add Extension";
 	const A_ADD_LOCALE = "Add Locale";
@@ -65,11 +65,17 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const C_CREDITS = "Credits:";
 	const C_DEMO_SITE_URL = "Demo Site Url:";
 	const C_DEMO_SITE_NAME = "Demo Site Name:";
+	const C_DIRECTORY_NAME = "Directory Name:";
 	const C_DONATIONS = "Button Donations:";
+	const C_EXTENSION = "Extension:";
 	const C_IMAGE = "Image:";
 	const C_LICENSE = "License:";
 	const C_MANUAL = "Manual:";
 	const C_MANUAL_FILE = "Manual File:";
+	const C_MIN_ADMIN = "Minimum Admin:";
+	const C_MIN_MYSQL = "Minimum MYSQL:";
+	const C_MIN_PHP = "Minimum PHP:";
+	const C_MIN_XOOPS = "Minimum XOOPS:";
 	const C_NAME = "Name:";
 	const C_PERMISSIONS = "Enable Permissions:";
 	const C_NOTIFICATIONS = "Enable Notifications:";
@@ -79,6 +85,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const C_RELEASE_FILE = "Release File:";
 	const C_RELEASE_INFO = "Release Info:";	
 	const C_SEARCH = "Enable Search:";
+	const C_SINCE = "Since:";
 	const C_STATUS = "Status:";
 	const C_SUBMENU = "View Submenu:";	
 	const C_SUBVERSION = "Subversion module:";
@@ -88,8 +95,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const C_USER = "Visible User:";
 	const C_VERSION = "Version:";
 	const C_WEBSITE_URL = "Module Website URL:";
-	const C_WEBSITE_NAME = "Module Website Name:";
-	const C_MODULE_OR_EXTENSION = "Module or extension:";
+	const C_WEBSITE_NAME = "Module Website Name:";	
 	const C_MODULE_OR_EXTENSION_DESC = "If you choose to create an extension, the checkbox will be checked";
 	
 	const CH_NUMBER_ID = "N&176;&nbsp;ID";
@@ -113,6 +119,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONF_DEMO_SITE_URL = "Demo Website URL";
 	const CONF_DEMO_SITE_NAME = "Demo Website Name";
 	const CONF_DESCRIPTION = "Module Description";
+	const CONF_DIRECTORY_NAME = "Directory Name";
 	const CONF_DISPLAY_ADMIN_SIDE = "Visible in Admin Panel";
 	const CONF_DISPLAY_SUBMENU = "Display Submenu";
 	const CONF_DISPLAY_USER_SIDE = "Visible in User side";	
@@ -127,11 +134,12 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONF_MAX_UPLOAD_SIZE = "Maximum size of images";
 	const CONF_MAX_UPLOAD_SIZE_DESC = "Set maximum size of images in Bytes";
 	const CONF_MIMETYPES = "Mime Types";
-	const CONF_MIMETYPES_DESC = "Mime Types for images";	
+	const CONF_MIMETYPES_DESC = "Mime Types for images";
 	const CONF_MODULE_DESCRIPTION = "Module Description";
 	const CONF_NAME = "Module Name";	
 	const CONF_DONATIONS = "Paypal Donations";
 	const CONF_RELEASE_DATE = "Release Date";
+	const CONF_RELEASE_DATE_DESC = "Date Format";
 	const CONF_RELEASE_INFO = "Modules Release Info";
 	const CONF_RELEASE_FILE = "Module Release File";	
 	const CONF_REVISION = "Svn Revision";
@@ -141,6 +149,11 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONF_VERSION = "Module Version";
 	const CONF_WEBSITE_URL = "Module website URL";
 	const CONF_WEBSITE_NAME = "Module Website name";	
+	const CONF_SINCE = "Since";
+	const CONF_MIN_ADMIN = "Minimum Admin";
+	const CONF_MIN_MYSQL = "Minimum MYSQL";
+	const CONF_MIN_PHP = "Minimum PHP";
+	const CONF_MIN_XOOPS = "Minimum XOOPS";
 	
 	const CONST_MODULES = "Select the module you want to build";
 	const CONST_TABLES = "Select the table you want to build";
@@ -174,6 +187,8 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const CONST_NOTOK_TEMPLATES = "Problems: Creating <b>%s</b> file in the templates folder";
 	const CONST_NOTOK_TEMPLATES_BLOCS = "Problems: Creating <b>%s</b> file in the templates/blocks folder";
 	const CONST_NOTOK_TEMPLATES_ADMIN = "Problems: Creating <b>%s</b> file in the templates/admin folder";
+		
+	const CREATE_LOGO = "Create Logo";
 	
 	const ALL_TABS_TIPS = "<ul><li>Add, update, create or delete modules, extensions, tables, fields, import old modules</li></ul>";
 	
@@ -214,6 +229,36 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const F_INDEX_NITOTAL = "There are %s old modules imported in the Database";
 	
 	const INDEX_STATISTICS = "Statistics";
+	const L_BUILDING_FAILED = "Building Failed";
+	const L_BUILDING_FILES = "Building Files";
+	const L_BUILDING_SUCCESS = "Building Success";
+	const L_OPTIONS_CHECK = "Options Check";
+	const L_OPTIONS_MODULES_ADMIN = "PDF icon";
+    const L_OPTIONS_MODULES_DOPRINT = "Print icon";
+    const L_OPTIONS_MODULES_DOSOCIAL = "Social networks";
+    const L_OPTIONS_MODULES_DOAUTHOR = "Author";
+    const L_OPTIONS_MODULES_DOMAIL = "Mail icon";
+    const L_OPTIONS_MODULES_DODATE = "Date";
+    const L_OPTIONS_MODULES_DOHITS = "Hits";
+    const L_OPTIONS_MODULES_DORATING = "Rating and vote count";
+    const L_OPTIONS_MODULES_DOCOMS = "Comments";
+    const L_OPTIONS_MODULES_DONCOMS = "Comments count";
+    const L_OPTIONS_MODULES_DOTITLE = "Title";
+    const L_OPTIONS_MODULES_DONOTIFICATIONS = "Notifications";
+	
+	const L_OPTIONS_TABLES_ADMIN = "PDF icon";
+    const L_OPTIONS_TABLES_DOPRINT = "Print icon";
+    const L_OPTIONS_TABLES_DOSOCIAL = "Social networks";
+    const L_OPTIONS_TABLES_DOAUTHOR = "Author";
+    const L_OPTIONS_TABLES_DOMAIL = "Mail icon";
+    const L_OPTIONS_TABLES_DODATE = "Date";
+    const L_OPTIONS_TABLES_DOHITS = "Hits";
+    const L_OPTIONS_TABLES_DORATING = "Rating and vote count";
+    const L_OPTIONS_TABLES_DOCOMS = "Comments";
+    const L_OPTIONS_TABLES_DONCOMS = "Comments count";
+    const L_OPTIONS_TABLES_DOTITLE = "Title";
+    const L_OPTIONS_TABLES_DONOTIFICATIONS = "Notifications";
+	
 	const MODULE_IMPORTANT = "Required Information";
     const MODULE_NAME = "TDMCreate";
     const MODULE_DESC = "Module for creating others modules";
@@ -223,6 +268,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const MODULE_FIELDS_NUMBER = "Fields Number";
 	const MODULE_BLOCKS = "Blocks";
 	const MODULE_TIPS = "<ul><li>Add, edit or delete modules</li></ul>";
+	const MODULE_SELECT_DEFAULT = "Select Module or Extension";
 	
 	const QF_ARE_YOU_SURE_TO_DELETE = "Are you sure you want to delete: <span class='red bold'>%s</span>?";
 	const QF_ARE_YOU_SURE_TO_RENEW = "Are you sure you want to renew: <span class='red bold'>%s</span>?";
@@ -347,7 +393,7 @@ class TDMCreateLocaleEn_US extends XoopsLocaleEn_US
 	const IMPORTED = "Imported";
 	const IMPORT_TITLE = "Form Import old module";
 	const IMPORT_LIST = "List of old modules Imported";
-	const IMPORTED_LIST = "Modules Imported List";
+	const IMPORTED_LIST = "Imported Modules List";
 
 	const IMPORT_ID = "Id";
 	const IMPORT_MID = "Module";

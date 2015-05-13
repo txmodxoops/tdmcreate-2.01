@@ -17,10 +17,10 @@ use Xoops\Core\Database\Connection;
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: locales.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: locales.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
 /**
- * Class TDMCreateLocales
+ * Class TDMCreateLocale
  */
 class TDMCreateLocales extends XoopsObject
 {	
@@ -34,10 +34,27 @@ class TDMCreateLocales extends XoopsObject
         $this->initVar('loc_file',XOBJ_DTYPE_TXTBOX);
         $this->initVar('loc_define',XOBJ_DTYPE_TXTBOX);
         $this->initVar('loc_description',XOBJ_DTYPE_TXTBOX);
-	}	
+	}
+
+	public function getValues($keys = null, $format = null, $maxDepth = null)
+    {
+        $ret 				= parent::getValues($keys, $format, $maxDepth);
+        $ret['mid']	 		= $this->getVar('loc_mid');
+		$ret['file'] 		= $this->getVar('loc_file');		
+        $ret['define'] 		= $this->getVar('loc_define');
+		$ret['description'] = $this->getVar('loc_description');
+        return $ret;
+    }
+	
+	public function toArray()
+    {
+        $ret = parent::getValues();
+        unset($ret['dohtml']);
+        return $ret;
+    }
 }
 /**
- * Class TDMCreateLocalesHandler
+ * Class TDMCreateLocaleHandler
  */
 class TDMCreateLocalesHandler extends XoopsPersistableObjectHandler
 {
@@ -47,5 +64,25 @@ class TDMCreateLocalesHandler extends XoopsPersistableObjectHandler
 	public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'tdmcreate_locales', 'tdmcreatelocales', 'loc_id', 'loc_mid');
+    }
+	
+	public function getAllLocales($start = 0, $limit = 0, $sort = 'loc_id ASC, loc_mid', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getAll($criteria);
+    }
+
+    public function getCountLocales($start = 0, $limit = 0, $sort = 'loc_id ASC, loc_mid', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getCount($criteria);
     }
 }

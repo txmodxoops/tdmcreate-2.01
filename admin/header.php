@@ -30,10 +30,10 @@ XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/common.php'));
 XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/functions.php'));
 // Get handler
 $modulesHandler = $helper->getModulesHandler();
-$tablesHandler = $helper->getTablesHandler();
-$fieldsHandler = $helper->getFieldsHandler();
-$localeHandler = $helper->getLocaleHandler();
-$importHandler = $helper->getImportsHandler();
+$tablesHandler  = $helper->getTablesHandler();
+$fieldsHandler  = $helper->getFieldsHandler();
+$localesHandler = $helper->getLocalesHandler();
+$importsHandler = $helper->getImportsHandler();
 // Add Script
 $xoops->theme()->addScript('media/xoops/xoops.js');
 $xoops->theme()->addScript('modules/system/js/admin.js');

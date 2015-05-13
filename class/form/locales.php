@@ -22,7 +22,7 @@
 class TDMCreateLocalesForm extends Xoops\Form\ThemeForm
 { 
 	/**
-     * @param TDMCreateLocale|XoopsObject $obj
+     * @param TDMCreateLocales|XoopsObject $obj
      */
 	public function __construct(TDMCreateLocales &$obj)
 	{
@@ -31,9 +31,9 @@ class TDMCreateLocalesForm extends Xoops\Form\ThemeForm
 		$title = $obj->isNew() ? TDMCreateLocale::A_ADD_LOCALE : PageLocale::A_EDIT_LOCALE;
         parent::__construct($title, 'form', 'locales.php', 'post', true);
 		
-		$this->addElement(new XoopsFormText(XoopsLocale::LOCALE_FILE_NAME, 'loc_file', 50, 255, $obj->getVar('loc_file')), true);
-		$this->addElement(new XoopsFormText(XoopsLocale::LOCALE_DEFINE, 'loc_define', 50, 255, $obj->getVar('loc_define')), true);
-		$this->addElement(new XoopsFormText(XoopsLocale::LOCALE_DESCRIPTION, 'loc_description', 50, 255, $obj->getVar('loc_description')), true);
+		$this->addElement(new Xoops\Form\Text(TDMCreateLocale::LOCALE_FILE_NAME, 'loc_file', 50, 255, $obj->getVar('loc_file')), true);
+		$this->addElement(new Xoops\Form\Text(TDMCreateLocale::LOCALE_DEFINE, 'loc_define', 50, 255, $obj->getVar('loc_define')), true);
+		$this->addElement(new Xoops\Form\Text(TDMCreateLocale::LOCALE_DESCRIPTION, 'loc_description', 50, 255, $obj->getVar('loc_description')), true);
 		
 		$this->addElement(new XoopsFormHidden('op', 'save' ) );
         $this->addElement(new XoopsFormButton('', 'submit', XoopsLocale::A_SUBMIT, 'submit' ) );

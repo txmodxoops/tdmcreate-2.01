@@ -20,7 +20,7 @@ use Xoops\Core\Database\Connection;
  * @version         $Id: fieldelements.php 10665 2012-12-27 10:14:15Z timgno $
  */
 
-class TDMCreateFieldElements extends XoopsObject
+class TDMCreateFieldelements extends XoopsObject
 { 
 	/**
      * Constructor
@@ -32,10 +32,10 @@ class TDMCreateFieldElements extends XoopsObject
         $this->initVar('fieldelement_tid', XOBJ_DTYPE_INT);
         $this->initVar('fieldelement_name', XOBJ_DTYPE_TXTBOX);
         $this->initVar('fieldelement_value', XOBJ_DTYPE_TXTBOX);			
-	}	
+	}
 }
 
-class TDMCreateFieldElementsHandler extends XoopsPersistableObjectHandler
+class TDMCreateFieldelementsHandler extends XoopsPersistableObjectHandler 
 {
     /**
      * @param null|Connection $db
@@ -44,18 +44,5 @@ class TDMCreateFieldElementsHandler extends XoopsPersistableObjectHandler
     {
         parent::__construct($db, 'tdmcreate_fieldelements', 'tdmcreatefieldelements', 'fieldelements_id', 'fieldelements_name');
     }
-	
-	public function getAllFieldElementsByModuleId($mid = 0)
-    {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('fieldelement_mid', $mid));
-        return parent::getAll($criteria);
-    }
-	
-	public function getAllFieldElementsByTableId($tid = 0)
-    {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('fieldelement_tid', $tid));
-        return parent::getAll($criteria);
-    }
 }
+?>

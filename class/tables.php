@@ -110,6 +110,17 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
         $criteria->setLimit($limit);
         return parent::getAll($criteria);
     }
+	
+	public function getAllTablesByModuleId($mid, $start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
+    {
+        $criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('table_mid', $mid));
+        $criteria->setSort($sort);
+        $criteria->setOrder($order);
+        $criteria->setStart($start);
+        $criteria->setLimit($limit);
+        return parent::getAll($criteria);
+    }
 
     public function getCountTables($start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {

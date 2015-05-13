@@ -24,18 +24,18 @@ include __DIR__ . '/header.php';
 $op = Request::getCmd('op', 'default');
 // header
 $xoops->header('admin:tdmcreate/tdmcreate_building.tpl');
-
+//
 $adminMenu->renderNavigation('building.php');
+//
 switch ($op) 
 {
 	case 'default':
 	default:
 		$adminMenu->addTips(TDMCreateLocale::BUILDING_TIPS);
 		$adminMenu->renderTips();
-		
-		$form = new XoopsSimpleForm('', 'building', 'building.php', 'post', true);
+		$form = new XoopsSimpleForm(TDMCreateLocale::BUILDING_TITLE, 'building', 'building.php', 'post', true);
 
-		$mods_select = new XoopsFormSelect('', 'mod_name', 'mod_name');
+		$mods_select = new XoopsFormSelect(TDMCreateLocale::BUILDING_MODULES, 'mod_name', 'mod_name');
 		$mods_select->addOption(0, TDMCreateLocale::BUILDING_SELECT_DEFAULT);
 		$mods_select->addOptionArray($modulesHandler->getList());
 		$form->addElement($mods_select);	
@@ -46,8 +46,8 @@ switch ($op)
 	break;
 	
 	case 'build':
-	    $adminMenu->addItemButton(TDMCreateLocale::BUILDING_FORM, 'building.php', 'application-view-detail');
-        $adminMenu->renderButton();
+	    $admin_menu->addItemButton(TDMCreateLocale::BUILDING_FORM, 'building.php', 'application-view-detail');
+        $admin_menu->renderButton();
 		
 		$mods =& $modulesHandler->get($_REQUEST['mod_name']);
 		$mods_name = $mods->getVar('mod_name');	    

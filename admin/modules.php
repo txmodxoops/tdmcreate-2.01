@@ -33,26 +33,26 @@ $adminMenu->renderNavigation('modules.php');
 switch ($op) 
 {   
     case 'list': 
-    default:
+    default:	
 		$adminMenu->addTips(TDMCreateLocale::MODULE_TIPS);
-		$adminMenu->addItemButton(TDMCreateLocale::ADD_MODULE, 'modules.php?op=new', 'add');
+		$adminMenu->addItemButton(TDMCreateLocale::A_ADD_MODULE, 'modules.php?op=new', 'add');
 		$adminMenu->renderTips();
 		$adminMenu->renderButton();
 		// Get modules list
-        $numRowsMods  = $modulesHandler->getCountModules();
+        $numbRowsMods = $modulesHandler->getCountModules();
 		$modulesArray = $modulesHandler->getAllModules($start, $limit);
         // Assign Template variables
-        $xoops->tpl()->assign('modules_count', $numRowsMods);
-		unset($criteria);
-        if ($numRowsMods > 0) {
+        $xoops->tpl()->assign('modules_count', $numbRowsMods);		
+		unset($criteria);          
+        if ($numbRowsMods > 0) {
             foreach (array_keys($modulesArray) as $i) {
                 $module = $modulesArray[$i]->getValues();
 				$xoops->tpl()->appendByRef('modules', $module);
-                unset($module);
+                unset($module);				
             }
             // Display Page Navigation
-			if ($numRowsMods > $limit) {
-				$nav = new XoopsPageNav($numRowsMods, $limit, $start, 'start');
+			if ($numbRowsMods > $limit) {
+				$nav = new XoopsPageNav($numbRowsMods, $limit, $start, 'start');
 				$xoops->tpl()->assign('pagenav', $nav->renderNav(4));
 			}
         } else {
@@ -80,20 +80,20 @@ switch ($op)
             $modulesObj = $modulesHandler->create();
         }        	
 		//Form module save		
-		$modulesObj->setVars(array('mod_name' 				=> Request::getString('mod_name', ''), 
-								'mod_isextension' 			=> Request::getInt('mod_isextension', 0), 
-								'mod_version' 				=> Request::getString('mod_version', ''), 
-								'mod_description' 			=> Request::getString('mod_description', ''), 
-								'mod_author' 				=> Request::getString('mod_author', ''), 
-								'mod_author_mail' 			=> Request::getString('mod_author_mail', ''), 
-								'mod_author_website_url' 	=> Request::getString('mod_author_website_url', ''), 
-								'mod_author_website_name' 	=> Request::getString('mod_author_website_name', ''), 
-								'mod_credits' 				=> Request::getString('mod_credits', ''), 
-								'mod_license' 				=> Request::getString('mod_license', ''), 
-								'mod_release_info' 			=> Request::getString('mod_release_info', ''), 
-								'mod_release_file' 			=> Request::getString('mod_release_file', ''), 
-								'mod_manual' 				=> Request::getString('mod_manual', ''), 
-								'mod_manual_file' 			=> Request::getString('mod_manual_file', '')));		
+		$modulesObj->setVars(array( 'mod_name' 					=> Request::getString('mod_name', ''), 
+									'mod_isextension' 			=> Request::getInt('mod_isextension', 0), 
+									'mod_version' 				=> Request::getString('mod_version', ''), 
+									'mod_description' 			=> Request::getString('mod_description', ''), 
+									'mod_author' 				=> Request::getString('mod_author', ''), 
+									'mod_author_mail' 			=> Request::getString('mod_author_mail', ''), 
+									'mod_author_website_url' 	=> Request::getString('mod_author_website_url', ''), 
+									'mod_author_website_name' 	=> Request::getString('mod_author_website_name', ''), 
+									'mod_credits' 				=> Request::getString('mod_credits', ''), 
+									'mod_license' 				=> Request::getString('mod_license', ''), 
+									'mod_release_info' 			=> Request::getString('mod_release_info', ''), 
+									'mod_release_file' 			=> Request::getString('mod_release_file', ''), 
+									'mod_manual' 				=> Request::getString('mod_manual', ''), 
+									'mod_manual_file' 			=> Request::getString('mod_manual_file', '')));		
 		//Form module_image	       
         $uploader = new XoopsMediaUploader( TDMC_MODULES_PATH_IMG, $helper->getConfig('mimetypes'), 
 											    $helper->getConfig('maxuploadsize'), null, null);
@@ -122,7 +122,7 @@ switch ($op)
 								'mod_support_name' 			=> Request::getString('mod_support_name', ''), 
 								'mod_website_url' 			=> Request::getString('mod_website_url', ''), 
 								'mod_website_name' 			=> Request::getString('mod_website_name', ''), 
-								'mod_release' 				=> Request::getString('mod_release', ''), 
+								'mod_release' 				=> strtotime(Request::getString('mod_release', '')), 
 								'mod_status' 				=> Request::getString('mod_status', ''),
 								'mod_admin' 				=> Request::getInt('mod_admin', 0), 
 								'mod_user' 					=> Request::getInt('mod_user', 0), 

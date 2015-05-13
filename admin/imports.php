@@ -28,42 +28,33 @@ $limit = $helper->getConfig('adminpager');
 // heaser
 $xoops->header('admin:tdmcreate/tdmcreate_imports.tpl');
 //
-$importId = Request::getInt('import_id', 0);
+$importId = Request::getInt('import_id');
 //
 $adminMenu->renderNavigation('imports.php');
 //
 switch ($op) 
 {  	
-	case 'list': 
-		$adminMenu->addTips(TDMCreateLocale::IMPORT_TIPS);
+	case 'list':   
+        $adminMenu->addTips(TDMCreateLocale::IMPORT_TIPS);
         $adminMenu->addItemButton(TDMCreateLocale::IMPORT_OLD_MODULE, 'imports.php?op=new', 'add');
 		$adminMenu->renderTips();
 		$adminMenu->renderButton();		
 		// Get modules list
-        $criteria = new CriteriaCompo();
-        $criteria->setSort('import_id');
-        $criteria->setOrder('ASC'); 
-        $criteria->setStart($start);
-        $criteria->setLimit($limit);		
-        $numImports = $importHandler->getCount($criteria);
-		$importArr = $importHandler->getAll($criteria);
+        $numbRowsImports = $importsHandler->getCountImports();
+		$importArray     = $importsHandler->getAllImports($start, $limit);
         // Assign Template variables
-        $xoops->tpl()->assign('imports_count', $numImports);		
+        $xoops->tpl()->assign('imports_count', $numbRowsImports);
 		unset($criteria);          
-        if ($numImports > 0) {
-            foreach (array_keys($importArr) as $i) {
-                $import['id'] = $importArr[$i]->getVar('import_id');                 
-                $import['mid'] = $importArr[$i]->getVar('import_mid');
-				$import['name'] = $importArr[$i]->getVar('import_name');
-				$import['nbtables'] = $importArr[$i]->getVar('import_nbtables'); 
-                $import['nbfields'] = $importArr[$i]->getVar('import_nbfields');                
-				$xoops->tpl()->append_by_ref('imports', $import);
+        if ($numbRowsImports > 0) {
+            foreach (array_keys($importArray) as $i) {
+                $import = $importsHandler[$i]->getValues();             
+				$xoops->tpl()->appendByRef('imports', $import);
                 unset($import);				
             }
-            // Display Page Navigation
-			if ($numrows > $limit) {
-				$nav = new XoopsPageNav($numrows, $limit, $start, 'start');
-				$xoops->tpl()->assign('pagenav', $nav->renderNav(4, 'small'));
+            // Display Imports Navigation
+			if ($numbRowsImports > $limit) {
+				$nav = new XoopsPageNav($numbRowsImports, $limit, $start, 'start');
+				$xoops->tpl()->assign('pagenav', $nav->renderNav(4));
 			}
         } else {
             $xoops->tpl()->assign('error_message', TDMCreateLocale::E_NO_IMPORTS);
@@ -74,8 +65,8 @@ switch ($op)
         $adminMenu->addItemButton(TDMCreateLocale::IMPORTED_LIST, 'imports.php', 'application-view-detail');
         $adminMenu->renderButton();
 
-		$obj = $importHandler->create();
-        $form = $xoops->getModuleForm($obj, 'imports');
+		$importsObj = $importsHandler->create();
+        $form 		= $xoops->getModuleForm($importsObj, 'imports');
         $xoops->tpl()->assign('form', $form->render());	
 	break;
 	
@@ -85,32 +76,32 @@ switch ($op)
 		}
 		
         if ($importId > 0) {
-            $obj = $importHandler->get($importId);
+            $importsObj = $importsHandler->get($importId);
 			//Form imported edited save		
-			$obj->setVar('import_mid', $_POST['import_mid']);
-			$obj->setVar('import_name', $_POST['import_name']);
-			$obj->setVar('import_nbtables', $_POST['import_nbtables']);			
-			$obj->setVar('import_tablename', $_POST['import_tablename']);
-			$obj->setVar('import_nbfields', $_POST['import_nbfields']);
-			$obj->setVar('import_fieldelements', $_POST['import_fieldelements']);
+			$importsObj->setVar('import_mid', $_POST['import_mid']);
+			$importsObj->setVar('import_name', $_POST['import_name']);
+			$importsObj->setVar('import_nbtables', $_POST['import_nbtables']); 	
+			$importsObj->setVar('import_tablename', $_POST['import_mid']);
+			$importsObj->setVar('import_nbfields', $_POST['import_nbfields']);
+			$importsObj->setVar('import_fieldelements', $_POST['import_fieldelements']);			
         } else {
-            $obj = $importHandler->create();
+            $importsObj = $importsHandler->create();
 			//Form imported save			
-			$obj->setVar('import_name', $_POST['import_name']);
-			$obj->setVar('import_mid', $_POST['import_mid']);
+			$importsObj->setVar('import_name', $_POST['import_name']);	
+			$importsObj->setVar('import_mid', $_POST['import_mid']);
         	$files = $_FILES['importfile'];
 			// If incoming data have been entered correctly
 			if($_POST['upload'] == XoopsLocale::A_SUBMIT && isset($files['tmp_name']) && (substr($files['name'], -4) == '.sql'))
 			{	
 				// File recovery
-				$dir = TDMC_UPLOAD_PATH_FILES;
-				$file = $_FILES['importfile'];
+				$dir 	= TDMC_UPLOAD_PATH_FILES; 
+				$file 	= $_FILES['importfile'];
 				$tmpName = $file['tmp_name'];
 				// Copy files to the server
-				if (is_uploaded_file($tmpName)) {	
+				if (is_uploaded_file($tmpName)) {				
 					readfile($tmpName);
 					// The directory where you saved the file
-					if ($file['error'] == UPLOAD_ERR_OK) {
+					if ($file['error'] == UPLOAD_ERR_OK) {					
 						if (move_uploaded_file($tmpName, $dir.'/'.$file['name']));
 						$xoops->redirect('imports.php', 3, sprintf(TDMCreateLocale::E_FILE_UPLOADING, $file['name']));
 					}
@@ -119,24 +110,24 @@ switch ($op)
 				}           
 					 
 				// Copies data in the db         
-				$filename = $dir.'/'.$file['name'];
+				$filename = $dir.'/'.$file['name'];			
 				// File size
-				$filesize = $files['size'];
+				$filesize = $files['size'];			
 				// Check that the file was inserted and that there is
-				if ( ($handle = fopen($filename, 'r') ) !== false) {
-					// File reading until at the end
+				if ( ($handle = fopen($filename, 'r') ) !== false) {			    							
+					// File reading until at the end				
 					while ( !feof( $handle ))
 					{ 	
-						$buffer = fgets($handle, filesize($filename));
+						$buffer = fgets($handle, filesize($filename));			    				
 						if(strlen($buffer) > 1)
 						{ 						
 							// search all comments
-							$search = array ( '/\/\*.*(\n)*.*(\*\/)?/', '/\s*--.*\n/', '/\s*#.*\n/' );
+							$search = array ( '/\/\*.*(\n)*.*(\*\/)?/', '/\s*--.*\n/', '/\s*#.*\n/' );  
 							// and replace with null
 							$replace = array ( "\n" );
-							$buffer = preg_replace($search, $replace, $buffer);
+							$buffer = preg_replace($search, $replace, $buffer);							
 							$buffer = str_replace('`', '', $buffer);
-                            $buffer = str_replace(',', '', $buffer);
+                            $buffer = str_replace(',', '', $buffer);							
 							
 							preg_match_all('/((\s)*(CREATE TABLE)(\s)+(.*)(\s)+(\())/', $buffer, $tableMatch); // table name ... (match)
 							if(count($tableMatch[0]) > 0) {
@@ -148,20 +139,20 @@ switch ($op)
 					}	
 					
 					// Insert query 
-					if(strlen($resultTable[0]) > 0)
+					if(strlen($resultTable[0]) > 0) 
 					{			
                         $t = 0;                         						
-						foreach(array_keys($resultTable) as $table)
+						foreach(array_keys($resultTable) as $table) 
 						{	
-						    $obj->setVar('import_tablename', $resultTable[$table]); //$_POST['import_tablename']	
-							$obj->setVar('import_nbtables', $t); $t++;	//$_POST['import_nbtables']	
-                            if(strlen($resultTable[0]) > 0)
+						    $importsObj->setVar('import_tablename', $resultTable[$table]); //$_POST['import_tablename']	
+							$importsObj->setVar('import_nbtables', $t); $t++;	//$_POST['import_nbtables']	
+                            if(strlen($resultTable[0]) > 0) 
 							{	
 							    $f = 0;						
 								foreach(array_keys($resultFields) as $field)
 								{															
-									$obj->setVar('import_nbfields', $f); $f++; // $_POST['import_nbfields']
-									$obj->setVar('import_fieldelements', $_POST['import_fieldelements']);									
+									$importsObj->setVar('import_nbfields', $f); $f++; // $_POST['import_nbfields']
+									$importsObj->setVar('import_fieldelements', $_POST['import_fieldelements']);									
 								}
 								unset($f);	
                             }								
@@ -178,12 +169,12 @@ switch ($op)
 			}		
 		}
 		
-		if ($importHandler->insert($obj)) {
+		if ($importsHandler->insert($importsObj)) {
             $xoops->redirect('imports.php', 3, TDMCreateLocale::FORM_OK);
         }		
 
-        $xoops->error($obj->getHtmlErrors());
-        $form = $xoops->getModuleForm($obj, 'import');
+        $xoops->error($importsObj->getHtmlErrors());
+        $form = $xoops->getModuleForm($importsObj, 'import');
         $xoops->tpl()->assign('form', $form->render());
 	break;
 	
@@ -192,25 +183,25 @@ switch ($op)
 		$adminMenu->addItemButton(TDMCreateLocale::IMPORTED_LIST, 'imports.php', 'application-view-detail');
         $adminMenu->renderButton();		
 		
-		$obj = $importHandler->get($importId);
-		$form = $xoops->getModuleForm($obj, 'import');
+		$importsObj = $importsHandler->get($importId);
+		$form 		= $xoops->getModuleForm($importsObj, 'import');
 		$xoops->tpl()->assign('form', $form->render());
 	break;	
 	
 	case 'delete': 
         if ($importId > 0) {
-            $obj = $importHandler->get($importId);			
+            $importsObj = $importsHandler->get($importId);			
 			if (isset($_POST['ok']) && $_POST['ok'] == 1) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('imports.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
-                if ($importHandler->delete($obj)) {
+                if ($importsHandler->delete($importsObj)) {
                     $xoops->redirect('imports.php', 2, sprintf(TDMCreateLocale::S_DELETED, TDMCreateLocale::IMPORT));
                 } else {
-                    $xoops->error($obj->getHtmlErrors());
+                    $xoops->error($importsObj->getHtmlErrors());
                 }
             } else {			
-				$xoops->confirm(array('ok' => 1, 'id' => $importId, 'op' => 'delete'), 'imports.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $obj->getVar('import_name')) . '<br />');
+				$xoops->confirm(array('ok' => 1, 'id' => $importId, 'op' => 'delete'), 'imports.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $importsObj->getVar('import_name')) . '<br />');
 			}
 		} else {
 		    $xoops->redirect('imports.php', 1, TDMCreateLocale::E_DATABASE_ERROR);

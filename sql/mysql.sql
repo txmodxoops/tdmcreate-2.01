@@ -140,10 +140,10 @@ CREATE TABLE `tdmcreate_imports` (
 ) ENGINE=InnoDB;
 
 #
-# Table structure for table `tdmcreate_locale` 5
+# Table structure for table `tdmcreate_languages` 5
 #
 
-CREATE TABLE `tdmcreate_locale` (
+CREATE TABLE `tdmcreate_locales` (
 	`loc_id`          INT(5)       UNSIGNED NOT NULL AUTO_INCREMENT,
 	`loc_mid`         INT(5)       UNSIGNED NOT NULL DEFAULT '0',
 	`loc_file`        VARCHAR(255)          NOT NULL DEFAULT '',

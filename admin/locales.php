@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+use Xoops\Core\Request;
 /**
  * tdmcreate module
  *
@@ -16,108 +17,106 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          XOOPS Development Team
- * @version         $Id: locales.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: locale.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
 include __DIR__ . '/header.php';
+// Get $_POST, $_GET, $_REQUEST
+$op = Request::getCmd('op', 'list');
+$start = Request::getInt('start', 0);
+// Parameters
+$limit = $helper->getConfig('adminpager');
 // heaser
-$xoops->header('admin:tdmcreate/tdmcreate_locale.tpl');
+$xoops->header('admin:tdmcreate/tdmcreate_locales.tpl');
 //
-//$localeId = Request::getInt('import_id', 0);
+$localeId = Request::getInt('loc_id', 0);
 //
-$adminMenu->renderNavigation('locales.php');
+$adminMenu->renderNavigation('locale.php');
 //
 switch ($op) 
 {  	
-	case 'list':     
-	    $adminMenu->addItemButton(TDMCreateLocale::ADD_LOCALE, 'locales.php?op=new', 'add');            
-		$adminMenu->renderButton();		
-		// Get modules list
-        $criteria = new CriteriaCompo();
-        $criteria->setSort('loc_id');
-        $criteria->setOrder('ASC'); 
-        $criteria->setStart($start);
-        $criteria->setLimit($limit);		
-        $numLocale = $localeHandler->getCount($criteria);
-		$localeArr = $localeHandler->getAll($criteria);
+	case 'list':  
+		$adminMenu->addTips(TDMCreateLocale::LOCALE_TIPS);
+	    $adminMenu->addItemButton(TDMCreateLocale::A_ADD_LOCALE, 'locales.php?op=new', 'add');
+		$adminMenu->renderTips();
+		$adminMenu->renderButton();	
+		//
+        $numbRowsLocales = $localesHandler->getCountLocales();
+		$localesArray    = $localesHandler->getAllLocales($start, $limit);
         // Assign Template variables
-        $xoops->tpl()->assign('locale_count', $numLocale);		
+        $xoops->tpl()->assign('locale_count', $numbRowsLocales);		
 		unset($criteria);          
-        if ($numLocale > 0) {
-            foreach (array_keys($localeArr) as $i) {
-                $locale['id'] = $localeArr[$i]->getVar('loc_id');                 
-                $locale['mid'] = $localeArr[$i]->getVar('loc_mid');
-				$locale['name'] = $localeArr[$i]->getVar('loc_file');
-				$locale['define'] = $localeArr[$i]->getVar('loc_define'); 
-                $locale['description'] = $localeArr[$i]->getVar('loc_description');                
-				$xoops->tpl()->append_by_ref('locales', $locale);
+        if ($numbRowsLocales > 0) {
+            foreach (array_keys($localesArray) as $i) {
+                $locale = $localesHandler->getVars();
+				$xoops->tpl()->appendByRef('locales', $locale);
                 unset($locale);				
             }
             // Display Page Navigation
-			if ($numrows > $limit) {
-				$nav = new XoopsPageNav($numrows, $limit, $start, 'start');
+			if ($numbRowsLocales > $limit) {
+				$nav = new XoopsPageNav($numbRowsLocales, $limit, $start, 'start');
 				$xoops->tpl()->assign('pagenav', $nav->renderNav(4));
 			}
         } else {
-            $xoops->tpl()->assign('error_message', TDMCreateLocale::IMPORT_ERROR_NOLOCALE);
+            $xoops->tpl()->assign('error_message', TDMCreateLocale::E_NO_LOCALES);
         }	
     break;
     	 
 	case 'new':
-        $adminMenu->addItemButton(TDMCreateLocale::IMPORTED_LIST, 'locales.php', 'application-view-detail');
+        $adminMenu->addItemButton(TDMCreateLocale::A_LIST_LOCALE, 'locales.php', 'application-view-detail');
         $adminMenu->renderButton();
 
-		$obj = $localeHandler->create();
-        $form = $xoops->getModuleForm($obj, 'locales');
+		$localesObj = $localesHandler->create();
+        $form 		= $xoops->getModuleForm($localesObj, 'locales');
         $xoops->tpl()->assign('form', $form->render());	
 	break;
 	
 	case 'save':
         if (!$xoops->security()->check()) {
-			$xoops->redirect('modules.php', 3, implode(',', $xoops->security()->getErrors()));
+			$xoops->redirect('locales.php', 3, implode(',', $xoops->security()->getErrors()));
 		}
 		
         if ($localeId > 0) {
-            $obj = $localeHandler->get($localeId);
+            $localesObj = $localesHandler->get($localeId);
 			//Form imported edited save		
-			$obj->setVar('loc_mid', Request::getInt('loc_mid'));
-			$obj->setVar('loc_file', Request::getString('loc_file'));
-			$obj->setVar('loc_define', Request::getString('loc_define')); 	
-			$obj->setVar('loc_description', Request::getString('loc_description'));
+			$localesObj->setVar('loc_mid', Request::getInt('loc_mid'));
+			$localesObj->setVar('loc_file', Request::getString('loc_file'));
+			$localesObj->setVar('loc_define', Request::getString('loc_define')); 	
+			$localesObj->setVar('loc_description', Request::getString('loc_description'));
          	$xoops->redirect('locales.php', 3, TDMCreateLocale::E_DATABASE_SQL_FILE_NOT_IMPORTED);
 		}			
-		if ($localeHandler->insert($obj)) {
+		if ($localesHandler->insert($localesObj)) {
             $xoops->redirect('locales.php', 3, TDMCreateLocale::FORM_OK);
         }		
 
-        $xoops->error($obj->getHtmlErrors());
-        $form = $xoops->getModuleForm($obj, 'locales');
+        $xoops->error($localesObj->getHtmlErrors());
+        $form = $xoops->getModuleForm($localesObj, 'locales');
         $xoops->tpl()->assign('form', $form->render());
 	break;
 	
 	case 'edit':
-        $adminMenu->addItemButton(TDMCreateLocale::IMPORT_OLD_MODULE, 'locales.php?op=import', 'add');   
-		$adminMenu->addItemButton(TDMCreateLocale::IMPORTED_LIST, 'locales.php', 'application-view-detail');
+        $adminMenu->addItemButton(TDMCreateLocale::A_ADD_LOCALE, 'locales.php?op=new', 'add');   
+		$adminMenu->addItemButton(TDMCreateLocale::A_LIST_LOCALE, 'locales.php', 'application-view-detail');
         $adminMenu->renderButton();		
 		
-		$obj = $localeHandler->get($localeId);
-		$form = $xoops->getModuleForm($obj, 'locales');
+		$localesObj = $localesHandler->get($localeId);
+		$form 		= $xoops->getModuleForm($localesObj, 'locales');
 		$xoops->tpl()->assign('form', $form->render());
 	break;	
 	
 	case 'delete': 
         if ($localeId > 0) {
-            $obj = $localeHandler->get($localeId);			
+            $localesObj = $localesHandler->get($localeId);			
 			if (isset($_POST['ok']) && $_POST['ok'] == 1) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('locales.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
-                if ($localeHandler->delete($obj)) {
+                if ($localesHandler->delete($localesObj)) {
                     $xoops->redirect('locales.php', 2, sprintf(TDMCreateLocale::S_DELETED, TDMCreateLocale::IMPORT));
                 } else {
-                    $xoops->error($obj->getHtmlErrors());
+                    $xoops->error($localesObj->getHtmlErrors());
                 }
             } else {			
-				$xoops->confirm(array('ok' => 1, 'id' => $localeId, 'op' => 'delete'), 'locales.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $obj->getVar('loc_file')) . '<br />');
+				$xoops->confirm(array('ok' => 1, 'id' => $localeId, 'op' => 'delete'), 'locales.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $localesObj->getVar('loc_file')) . '<br />');
 			}
 		} else {
 		    $xoops->redirect('locales.php', 1, TDMCreateLocale::E_DATABASE_ERROR);

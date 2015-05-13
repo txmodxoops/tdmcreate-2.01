@@ -78,7 +78,7 @@ $modversion['tables'][$i] = 'tdmcreate_modules'; $i++;
 $modversion['tables'][$i] = 'tdmcreate_tables'; $i++;
 $modversion['tables'][$i] = 'tdmcreate_fields'; $i++;
 $modversion['tables'][$i] = 'tdmcreate_imports'; $i++;
-$modversion['tables'][$i] = 'tdmcreate_locale'; $i++;
+$modversion['tables'][$i] = 'tdmcreate_locales'; $i++;
 $modversion['tables'][$i] = 'tdmcreate_fieldtype'; $i++;
 $modversion['tables'][$i] = 'tdmcreate_fieldattributes'; $i++;
 $modversion['tables'][$i] = 'tdmcreate_fieldnull'; $i++; 
@@ -144,7 +144,14 @@ $modversion['config'][$i]['formtype']    = 'textbox';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default']     = 'My Module or Extension';
 $i++;
-$modversion['config'][$i]['name']        = 'is_extension';
+$modversion['config'][$i]['name']        = 'dirname';
+$modversion['config'][$i]['title']       = TDMCreateLocale::CONF_DIRECTORY_NAME;
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'mymoduleextensiondirname';
+$i++;
+$modversion['config'][$i]['name']        = 'isextension';
 $modversion['config'][$i]['title']       = TDMCreateLocale::CONF_IS_EXTENSION;
 $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype']    = 'yesno';
@@ -157,6 +164,41 @@ $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype']    = 'textbox';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default']     = '1.0';
+$i++;
+$modversion['config'][$i]['name']        = 'since';
+$modversion['config'][$i]['title']       = TDMCreateLocale::CONF_SINCE;
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '1.0';
+$i++;
+$modversion['config'][$i]['name']        = 'min_php';
+$modversion['config'][$i]['title']       = TDMCreateLocale::CONF_MIN_PHP;
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '5.3';
+$i++;
+$modversion['config'][$i]['name']        = 'min_xoops';
+$modversion['config'][$i]['title']       = TDMCreateLocale::CONF_MIN_XOOPS;
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '2.6';
+$i++;
+$modversion['config'][$i]['name']        = 'min_admin';
+$modversion['config'][$i]['title']       = TDMCreateLocale::CONF_MIN_ADMIN;
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '1.2';
+$i++;
+$modversion['config'][$i]['name']        = 'min_mysql';
+$modversion['config'][$i]['title']       = TDMCreateLocale::CONF_MIN_MYSQL;
+$modversion['config'][$i]['description'] = '';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '5.0.7';
 $i++;
 $modversion['config'][$i]['name']        = 'author';
 $modversion['config'][$i]['title']       = TDMCreateLocale::CONF_AUTHOR;
@@ -346,25 +388,26 @@ $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype'] 	 = 'yesno';
 $modversion['config'][$i]['valuetype'] 	 = 'int';
 $modversion['config'][$i]['default'] 	 = 0;
-/*$i++;
-$modversion['config'][$i]['name'] 		 = 'release_date';
-$modversion['config'][$i]['title'] 		 = TDMCreateLocale::CONF_RELEASE_DATE;
-$modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] 	 = 'textbox';
-$modversion['config'][$i]['valuetype'] 	 = 'text';
-$modversion['config'][$i]['default'] 	 = date('Y-d-m');*/
 $i++;
 $modversion['config'][$i]['name'] 		 = 'release_date';
 $modversion['config'][$i]['title'] 		 = TDMCreateLocale::CONF_RELEASE_DATE;
-$modversion['config'][$i]['description'] = TDMCreateLocale::CONF_DATE_FORMAT;
+$modversion['config'][$i]['description'] = TDMCreateLocale::CONF_RELEASE_DATE_DESC;
 $modversion['config'][$i]['formtype'] 	 = 'select';
 $modversion['config'][$i]['valuetype'] 	 = 'text';
-$modversion['config'][$i]['options'] 	 = array(  date('d/m/y') => 'd/m/y', date('d-m-y') => 'd-m-y', date('d.m.y') => 'd.m.y',
-												   date('d/m/Y') => 'd/m/Y', date('d-m-Y') => 'd-m-Y', date('d.m.Y') => 'd.m.Y',
-												   date('m/d/y') => 'm/d/y', date('m-d-y') => 'm-d-y', date('m.d.y') => 'm.d.y',
-												   date('m/d/Y') => 'm/d/Y', date('m-d-Y') => 'm-d-Y', date('m.d.Y') => 'm.d.Y'
-												);
-$modversion['config'][$i]['default']     = 'd/m/Y';
+$modversion['config'][$i]['default']     = date('m/d/Y');
+$modversion['config'][$i]['options'] 	 = array(  
+			date('d/m/y') => date('d/m/y'),
+			date('d-m-y') => date('d-m-y'),
+			date('d.m.y') => date('d.m.y'),
+			date('d/m/Y') => date('d/m/Y'),
+			date('d-m-Y') => date('d-m-Y'),
+			date('d.m.Y') => date('d.m.Y'),
+			date('m/d/y') => date('m/d/y'),
+			date('m-d-y') => date('m-d-y'),
+			date('m.d.y') => date('m.d.y'),
+			date('m/d/Y') => date('m/d/Y'),
+			date('m-d-Y') => date('m-d-Y'),
+			date('m.d.Y') => date('m.d.Y'));
 $i++;
 $modversion['config'][$i]['name'] 		 = 'description';
 $modversion['config'][$i]['title'] 		 = TDMCreateLocale::CONF_DESCRIPTION;

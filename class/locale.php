@@ -17,7 +17,7 @@ use Xoops\Core\Database\Connection;
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: locale.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: locale.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
 /**
  * Class TDMCreateLocale

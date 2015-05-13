@@ -27,95 +27,112 @@ class TDMCreateTablesForm extends Xoops\Form\ThemeForm
      */
 	public function __construct(TDMCreateTables &$obj)
 	{	    
-		$xoops = Xoops::getInstance();
-		$tdmcreate = TDMCreate::getInstance();
-		
-		$title = $obj->isNew() ? sprintf(TDMCreateLocale::TABLE_ADD) : sprintf(TDMCreateLocale::TABLE_EDIT);
-		
-		//parent::__construct($title, 'form', 'tables.php', 'post', true);
-		parent::__construct($title, 'form', $xoops->getEnv('PHP_SELF'));
-        $this->setExtra('enctype="multipart/form-data"');
-		
+		$helper = TDMCreate::getInstance();
+        $xoops = $helper->xoops();
+        $xoops->theme()->addStylesheet('modules/tdmcreate/assets/css/styles.css');
+		//
+		$title = $obj->isNew() ? sprintf(TDMCreateLocale::A_ADD_TABLE) : sprintf(TDMCreateLocale::A_EDIT_TABLE);		
+		parent::__construct($title, 'form', 'tables.php', 'post', true, 'raw');
+		//
 		if (!$obj->isNew()) {		
 		    $this->addElement(new Xoops\Form\Hidden('id', $obj->getVar('table_id')));
 		}
-		
+		//
 		$tabtray = new Xoops\Form\TabTray('', 'uniqueid', $xoops->getModuleConfig('jquery_theme', 'system'));
-		
+		//
 		$tab1 = new Xoops\Form\Tab(TDMCreateLocale::IMPORTANT, 'important');
-
-        $modules_Handler = $xoops->getModuleHandler('modules');
-    	$mods_select = new Xoops\Form\Select(TDMCreateLocale::MODULES_LIST, 'table_mid', $obj->getVar('table_mid'));
-    	$mods_select->addOptionArray($modules_Handler->getList());
-    	$tab1->addElement($mods_select, true);		
-		
-		$table_name = new Xoops\Form\Text(TDMCreateLocale::TABLE_NAME, 'table_name', 50, 255, $obj->getVar('table_name'));
-		$table_name->setDescription(TDMCreateLocale::TABLE_NAME_DESC);
-		$tab1->addElement($table_name, true);
-		$table_fieldname = new Xoops\Form\Text(TDMCreateLocale::TABLE_FIELD_NAME, 'table_fieldname', 3, 50, $obj->getVar('table_fieldname'));
-		$table_fieldname->setDescription(TDMCreateLocale::TABLE_FIELD_NAME_DESC);
-		$tab1->addElement($table_fieldname);
-		$table_nbfield = new Xoops\Form\Text(TDMCreateLocale::TABLE_FIELDS_NUMBER, 'table_nbfields', 2, 50, $obj->getVar('table_nbfields'));
-		$table_nbfield->setDescription(TDMCreateLocale::TABLE_FIELDS_NUMBER_DESC);
-		$tab1->addElement($table_nbfield, true);		
+		//
+        $modulesHandler = $xoops->getModuleHandler('modules');
+    	$modulesSelect  = new Xoops\Form\Select(TDMCreateLocale::MODULES_LIST, 'table_mid', $obj->getVar('table_mid'));
+		$modulesSelect->addOption(0, TDMCreateLocale::MODULE_SELECT_DEFAULT);
+    	$modulesSelect->addOptionArray($modulesHandler->getList());
+    	$tab1->addElement($modulesSelect, true);		
+		//
+		$tableName = new Xoops\Form\Text(TDMCreateLocale::TABLE_NAME, 'table_name', 50, 255, $obj->getVar('table_name'));
+		$tableName->setDescription(TDMCreateLocale::TABLE_NAME_DESC);
+		$tab1->addElement($tableName, true);
+		$tableFieldname = new Xoops\Form\Text(TDMCreateLocale::TABLE_FIELD_NAME, 'table_fieldname', 3, 50, $obj->getVar('table_fieldname'));
+		$tableFieldname->setDescription(TDMCreateLocale::TABLE_FIELD_NAME_DESC);
+		$tab1->addElement($tableFieldname);
+		$tableNmbField = new Xoops\Form\Text(TDMCreateLocale::TABLE_FIELDS_NUMBER, 'table_nbfields', 2, 50, $obj->getVar('table_nbfields'));
+		$tableNmbField->setDescription(TDMCreateLocale::TABLE_FIELDS_NUMBER_DESC);
+		$tab1->addElement($tableNmbField, true);		
 		// table_image	
-		$table_image = $obj->getVar('table_image') ? $obj->getVar('table_image') : 'blank.gif';	
-		$uploadir = 'media/xoops/images/icons/32';
-		$imgtray = new Xoops\Form\ElementTray(TDMCreateLocale::C_IMAGE,'<br />');
-		$imgpath = sprintf(TDMCreateLocale::CF_IMAGE_PATH, './'.$uploadir.'/');
-		$imageselect = new Xoops\Form\Select($imgpath, 'tables_image', $table_image, 5);
-		$image_array = XoopsLists::getImgListAsArray( XOOPS_ROOT_PATH.'/'.$uploadir );
-		foreach( $image_array as $image ) {
-			$imageselect->addOption("{$image}", $image);
+		$tableImage  = $obj->getVar('table_image') ? $obj->getVar('table_image') : 'blank.gif';	
+		$uploadir    = 'media/xoops/images/icons/32';
+		$imgtray     = new Xoops\Form\ElementTray(TDMCreateLocale::C_IMAGE,'<br />');
+		$imgpath     = sprintf(TDMCreateLocale::CF_IMAGE_PATH, './'.$uploadir.'/');
+		$imageSelect = new Xoops\Form\Select($imgpath, 'tables_image', $tableImage, 5);
+		$imageArray  = XoopsLists::getImgListAsArray( XOOPS_ROOT_PATH.'/'.$uploadir );
+		foreach( $imageArray as $image ) {
+			$imageSelect->addOption("{$image}", $image);
 		}
-		$imageselect->setExtra( "onchange='showImgSelected(\"image3\", \"tables_image\", \"".$uploadir."\", \"\", \"".XOOPS_URL."\")'" );
-		$imgtray->addElement($imageselect);
-		$imgtray->addElement( new Xoops\Form\Label( '', "<br /><img src='".XOOPS_URL."/".$uploadir."/".$table_image."' name='image3' id='image3' alt='' />" ) );		
+		$imageSelect->setExtra( "onchange='showImgSelected(\"image3\", \"tables_image\", \"".$uploadir."\", \"\", \"".XOOPS_URL."\")'" );
+		$imgtray->addElement($imageSelect);
+		$imgtray->addElement( new Xoops\Form\Label( '', "<br /><img src='".XOOPS_URL."/".$uploadir."/".$tableImage."' name='image3' id='image3' alt='' />" ) );		
 		$fileseltray = new Xoops\Form\ElementTray('','<br />');
 		$fileseltray->addElement(new Xoops\Form\File(XoopsLocale::A_UPLOAD, 'attachedfile', $xoops->getModuleConfig('maxuploadsize')));
 		$fileseltray->addElement(new Xoops\Form\Label(''));
 		$imgtray->addElement($fileseltray);
 		$tab1->addElement($imgtray);
-		
-		$options_tray = new Xoops\Form\ElementTray(XoopsLocale::OPTIONS, '<br />');
-			$table_checkbox_all = new Xoops\Form\CheckBox('', "tablebox", 1);
-			$table_checkbox_all->addOption('allbox', TDMCreateLocale::C_CHECK_ALL);
-			$table_checkbox_all->setExtra(" onclick='xoopsCheckAll(\"form\", \"tablebox\");' ");
-			$table_checkbox_all->setClass('xo-checkall');
-			$options_tray->addElement($table_checkbox_all);
-			$table_blocks = $obj->isNew() ? 0 : $obj->getVar('table_blocks');
-			$check_blocks = new Xoops\Form\CheckBox(' ', "table_blocks", $table_blocks);
-			$check_blocks->addOption(1, TDMCreateLocale::TABLE_BLOCKS);
-			$options_tray->addElement($check_blocks);
-			$table_display_admin = $obj->isNew() ? 0 : $obj->getVar('table_display_admin');
-			$check_display_admin = new Xoops\Form\CheckBox(' ', "table_admin", $table_display_admin);
-			$check_display_admin->addOption(1, TDMCreateLocale::TABLE_ADMIN);
-			$options_tray->addElement($check_display_admin);
-			$table_display_user = $obj->isNew() ? 0 : $obj->getVar('table_display_user');
-			$check_display_user = new Xoops\Form\CheckBox(' ', "table_user", $table_display_user);
-			$check_display_user->addOption(1, TDMCreateLocale::TABLE_USER);
-			$options_tray->addElement($check_display_user);
-			$table_submenu = $obj->isNew() ? 0 : $obj->getVar('table_submenu');
-			$check_submenu = new Xoops\Form\CheckBox(' ', "table_submenu", $table_submenu);
-			$check_submenu->addOption(1, TDMCreateLocale::TABLE_SUBMENU);
-			$options_tray->addElement($check_submenu);
-			$table_search = $obj->isNew() ? 0 : $obj->getVar('table_search');
-			$check_search = new Xoops\Form\CheckBox(' ', "table_search", $table_search);
-			$check_search->addOption(1, TDMCreateLocale::TABLE_SEARCH);
-			$options_tray->addElement($check_search);
-			$table_comments = $obj->isNew() ? 0 : $obj->getVar('table_comments');
-			$check_comments = new Xoops\Form\CheckBox(' ', "table_comments", $table_comments);
-			$check_comments->addOption(1, TDMCreateLocale::TABLE_COMMENTS);
-			$options_tray->addElement($check_comments);
-			$table_notify = $obj->isNew() ? 0 : $obj->getVar('table_notifications');
-			$check_notify = new Xoops\Form\CheckBox(' ', "table_notifications", $table_notify);
-			$check_notify->addOption(1, TDMCreateLocale::TABLE_NOTIFICATIONS);
-			$options_tray->addElement($check_notify);
-		$tab1->addElement($options_tray);			
-		
-		$tab1->addElement(new Xoops\Form\Hidden('op', 'save'));
-		$tab1->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
 		$tabtray->addElement($tab1);
+		/**
+         * Not important
+         */
+        $tab2 = new Xoops\Form\Tab(TDMCreateLocale::L_OPTIONS_CHECK, 'options_check');
+		
+		$optionTray = new Xoops\Form\ElementTray(XoopsLocale::OPTIONS, '<br />');
+			$tableCheckboxAll = new Xoops\Form\CheckBox('', "tablebox", 1);
+			$tableCheckboxAll->addOption('allbox', TDMCreateLocale::C_CHECK_ALL);
+			$tableCheckboxAll->setExtra(" onclick='xoopsCheckAll(\"form\", \"tablebox\");' ");
+			$tableCheckboxAll->setClass('xo-checkall');
+		$optionTray->addElement($tableCheckboxAll);
+			$tableBlocks        = $obj->isNew() ? 0 : $obj->getVar('table_blocks');
+			$displayBlocksCheck = new Xoops\Form\CheckBox(' ', "table_blocks", $tableBlocks);
+			$displayBlocksCheck->addOption(1, TDMCreateLocale::TABLE_BLOCKS);
+		$optionTray->addElement($displayBlocksCheck);
+			$tableAdmin        = $obj->isNew() ? 0 : $obj->getVar('table_admin');
+			$displayAdminCheck = new Xoops\Form\CheckBox(' ', "table_admin", $tableAdmin);
+			$displayAdminCheck->addOption(1, TDMCreateLocale::TABLE_ADMIN);
+		$optionTray->addElement($displayAdminCheck);
+			$tableUser        = $obj->isNew() ? 0 : $obj->getVar('table_user');
+			$displayUserCheck = new Xoops\Form\CheckBox(' ', "table_user", $tableUser);
+			$displayUserCheck->addOption(1, TDMCreateLocale::TABLE_USER);
+		$optionTray->addElement($displayUserCheck);
+			$tableSubmenu        = $obj->isNew() ? 0 : $obj->getVar('table_submenu');
+			$displaySubmenuCheck = new Xoops\Form\CheckBox(' ', "table_submenu", $tableSubmenu);
+			$displaySubmenuCheck->addOption(1, TDMCreateLocale::TABLE_SUBMENU);
+		$optionTray->addElement($displaySubmenuCheck);
+			$tableSearch       = $obj->isNew() ? 0 : $obj->getVar('table_search');
+			$activeSearchCheck = new Xoops\Form\CheckBox(' ', "table_search", $tableSearch);
+			$activeSearchCheck->addOption(1, TDMCreateLocale::TABLE_SEARCH);
+		$optionTray->addElement($activeSearchCheck);
+			$tableComments       = $obj->isNew() ? 0 : $obj->getVar('table_comments');
+			$activeCommentsCheck = new Xoops\Form\CheckBox(' ', "table_comments", $tableComments);
+			$activeCommentsCheck->addOption(1, TDMCreateLocale::TABLE_COMMENTS);
+		$optionTray->addElement($activeCommentsCheck);
+			$tableNotifications 	  = $obj->isNew() ? 0 : $obj->getVar('table_notifications');
+			$activeNotificationsCheck = new Xoops\Form\CheckBox(' ', "table_notifications", $tableNotifications);
+			$activeNotificationsCheck->addOption(1, TDMCreateLocale::TABLE_NOTIFICATIONS);
+		$optionTray->addElement($activeNotificationsCheck);
+		$tab2->addElement($optionTray);			
+		
+		/**
+         * Button submit
+         */
+        $buttonTray = new Xoops\Form\ElementTray('', '');
+        $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
+			
+        $button = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit' );
+        $button->setClass('btn');
+		$buttonTray->addElement($button);
+		$tab2->addElement($buttonTray);
+		$tabtray->addElement($tab2);
+		
+		if (!$obj->isNew()) {
+            $this->addElement(new Xoops\Form\Hidden( 'id', $obj->getVar('mod_id') ) );
+        }
+		
 		$this->addElement($tabtray);
 	}
 }

@@ -41,12 +41,12 @@ unset($criteria);
 // tdmcreate modules
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('loc_mid', 0, '!='));
-$locale = $localeHandler->getCount($criteria);
+$locale = $localesHandler->getCount($criteria);
 unset($criteria);
 // tdmcreate import
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('import_id', 0, '!='));
-$import = $importHandler->getCount($criteria);
+$import = $importsHandler->getCount($criteria);
 unset($criteria);
 $r = "red"; $g = "green";
 $modulesColor = $modules == 0 ? $r : $g;

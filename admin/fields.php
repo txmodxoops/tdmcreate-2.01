@@ -20,22 +20,26 @@ use Xoops\Core\Request;
  * @version         $Id: fields.php 10665 2012-12-27 10:14:15Z timgno $
  */
 include __DIR__ . '/header.php';
-
+// Get $_POST, $_GET, $_REQUEST
+$op = Request::getCmd('op', 'list');
+$start = Request::getInt('start', 0);
+// Parameters
+$limit = $helper->getConfig('adminpager');
+//
 $fieldId = Request::getInt('field_id');
 $fieldMid = Request::getInt('field_mid');
 $fieldTid = Request::getInt('field_tid');	
-$fieldNumb = Request::getInt('field_numb');
 $fieldName = Request::getString('field_name', '');
-
 // Get handler
 $xoops->header('admin:tdmcreate/tdmcreate_fields.tpl');
-
+//
 $adminMenu->renderNavigation('fields.php');
+//
 switch ($op) 
 {   
     case 'list': 
     default:               
-	    $adminMenu->addItemButton(TDMCreateLocale::A_ADD_TABLE, 'tables.php?op=new', 'add');            
+	    $adminMenu->addItemButton(TDMCreateLocale::A_ADD_TABLE, 'tables.php?op=new', 'add');
 	    $adminMenu->renderButton(); 
         // Get modules list
         $criteria = new CriteriaCompo(new Criteria('table_mid', $fieldMid));
@@ -110,91 +114,72 @@ switch ($op)
     break;
 	
     case 'new':     
-        $adminMenu->addItemButton(TDMCreateLocale::A_LIST_FIELDS, 'fields.php', 'application-view-detail');
+        $adminMenu->addItemButton(TDMCreateLocale::FIELDS_LIST, 'fields.php', 'application-view-detail');
         $adminMenu->renderButton();		
 		
-		$fieldsObj = $fieldsHandler->create();
-		$form = $xoops->getModuleForm($fieldsObj, 'fields');
+		$obj = $fieldsHandler->create();
+		$form = $xoops->getModuleForm($obj, 'fields');
         $xoops->tpl()->assign('form', $form->render());
     break;	
 	
 	case 'save':
 		if (!$xoops->security()->check()) {
 			$xoops->redirect('fields.php', 3, implode(',', $xoops->security()->getErrors()));
-		}  
-		$fieldOrder = 0;
+		}		
+        if ($fieldId) {
+            $obj = $fieldsHandler->get($fieldId);
+        } else {
+            $obj = $fieldsHandler->create();
+        }			
 		//Form fields
-		foreach($_POST['field_id'] as $key => $value) 
-		{				
-			if(isset($value)){
-				$fieldsObj =& $fieldsHandler->get($value);
-			} else { 					
-				$fieldsObj =& $fieldsHandler->create();										
-			}
-			
-			$order = $fieldsObj->isNew() ? $fieldOrder++ : Request::getInt('field_order');
-			// Set Data	
-			$fieldsObj->setVar( 'field_mid', $fieldMid );
-			$fieldsObj->setVar( 'field_tid', $fieldTid );								
-			$fieldsObj->setVar( 'field_order', $order );
-			$fieldsObj->setVar( 'field_name', $_POST['field_name'][$key]);
-			$fieldsObj->setVar( 'field_type', $_POST['field_type'][$key]); 
-			$fieldsObj->setVar( 'field_value', $_POST['field_value'][$key]);
-			$fieldsObj->setVar( 'field_attribute', $_POST['field_attribute'][$key]);
-			$fieldsObj->setVar( 'field_null', $_POST['field_null'][$key]); 
-			$fieldsObj->setVar( 'field_default', $_POST['field_default'][$key]); 
-			$fieldsObj->setVar( 'field_key', $_POST['field_key'][$key]);						
-			$fieldsObj->setVar( 'field_element', $_POST['field_element'][$key]);               
-			$fieldsObj->setVar( 'field_parent', (1 == $_REQUEST['field_parent'][$key]) ? 1 : 0);
-			$fieldsObj->setVar( 'field_inlist', (1 == $_REQUEST['field_inlist'][$key]) ? 1 : 0);
-			$fieldsObj->setVar( 'field_inform', (1 == $_REQUEST['field_inform'][$key]) ? 1 : 0);
-			$fieldsObj->setVar( 'field_admin', (1 == $_REQUEST['field_admin'][$key]) ? 1 : 0);
-			$fieldsObj->setVar( 'field_user', (1 == $_REQUEST['field_user'][$key]) ? 1 : 0); 
-			$fieldsObj->setVar( 'field_block', (1 == $_REQUEST['field_block'][$key]) ? 1 : 0); 
-			$fieldsObj->setVar( 'field_main', ($key == $_REQUEST['field_main'] ? 1 : 0)); 
-			$fieldsObj->setVar( 'field_search',  (1 == $_REQUEST['field_search'][$key]) ? 1 : 0); 
-			$fieldsObj->setVar( 'field_required', (1 == $_REQUEST['field_required'][$key]) ? 1 : 0);
-			// Insert Data
-			$tdmcreate->getHandler('fields')->insert($fieldsObj);
-		}
-		unset($fieldOrder);
-		// Get table name from field table id
-		$tables =& $tdmcreate->getHandler('tables')->get($fieldTid);
-		$tableName = $tables->getVar('table_name');
-		// Set field elements
-		if ($fieldsObj->isNew()) {		    
-			// Fields Elements Handler
-			$fieldelementObj =& $tdmcreate->getHandler('fieldelements')->create();
-			$fieldelementObj->setVar( 'fieldelement_mid', $fieldMid );
-			$fieldelementObj->setVar( 'fieldelement_tid', $fieldTid );
-			$fieldelementObj->setVar( 'fieldelement_name', 'Table : '.ucfirst($tableName) );
-			$fieldelementObj->setVar( 'fieldelement_value', 'XoopsFormTables-'.ucfirst($tableName) );
-			// Insert new field element id for table name
-			if (!$tdmcreate->getHandler('fieldelements')->insert($fieldelementObj) ) {
-				$GLOBALS['xoopsTpl']->assign('error', $fieldelementObj->getHtmlErrors() . ' Field element');
-			}			
-			redirect_header('fields.php', 2, sprintf(_AM_TDMCREATE_FIELDS_FORM_SAVED_OK, $tableName));					
-		} else {
-			// Needed code from table name by field_tid
-			redirect_header('fields.php', 2, sprintf(_AM_TDMCREATE_FIELDS_FORM_UPDATED_OK, $tableName));
-		}
+		$obj->setVars(array('field_mid' => $fieldMid, 'field_tid' => $fieldTid, 'field_name' => $fieldName, 
+		                    'field_numb' => $fieldNumb, 'field_type' => $_POST['field_type'], 
+							'field_value' => $_POST['field_value'], 'field_attribute' => $_POST['field_attribute'], 
+							'field_null' => $_POST['field_null'], 'field_default' => $_POST['field_default'], 
+							'field_key' => $_POST['field_key'],	'field_elements' => $_POST['field_elements'],
+	                        'field_auto_increment' => (($_REQUEST['field_auto_increment'] == 1) ? '1' : '0'),
+							'field_admin' => (($_REQUEST['field_admin'] == 1) ? '1' : '0'),
+							'field_user' => (($_REQUEST['field_user'] == 1) ? '1' : '0'), 
+							'field_blocks' => (($_REQUEST['field_blocks'] == 1) ? '1' : '0'), 
+							'field_mainfield' => (($_REQUEST['field_mainfield'] == 1) ? '1' : '0'), 
+							'field_search' =>  (($_REQUEST['field_search'] == 1) ? '1' : '0'), 
+							'field_required' => (($_REQUEST['field_required'] == 1) ? '1' : '0')));	
 		// Save data					
-        if ($fieldsHandler->insert($fieldsObj)) {
+        if ($fieldsHandler->insert($obj)) {
             $xoops->redirect('fields.php', 2, TDMCreateLocale::FORMOK);
         }
 		
-        $xoops->error($fieldsObj->getHtmlErrors());
+        $xoops->error($obj->getHtmlErrors());
 	break;		
 	
 	case 'edit':      
-        $adminMenu->addItemButton(TDMCreateLocale::A_ADD_TABLE, 'tables.php?op=new', 'add');
-		$adminMenu->addItemButton(TDMCreateLocale::A_LIST_TABLES, 'tables.php?op=list', 'add');
-		$adminMenu->addItemButton(TDMCreateLocale::A_LIST_FIELDS, 'fields.php', 'application-view-detail');
+        $adminMenu->addItemButton(TDMCreateLocale::ADD_TABLE, 'tables.php?op=new', 'add');	
+		$adminMenu->addItemButton(TDMCreateLocale::FIELDS_LIST, 'fields.php', 'application-view-detail');
         $adminMenu->renderButton();
 		
-		$fieldsObj = $fieldsHandler->get($fieldTid);		
-		$form = $xoops->getModuleForm($fieldsObj, 'fields');
+		$obj = $fieldsHandler->get($fieldTid);		
+		$form = $xoops->getModuleForm($obj, 'fields');
         $xoops->tpl()->assign('form', $form->render());
 	break;	
+		
+	case 'delete':			
+        if ($fieldId > 0) {
+            $obj = $fieldsHandler->get($fieldId);			
+			if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+                if (!$xoops->security()->check()) {
+                    $xoops->redirect('fields.php', 3, implode(',', $xoops->security()->getErrors()));
+                }
+                if ($fieldsHandler->delete($obj)) {
+                    $xoops->redirect('fields.php', 2, sprintf(TDMCreateLocale::S_DELETED, TDMCreateLocale::TABLE));
+                } else {
+                    $xoops->error($obj->getHtmlErrors());
+                }
+            } else {			
+				$xoops->confirm(array('ok' => 1, 'id' => $fieldId, 'op' => 'delete'), 'fields.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $obj->getVar('field_name')) . '<br />');
+			}
+		} else {
+		    $xoops->redirect('fields.php', 1, TDMCreateLocale::E_DATABASE_ERROR);
+		}
+	break; 
 }
 $xoops->footer();
