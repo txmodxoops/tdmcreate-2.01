@@ -16,7 +16,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          TXMod Xoops (aka Timgno)
- * @version         $Id: helper.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: helper.php 13061 2015-05-15 12:00:25Z txmodxoops $
  */
 
  class TDMCreate extends Xoops\Module\Helper\HelperAbstract

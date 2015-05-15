@@ -25,6 +25,15 @@ use Xoops\Core\Database\Connection;
 class TDMCreateTables extends XoopsObject
 { 
 	/**
+     * Options
+     */
+	public $options = array(
+        'blocks', 'admin', 'user', 'submenu',
+        'submit', 'tag',  'broken', 'search',
+        'comments', 'notifications', 'permissions', 'rate',
+        'print', 'pdf', 'rss', 'single', 'visit' 
+    );
+	/**
      * Constructor
      */
 	public function __construct()
@@ -57,14 +66,23 @@ class TDMCreateTables extends XoopsObject
         $this->initVar('table_single', XOBJ_DTYPE_INT);
         $this->initVar('table_visit', XOBJ_DTYPE_INT);
 	}
-	
+	/**
+     * Get Values
+     */
 	public function getValues($keys = null, $format = null, $maxDepth = null)
     {
-        $ret 					= parent::getValues($keys, $format, $maxDepth);
+        
+		$ret 					= parent::getValues($keys, $format, $maxDepth);
         $ret['id']				= $this->getVar('table_id');
+		$ret['mid']	 			= $this->getVar('table_mid');
 		$ret['name']	 		= $this->getVar('table_name');
-		$ret['image'] 			= $this->getVar('table_image');
-        $ret['nbfields'] 		= number_format($this->getVar('table_nbfields'), 1);
+		if(XoopsLoad::fileExists(XOOPS_ICONS32_PATH . '/' . $this->getVar('table_image'))) {
+			$ret['image'] 		= XOOPS_ICONS32_URL .'/'.$this->getVar('table_image');
+		} else {
+			$ret['image'] 		= TDMC_UPLOAD_IMAGES_TABLES_URL .'/'.$this->getVar('table_image');
+		}
+        $ret['nbfields'] 		= number_format($this->getVar('table_nbfields'), 0);
+		$ret['order']	 		= $this->getVar('table_order');
         $ret['admin'] 			= $this->getVar('table_admin');
 		$ret['user'] 			= $this->getVar('table_user');
 		$ret['blocks'] 			= $this->getVar('table_blocks');
@@ -75,17 +93,79 @@ class TDMCreateTables extends XoopsObject
 		$ret['permissions'] 	= $this->getVar('table_permissions');
         return $ret;
     }
-	
+	/**
+     * To Array
+     */
 	public function toArray()
     {
         $ret = parent::getValues();
-        unset($ret['dohtml']);
         return $ret;
     }
-
+	/**
+     * Get Insert Id
+     */
 	public function getNewId()
     {
         return Xoops::getInstance()->db()->getInsertId();
+    }
+	/**
+     * Get Options
+     */
+	public function getOptions()
+    {
+        $ret = array();
+        if ($this->getVar('table_blocks') == 1) {
+            array_push($ret, 'blocks');
+        }
+        if ($this->getVar('table_admin') == 1) {
+            array_push($ret, 'admin');
+        }
+		if ($this->getVar('table_user') == 1) {
+            array_push($ret, 'user');
+        }
+        if ($this->getVar('table_submenu') == 1) {
+            array_push($ret, 'submenu');
+        }
+        if ($this->getVar('table_submit') == 1) {
+            array_push($ret, 'submit');
+        }
+        if ($this->getVar('table_tag') == 1) {
+            array_push($ret, 'tag');
+        }
+        if ($this->getVar('table_broken') == 1) {
+            array_push($ret, 'broken');
+        }
+        if ($this->getVar('table_search') == 1) {
+            array_push($ret, 'search');
+        }
+		 if ($this->getVar('table_comments') == 1) {
+            array_push($ret, 'comments');
+        }
+        if ($this->getVar('table_notifications') == 1) {
+            array_push($ret, 'notifications');
+        }
+		if ($this->getVar('table_permissions') == 1) {
+            array_push($ret, 'permissions');
+        }
+        if ($this->getVar('table_rate') == 1) {
+            array_push($ret, 'rate');
+        }
+        if ($this->getVar('table_print') == 1) {
+            array_push($ret, 'print');
+        }
+        if ($this->getVar('table_pdf') == 1) {
+            array_push($ret, 'pdf');
+        }
+        if ($this->getVar('table_rss') == 1) {
+            array_push($ret, 'rss');
+        }
+        if ($this->getVar('table_single') == 1) {
+            array_push($ret, 'single');
+        }
+		if ($this->getVar('table_visit') == 1) {
+            array_push($ret, 'visit');
+        }
+        return $ret;
     }
 }
 /**
@@ -100,7 +180,9 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
 	{
 		parent::__construct($db, 'tdmcreate_tables', 'tdmcreatetables', 'table_id', 'table_name');
 	}
-	
+	/**
+     * Get All Tables
+     */
 	public function getAllTables($start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {
         $criteria = new CriteriaCompo();
@@ -110,7 +192,9 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
         $criteria->setLimit($limit);
         return parent::getAll($criteria);
     }
-	
+	/**
+     * Get All Tables By Module Id
+     */
 	public function getAllTablesByModuleId($mid, $start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {
         $criteria = new CriteriaCompo();
@@ -121,7 +205,9 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
         $criteria->setLimit($limit);
         return parent::getAll($criteria);
     }
-
+	/**
+     * Get Count Tables
+     */
     public function getCountTables($start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {
         $criteria = new CriteriaCompo();

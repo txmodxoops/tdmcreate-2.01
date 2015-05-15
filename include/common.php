@@ -19,6 +19,7 @@
  * @version	    $Id common.php 10900 2013-01-19 13:00:30Z timgno $
 **/
 define('XOOPS_ICONS32_PATH', XOOPS_ROOT_PATH . '/media/xoops/images/icons/32');
+define('XOOPS_ICONS32_URL', XOOPS_URL . '/media/xoops/images/icons/32');
 define('TDMC_DIRNAME', basename(dirname(__DIR__)));
 // Directory URL'
 define('TDMC_URL', XOOPS_URL . '/modules/' . TDMC_DIRNAME);

@@ -16,7 +16,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: imports.php 10607 2012-12-30 00:36:57Z timgno $
+ * @version         $Id: imports.php 13061 2015-05-15 12:00:25Z txmodxoops $
  */
 
 class TDMCreateImportsForm extends Xoops\Form\ThemeForm

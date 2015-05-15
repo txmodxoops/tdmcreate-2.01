@@ -38,12 +38,18 @@ switch ($op)
 		$adminMenu->addItemButton(TDMCreateLocale::A_ADD_MODULE, 'modules.php?op=new', 'add');
 		$adminMenu->renderTips();
 		$adminMenu->renderButton();
+		$xoops->theme()->addStylesheet('modules/tdmcreate/assets/css/styles.css');
+		$xoops->theme()->addScript('modules/tdmcreate/assets/js/functions.js');
 		// Get modules list
         $numbRowsMods = $modulesHandler->getCountModules();
 		$modulesArray = $modulesHandler->getAllModules($start, $limit);
+		// Redirect if there aren't modules
+        if ( $numbRowsMods == 0 ) {
+            $xoops->redirect('modules.php?op=new', 2, TDMCreateLocale::NOT_MODULES );
+        }
         // Assign Template variables
-        $xoops->tpl()->assign('modules_count', $numbRowsMods);		
-		unset($criteria);          
+        $xoops->tpl()->assign('modules_count', $numbRowsMods);
+		$xoops->tpl()->assign('modPathIcon16', TDMC_URL . '/assets/icons/16');
         if ($numbRowsMods > 0) {
             foreach (array_keys($modulesArray) as $i) {
                 $module = $modulesArray[$i]->getValues();
@@ -72,16 +78,15 @@ switch ($op)
 	case 'save':
 		if (!$xoops->security()->check()) {
 			$xoops->redirect('modules.php', 3, implode(',', $xoops->security()->getErrors()));
-		}
-		$modId = Request::getInt('mod_id', 0);
+		}		
         if ($modId > 0) {
             $modulesObj = $modulesHandler->get($modId);
         } else {
             $modulesObj = $modulesHandler->create();
         }        	
 		//Form module save		
-		$modulesObj->setVars(array( 'mod_name' 					=> Request::getString('mod_name', ''), 
-									'mod_isextension' 			=> Request::getInt('mod_isextension', 0), 
+		$modulesObj->setVars(array( 'mod_name' 					=> Request::getString('mod_name', ''),
+									'mod_dirname' 				=> Request::getString('mod_dirname', ''),
 									'mod_version' 				=> Request::getString('mod_version', ''), 
 									'mod_description' 			=> Request::getString('mod_description', ''), 
 									'mod_author' 				=> Request::getString('mod_author', ''), 
@@ -95,10 +100,10 @@ switch ($op)
 									'mod_manual' 				=> Request::getString('mod_manual', ''), 
 									'mod_manual_file' 			=> Request::getString('mod_manual_file', '')));		
 		//Form module_image	       
-        $uploader = new XoopsMediaUploader( TDMC_MODULES_PATH_IMG, $helper->getConfig('mimetypes'), 
+        $uploader = new XoopsMediaUploader( TDMC_UPLOAD_IMAGES_MODULES_PATH, $helper->getConfig('mimetypes'), 
 											    $helper->getConfig('maxuploadsize'), null, null);
 		if ($uploader->fetchMedia('xoops_upload_file')) {
-		    $extension = preg_replace( "/^.+\.([^.]+)$/sU" , "\\1" , $_FILES['xoops_upload_file']['name']);
+		    $extension = preg_replace( "/^.+\.([^.]+)$/sU" , "\\1" , $_FILES['modules_image']['name']);
             $imageName = 'logo.'.$extension;
 			$uploader->setPrefix($imageName);
 			$uploader->fetchMedia('xoops_upload_file');
@@ -124,14 +129,17 @@ switch ($op)
 								'mod_website_name' 			=> Request::getString('mod_website_name', ''), 
 								'mod_release' 				=> strtotime(Request::getString('mod_release', '')), 
 								'mod_status' 				=> Request::getString('mod_status', ''),
+								'mod_isextension' 			=> Request::getInt('mod_isextension', 0),
 								'mod_admin' 				=> Request::getInt('mod_admin', 0), 
 								'mod_user' 					=> Request::getInt('mod_user', 0), 
 								'mod_submenu' 				=> Request::getInt('mod_submenu', 0), 
 								'mod_search' 				=> Request::getInt('mod_search', 0), 
 								'mod_comments' 				=> Request::getInt('mod_comments', 0), 
-								'mod_notifications' 		=> Request::getInt('mod_notifications', 0), 
+								'mod_notifications' 		=> Request::getInt('mod_notifications', 0),
+								'mod_permissions' 			=> Request::getInt('mod_permissions', 0),
 								'mod_paypal' 				=> Request::getString('mod_paypal', ''), 
-								'mod_subversion' 			=> Request::getString('mod_subversion', '')));
+								'mod_subversion' 			=> Request::getString('mod_subversion', ''), 
+								'mod_inroot_copy' 			=> Request::getString('mod_inroot_copy', '')));
 		// Insert Data		
         if ($modulesHandler->insert($modulesObj)) {
             $xoops->redirect('modules.php', 2, XoopsLocale::S_DATA_INSERTED);
@@ -143,10 +151,9 @@ switch ($op)
 	break;
 	
 	case 'edit':	    
-        $adminMenu->addItemButton(TDMCreateLocale::ADD_MODULE, 'modules.php?op=new', 'add');
-		$adminMenu->addItemButton(TDMCreateLocale::MODULES_LIST, 'modules.php', 'application-view-detail');
+        $adminMenu->addItemButton(TDMCreateLocale::A_ADD_MODULE, 'modules.php?op=new', 'add');
+		$adminMenu->addItemButton(TDMCreateLocale::A_LIST_MODULES, 'modules.php', 'application-view-detail');
         $adminMenu->renderButton();		
-		$modId = Request::getInt('mod_id', 0);
 		if ($modId > 0) {
 			$modulesObj = $modulesHandler->get($modId);
 			$form 		= $helper->getForm($modulesObj, 'modules');
@@ -157,7 +164,6 @@ switch ($op)
 	break;
 	
 	case 'delete':	
-        $modId = Request::getInt('mod_id', 0);	
 		if ($modId > 0) {
 			$modulesObj = $modulesHandler->get($modId);			
 			if (isset($_POST['ok']) && $_POST['ok'] == 1) {

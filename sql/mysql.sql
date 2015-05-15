@@ -140,7 +140,7 @@ CREATE TABLE `tdmcreate_imports` (
 ) ENGINE=InnoDB;
 
 #
-# Table structure for table `tdmcreate_languages` 5
+# Table structure for table `tdmcreate_locales` 5
 #
 
 CREATE TABLE `tdmcreate_locales` (

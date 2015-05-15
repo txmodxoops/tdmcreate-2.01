@@ -17,7 +17,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Team Developement Modules Xoops (AKA TDM)
- * @version         $Id: modules.php 13060 2015-05-12 19:29:44Z timgno $
+ * @version         $Id: modules.php 13061 2015-05-15 12:00:25Z txmodxoops $
  */
 defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
 
@@ -41,11 +41,7 @@ class TDMCreateModulesForm extends Xoops\Form\ThemeForm
 		// Name of Module 
 		$tab1->setDescription(TDMCreateLocale::C_MODULE_OR_EXTENSION_DESC);
 		$tab1->addElement( new Xoops\Form\Text(TDMCreateLocale::C_NAME, 'mod_name', 30, 155, $obj->getVar('mod_name')), true);
-		$tab1->addElement( new Xoops\Form\Text(TDMCreateLocale::C_DIRECTORY_NAME, 'mod_dirname', 30, 155, $obj->getVar('mod_dirname')), true);
-		$isExtension = $obj->isNew() ? $xoops->getModuleConfig('isextension') : $obj->getVar('mod_isextension');
-		$isExtensionCheck = new Xoops\Form\CheckBox(TDMCreateLocale::C_EXTENSION, 'isextension', $isExtension);
-		$isExtensionCheck->addOption(1, TDMCreateLocale::QC_ISEXTENSION);
-		$tab1->addElement($isExtensionCheck, true);
+		$tab1->addElement( new Xoops\Form\Text(TDMCreateLocale::C_DIRECTORY_NAME, 'mod_dirname', 30, 155, $obj->getVar('mod_dirname')), true);	
 		// Version module
 		$tab1->addElement(new Xoops\Form\Text(TDMCreateLocale::C_VERSION, 'mod_version', 2, 4, $obj->getVar('mod_version')), true);
         $tab1->addElement(new Xoops\Form\Text(TDMCreateLocale::C_SINCE, 'mod_since', 2, 4, $obj->getVar('mod_since')), true);
@@ -86,13 +82,17 @@ class TDMCreateModulesForm extends Xoops\Form\ThemeForm
 		$tab2->addElement($imgtray, true);		
 		$tabtray->addElement($tab2);
 		//
-		$tab3 		= new Xoops\Form\Tab(TDMCreateLocale::L_OPTIONS_CHECK, 'options_check');
+		$tab3 		= new Xoops\Form\Tab(TDMCreateLocale::OPTIONS_CHECK, 'options_check');
 		$optionTray = new Xoops\Form\ElementTray(TDMCreateLocale::C_OPTIONS, '<br />');
 			$moduleCheckboxAll = new Xoops\Form\CheckBox('', "modulebox", 1);
 			$moduleCheckboxAll->addOption('allbox', TDMCreateLocale::C_CHECK_ALL);
 			$moduleCheckboxAll->setExtra(" onclick='xoopsCheckAll(\"form\", \"modulebox\");' ");
 			$moduleCheckboxAll->setClass('xo-checkall');
 		$optionTray->addElement($moduleCheckboxAll);
+			$isExtension = $obj->isNew() ? $xoops->getModuleConfig('isextension') : $obj->getVar('mod_isextension');
+			$isExtensionCheck = new Xoops\Form\CheckBox(' ', 'isextension', $isExtension);
+			$isExtensionCheck->addOption(1, TDMCreateLocale::QC_ISEXTENSION);
+		$optionTray->addElement($isExtensionCheck);
 			$displayAdmin      = $obj->isNew() ? $xoops->getModuleConfig('display_admin') : $obj->getVar('mod_admin');
 			$displayAdminCheck = new Xoops\Form\CheckBox(' ', 'mod_admin', $displayAdmin);
 			$displayAdminCheck->addOption(1, TDMCreateLocale::C_ADMIN);
@@ -100,11 +100,7 @@ class TDMCreateModulesForm extends Xoops\Form\ThemeForm
 			$displayUser 	  = $obj->isNew() ? $xoops->getModuleConfig('display_user') : $obj->getVar('mod_user');
 			$displayUserCheck = new Xoops\Form\CheckBox(' ', 'mod_user', $displayUser);
 			$displayUserCheck->addOption(1, TDMCreateLocale::C_USER);
-		$optionTray->addElement($displayUserCheck);
-			$displaySubmenu 	 = $obj->isNew() ? $xoops->getModuleConfig('display_submenu') : $obj->getVar('mod_submenu');
-			$displaySubmenuCheck = new Xoops\Form\CheckBox(' ', 'mod_submenu', $displaySubmenu);
-			$displaySubmenuCheck->addOption(1, TDMCreateLocale::C_SUBMENU);
-		$optionTray->addElement($displaySubmenuCheck);
+		$optionTray->addElement($displayUserCheck);			
 			$displayBlocks 	    = $obj->isNew() ? $xoops->getModuleConfig('active_blocks') : $obj->getVar('mod_blocks');
 			$displayBlocksCheck = new Xoops\Form\CheckBox(' ', 'mod_blocks', $displayBlocks);
 			$displayBlocksCheck->addOption(1, TDMCreateLocale::C_BLOCKS);
@@ -169,7 +165,7 @@ class TDMCreateModulesForm extends Xoops\Form\ThemeForm
 		$tabtray->addElement($tab4);
 		
 		if (!$obj->isNew()) {
-            $this->addElement(new Xoops\Form\Hidden( 'id', $obj->getVar('mod_id') ) );
+            $this->addElement(new Xoops\Form\Hidden( 'mod_id', $obj->getVar('mod_id') ) );
         }
 		
 		$this->addElement($tabtray);

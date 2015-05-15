@@ -80,7 +80,7 @@ class TDMCreateModules extends XoopsObject
         $ret['id']	 			= $this->getVar('mod_id');
 		$ret['name']	 		= $this->getVar('mod_name');
         $ret['version'] 		= number_format($this->getVar('mod_version'), 2);
-        $ret['image'] 			= $this->getVar('mod_image');
+        $ret['image'] 			= TDMC_UPLOAD_IMAGES_MODULES_URL .'/'. $this->getVar('mod_image');
         $ret['release'] 		= XoopsLocale::formatTimestamp($this->getVar('mod_release'), $tdmcreate->getConfig('release_date'));
         $ret['status'] 			= $this->getVar('mod_status');
         $ret['admin'] 			= $this->getVar('mod_admin');
@@ -96,7 +96,6 @@ class TDMCreateModules extends XoopsObject
 	public function toArray()
     {
         $ret = parent::getValues();
-        unset($ret['dohtml']);
         return $ret;
     }
 }

@@ -17,7 +17,7 @@ use Xoops\Core\Request;
  * @package         tdmcreate
  * @since           2.6.0
  * @author          XOOPS Development Team
- * @version         $Id: imports.php 10665 2012-12-27 10:14:15Z timgno $
+ * @version         $Id: imports.php 13061 2015-05-15 12:00:25Z txmodxoops $
  */
 include __DIR__ . '/header.php';
 // Get $_POST, $_GET, $_REQUEST

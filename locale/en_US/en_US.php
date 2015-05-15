@@ -16,7 +16,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
- * @version         $Id: en_US.php 13058 2015-05-06 14:56:29Z txmodxoops $
+ * @version         $Id: en_US.php 13061 2015-05-15 12:00:25Z txmodxoops $
  */
 
 defined("XOOPS_ROOT_PATH") or die("Restricted access");
@@ -53,6 +53,7 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const BUILD_EXTENSION  = "Build Extension";
 	const BUILD_MODULE  = "Build Module";
 	
+	const CHANGE_DISPLAY = "Change Display";
 	const DASHBOARD = "Dashboard";
 
 	const C_ADMIN = "Visible Admin:";
@@ -232,33 +233,7 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const L_BUILDING_FAILED = "Building Failed";
 	const L_BUILDING_FILES = "Building Files";
 	const L_BUILDING_SUCCESS = "Building Success";
-	const L_OPTIONS_CHECK = "Options Check";
-	const L_OPTIONS_MODULES_ADMIN = "PDF icon";
-    const L_OPTIONS_MODULES_DOPRINT = "Print icon";
-    const L_OPTIONS_MODULES_DOSOCIAL = "Social networks";
-    const L_OPTIONS_MODULES_DOAUTHOR = "Author";
-    const L_OPTIONS_MODULES_DOMAIL = "Mail icon";
-    const L_OPTIONS_MODULES_DODATE = "Date";
-    const L_OPTIONS_MODULES_DOHITS = "Hits";
-    const L_OPTIONS_MODULES_DORATING = "Rating and vote count";
-    const L_OPTIONS_MODULES_DOCOMS = "Comments";
-    const L_OPTIONS_MODULES_DONCOMS = "Comments count";
-    const L_OPTIONS_MODULES_DOTITLE = "Title";
-    const L_OPTIONS_MODULES_DONOTIFICATIONS = "Notifications";
-	
-	const L_OPTIONS_TABLES_ADMIN = "PDF icon";
-    const L_OPTIONS_TABLES_DOPRINT = "Print icon";
-    const L_OPTIONS_TABLES_DOSOCIAL = "Social networks";
-    const L_OPTIONS_TABLES_DOAUTHOR = "Author";
-    const L_OPTIONS_TABLES_DOMAIL = "Mail icon";
-    const L_OPTIONS_TABLES_DODATE = "Date";
-    const L_OPTIONS_TABLES_DOHITS = "Hits";
-    const L_OPTIONS_TABLES_DORATING = "Rating and vote count";
-    const L_OPTIONS_TABLES_DOCOMS = "Comments";
-    const L_OPTIONS_TABLES_DONCOMS = "Comments count";
-    const L_OPTIONS_TABLES_DOTITLE = "Title";
-    const L_OPTIONS_TABLES_DONOTIFICATIONS = "Notifications";
-	
+			
 	const MODULE_IMPORTANT = "Required Information";
     const MODULE_NAME = "TDMCreate";
     const MODULE_DESC = "Module for creating others modules";
@@ -279,26 +254,59 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 		
 	const S_DELETED_SUCCESS	= "Deleted Successfully";
 	const S_DATA_ENTERED = "Data entered successfull!";
-		
+	
+	const OPTIONS_CHECK = "Options Check";
+	// Options Modules Check
+	const O_MODULES_ADMIN = "Visible Admin";
+    const O_MODULES_USER = "Visible User";
+    const O_MODULES_SUBMENU = "View Submenu";
+    const O_MODULES_BLOCKS = "Enable Blocks";
+    const O_MODULES_SEARCH = "Enable Search";
+    const O_MODULES_COMMENTS = "Enable Comments";
+    const O_MODULES_PERMISSIONS = "Enable Permissions";
+    const O_MODULES_NOTIFICATIONS = "Enable Notifications";
+    const O_MODULES_ROOT = "Copy of this module in root/modules";
+	// Options Tables Check
+	const O_TABLE_ADMIN = "Add in Admin Panel";
+	const O_TABLE_BLOCKS = "Add in Block file";
+	const O_TABLE_BROKEN = "Add in Broken file";
+	const O_TABLE_COMMENTS = "Add in Comments file";
+	const O_TABLE_NOTIFICATIONS = "Add in Notifications file";
+	const O_TABLE_PDF = "Add in Pdf file";
+	const O_TABLE_PERMISSIONS = "Add in Permissions file";
+	const O_TABLE_PRINT = "Add in Print file";
+	const O_TABLE_RATE = "Add in Rate file";
+	const O_TABLE_RSS = "Add in Rss file";
+	const O_TABLE_SEARCH = "Add in Search file";
+	const O_TABLE_SINGLE = "Add in Single file";
+	const O_TABLE_SUBMENU = "Add in Submenu";
+	const O_TABLE_SUBMIT = "Add in Submit file";
+	const O_TABLE_TAG = "Add in Tag file";
+	const O_TABLE_USER = "Add in User Side";
+	const O_TABLE_VISIT = "Add in Visit file";
+	
 	const TABLE_ADD = "Add a new table";
 	const TABLE_EDIT = "Edit Table";
+	const TABLE_EXIST = "The name specified for this table is already in use";
 	const TABLE_MODULES = "Choose a module";
 	const TABLE_NAME = "Table Name";
 	const TABLE_NAME_DESC = "Unique Name for this Table";
+	const TABLE_SOLE_NAME = "Table Singular Name";
+	const TABLE_SOLE_NAME_DESC = "Singular  Name: It's recommended to use singular word (i.e.: <span style='text-decoration: underline;'>category</span> for admin buttons)";
 	const TABLE_FIELDS_NUMBER = "Fields Number";
 	const TABLE_FIELDS_NUMBER_DESC = "Number of fields for this table";
 	const TABLE_FIELD_NAME = "Field Name";
-	const TABLE_FIELD_NAME_DESC = "This is the prefix of field name (optional)<br />If you leave the field blank,<br />doesn't appear anything in the fields of the next screen,<br />otherwise you'll see all the fields with a prefix type (e.g: <span class='bold'>fieldname_</span>)";
+	const TABLE_FIELD_NAME_DESC = "This is the prefix of field name (optional)<br />If you leave the field blank, doesn't appear anything in the fields of the next screen, otherwise you'll see all the fields with a prefix type (e.g: <span class='bold'>fieldname_</span>)";
+	const TABLE_ORDER = "Table Order";
+	const TABLE_ORDER_DESC = "Create a Table Order for index and menu of the new modules";
+	
 	const TABLE_IMAGE = "Table Logo";
-	const TABLE_BLOCKS = "Create blocks for this table";
-	const TABLE_BLOCKS_DESC = "(blocs: random, latest, today)";
-	const TABLE_DISPLAY_ADMIN = "Use the side view of Admin";
-	const TABLE_DISPLAY_USER = "Use the side view of User";
-	const TABLE_SUBMENU = "Use view TAB Submenu";
-	const TABLE_SEARCH = "Active search for this table";
-	const TABLE_EXIST = "The name specified for this table is already in use";
-	const TABLE_COMMENTS = "Enable Comments for this table";
-
+	
+	const TABLE_CATEGORY = "This table is a category or topic?";
+	const TABLE_CATEGORY_DESC = "<b class='red bold'>WARNING</b>: <i>Once you have used this option for this module, and edit this table, will not be displayed following the creation of other tables</i>";
+	const TABLE_AUTOINCREMENT = "Auto Increment";
+	const TABLE_AUTOINCREMENT_DESC = "Check this option if table have the Auto Increment ID";	
+	
 	const TABLE_ADMIN = "Display Admin";
 	const TABLE_USER = "Display User";
 	const TABLE_TIPS = "<ul><li>Add, edit or delete tables</li></ul>";
@@ -312,8 +320,7 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const TABLE_NOTIFICATIONS_LIST = "Active Notifications";
 
 	const TABLE_IMAGE_DESC = "<span class='red bold'>Attention</span>: If you want to choose a new image, is best to name it with the module name before and follow with the name of the image so as not to overwrite any images with the same name, in the <span class='bold'>Frameworks/moduleclasses/moduleadmin/icons/32/</span>. Otherwise an other solution, would be to insert the images in the module, a new folder is created, with the creation of the same module - <span class='bold'>images/32</span>.";
-
-	const TABLE_NOTIFICATIONS = "Enable Notifications";
+	
 	const TABLE_ERROR_NOTABLES = "There aren't tables";
 	const TABLE_ERROR_NOMODULES = "There aren't modules";
 	
