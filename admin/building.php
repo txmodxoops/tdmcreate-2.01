@@ -9,6 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 use Xoops\Core\Request;
+
 /**
  * tdmcreate module
  *
@@ -21,10 +22,12 @@ use Xoops\Core\Request;
  */
 include __DIR__ . '/header.php';
 // Get $_POST, $_GET, $_REQUEST
-$op = Request::getCmd('op', 'default');
-// header
+$op 	   = Request::getCmd('op', 'default');
+$mid       = Request::getInt('mod_id');
+$moduleObj = $modulesHandler->get($mid);
+// Header Template
 $xoops->header('admin:tdmcreate/tdmcreate_building.tpl');
-//
+// Navigation
 $adminMenu->renderNavigation('building.php');
 //
 switch ($op) 
@@ -33,24 +36,73 @@ switch ($op)
 	default:
 		$adminMenu->addTips(TDMCreateLocale::BUILDING_TIPS);
 		$adminMenu->renderTips();
-		$form = new XoopsSimpleForm(TDMCreateLocale::BUILDING_TITLE, 'building', 'building.php', 'post', true);
-
-		$mods_select = new XoopsFormSelect(TDMCreateLocale::BUILDING_MODULES, 'mod_name', 'mod_name');
-		$mods_select->addOption(0, TDMCreateLocale::BUILDING_SELECT_DEFAULT);
-		$mods_select->addOptionArray($modulesHandler->getList());
-		$form->addElement($mods_select);	
+		$numbModules = $modulesHandler->getCountModules();
+        if (0 == $numbModules) {
+            $xoops->redirect('modules.php?op=new', 2, TDMCreateLocale::E_NO_MODULES);
+        }
+		$form = new Xoops\Form\SimpleForm(TDMCreateLocale::BUILDING_TITLE, 'building', 'building.php', 'post', true);
+		unset($numbModules);
 		
-		$form->addElement(new XoopsFormHidden('op', 'build'));
-		$form->addElement(new XoopsFormButton('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));	
-		$xoops->tpl()->assign('form', $form->render());			
+		$modulesSelect = new Xoops\Form\Select(TDMCreateLocale::BUILDING_MODULES, 'mod_id', 'mod_id');
+		$modulesSelect->addOption(0, TDMCreateLocale::BUILDING_SELECT_DEFAULT);
+		$modulesSelect->addOptionArray($modulesHandler->getList());
+		$form->addElement($modulesSelect);	
+		
+		$form->addElement(new Xoops\Form\Hidden('op', 'build'));
+		$form->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));	
+		$xoops->tpl()->assign('form', $form->render());	
 	break;
 	
 	case 'build':
-	    $admin_menu->addItemButton(TDMCreateLocale::BUILDING_FORM, 'building.php', 'application-view-detail');
-        $admin_menu->renderButton();
-		
-		$mods =& $modulesHandler->get($_REQUEST['mod_name']);
-		$mods_name = $mods->getVar('mod_name');	    
+	    // Get var module dirname
+        $moduleDirname = $moduleObj->getVar('mod_dirname');
+        // Directories for copy from to
+        if(!$moduleObj->getVar('mod_isextension')) {
+			$fromDir = TDMC_UPLOAD_REPOSITORY_MODULES_PATH . '/' . strtolower($moduleDirname);
+        } else {			
+			$fromDir = TDMC_UPLOAD_REPOSITORY_EXTENSIONS_PATH . '/' . strtolower($moduleDirname);
+		}
+		$toDir = XOOPS_ROOT_PATH . '/modules/' . strtolower($moduleDirname);
+        if (isset($moduleDirname)) {
+			$xoopsFile = XoopsFile::getHandler();
+			$folder = $xoopsFile->getHandler('folder');
+            $folder->delete($fromDir);
+			$folder->delete($toDir);            
+        }
+        // Structure
+        include_once TDMC_CLASSES_PATH . '/files/architecture.php';
+        $handler = TDMCreateArchitecture::getInstance();
+        // Creation of the structure of folders and files
+        $baseArchitecture = $handler->createBaseFoldersFiles($moduleObj);
+        if (false !== $baseArchitecture) {
+            $xoops->tpl()->assign('base_architecture', true);
+        } else {
+            $xoops->tpl()->assign('base_architecture', false);
+        }
+        // Get files
+        $build = array();
+        $files = $handler->createFilesToBuilding($moduleObj);
+        foreach ($files as $file) {
+            if ($file) {
+                $build['list'] = $file;
+            }
+            $xoops->tpl()->append('builds', $build);
+        }
+        unset($build);
+        // Directory to saved all files
+		if(!$moduleObj->getVar('mod_isextension')) {
+			$extension = 'extension'; $extensions = 'extensions';
+			$xoops->tpl()->assign('building_directory', sprintf(TDMCreateLocale::BUILDING_DIRECTORY, $modules, $module, $moduleDirname));
+		} else {
+			$module = 'module'; $modules = 'modules';
+			$xoops->tpl()->assign('building_directory', sprintf(TDMCreateLocale::BUILDING_DIRECTORY, $extensions, $extension, $moduleDirname));
+		}
+        // Copy this module in root modules
+        if (1 == $moduleObj->getVar('mod_inroot_copy')) {
+			$xoopsFile = XoopsFile::getHandler();
+			$folder    = $xoopsFile->getHandler('folder', $fromDir);
+            $folder->copy($toDir);
+        }
     break;
 }
 

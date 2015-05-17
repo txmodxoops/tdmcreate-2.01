@@ -16,11 +16,33 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          DuGris (aka Laurent JEN)
- * @version         $Id: en_US.php 13061 2015-05-15 12:00:25Z txmodxoops $
+ * @version         $Id: en_US.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
-
 defined("XOOPS_ROOT_PATH") or die("Restricted access");
-
+/**
+ * Naming conventions
+ * - All translations must be enclosed with ""
+ * - All translations must be Uppercase first, do not use CamelCase
+ *   Good ex: "User groups"
+ *   Bad ex: "user groups" or "User Groups"
+ * - All keys must be as descriptive as possible.
+ * - All keys must use complete words between each '_',
+ * - Keys should be prepended with identifiers in following cases:
+ *   F_ Formatted, use this when strings are parsed with sprintf()
+ *   A_ Action, use this when using a single word which is a verb
+ *   S_ Success, use this for success messages and exclamations
+ *   E_ Error, use this for error messages
+ *   C_ Colon, use this when string ends with a colon ":"
+ *   Q_ Question, use this when string is a question
+ *   L_ List, use this for lists of strings, ex: months, countries, languages, etc
+ *      Use L_NAME_ to group list items by name, ex: L_COUNTRY_
+ * - Chain keys alphabetically with the exception of F, F always comes in last
+ *   ex: SF_ (formatted success message), EF_ (formatted error message)
+ * - Special cases:
+ *   CONF_ Configs, prepend this for your module configs.
+ *      Config keys are stored in database, try to make them as short as possible!
+ *   _DESC Description, append this for configs description
+ */
 class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 {    
 	const A_ADD_EXTENSION = "Add Extension";
@@ -226,7 +248,7 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const F_INDEX_NETOTAL = "There are %s extensions in the Database";
 	const F_INDEX_NTTOTAL = "There are %s tables in the Database";
 	const F_INDEX_NFTOTAL = "There are %s fields in the Database";
-	const F_INDEX_NLTOTAL = "There are %s total defines locales in the Database";
+	const F_INDEX_NLTOTAL = "There are %s total constants locales in the Database";
 	const F_INDEX_NITOTAL = "There are %s old modules imported in the Database";
 	
 	const INDEX_STATISTICS = "Statistics";
@@ -256,16 +278,19 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const S_DATA_ENTERED = "Data entered successfull!";
 	
 	const OPTIONS_CHECK = "Options Check";
+	const MODULE_OPTIONS_DESC = "Choose which option will be activated";
 	// Options Modules Check
-	const O_MODULES_ADMIN = "Visible Admin";
-    const O_MODULES_USER = "Visible User";
-    const O_MODULES_SUBMENU = "View Submenu";
-    const O_MODULES_BLOCKS = "Enable Blocks";
-    const O_MODULES_SEARCH = "Enable Search";
-    const O_MODULES_COMMENTS = "Enable Comments";
-    const O_MODULES_PERMISSIONS = "Enable Permissions";
-    const O_MODULES_NOTIFICATIONS = "Enable Notifications";
-    const O_MODULES_ROOT = "Copy of this module in root/modules";
+	const O_MODULE_EXTENSION = "Is an Extension?";
+	const O_MODULE_ADMIN = "Visible Admin";
+    const O_MODULE_USER = "Visible User";
+    const O_MODULE_SUBMENU = "View Submenu";
+    const O_MODULE_BLOCKS = "Enable Blocks";
+    const O_MODULE_SEARCH = "Enable Search";
+    const O_MODULE_COMMENTS = "Enable Comments";
+    const O_MODULE_PERMISSIONS = "Enable Permissions";
+    const O_MODULE_NOTIFICATIONS = "Enable Notifications";
+    const O_MODULE_ROOT = "Copy of this module in root/modules";
+	const TABLE_OPTIONS_DESC = "Choose which option will be activated";
 	// Options Tables Check
 	const O_TABLE_ADMIN = "Add in Admin Panel";
 	const O_TABLE_BLOCKS = "Add in Block file";
@@ -426,5 +451,6 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const BUILDING_EXECUTED = "Build Executed";
 	const BUILDING_SUCCESS = "Success";
 	const BUILDING_ERROR = "Error";
-	const BUILDING_FORM = "Building Form";	
+	const BUILDING_FORM = "Building Form";
+	const BUILDING_DIRECTORY = "Files created in the directory <span class='bold'>uploads/tdmcreate/repository/%s</span> of the %s <span class='bold green'>%s</span>";
 }

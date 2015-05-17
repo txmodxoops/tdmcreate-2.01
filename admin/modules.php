@@ -98,7 +98,18 @@ switch ($op)
 									'mod_release_info' 			=> Request::getString('mod_release_info', ''), 
 									'mod_release_file' 			=> Request::getString('mod_release_file', ''), 
 									'mod_manual' 				=> Request::getString('mod_manual', ''), 
-									'mod_manual_file' 			=> Request::getString('mod_manual_file', '')));		
+									'mod_manual_file' 			=> Request::getString('mod_manual_file', ''),
+									'mod_demo_site_url' 		=> Request::getString('mod_demo_site_url', ''), 
+									'mod_demo_site_name'   		=> Request::getString('mod_demo_site_name', ''), 
+									'mod_support_url' 	  		=> Request::getString('mod_support_url', ''), 
+									'mod_support_name' 			=> Request::getString('mod_support_name', ''), 
+									'mod_website_url' 			=> Request::getString('mod_website_url', ''), 
+									'mod_website_name' 			=> Request::getString('mod_website_name', ''), 
+									'mod_release' 				=> strtotime(Request::getString('mod_release', '')), 
+									'mod_status' 				=> Request::getString('mod_status', ''), 
+									'mod_paypal' 				=> Request::getString('mod_paypal', ''), 
+									'mod_subversion' 			=> Request::getString('mod_subversion', '')
+									));		
 		//Form module_image	       
         $uploader = new XoopsMediaUploader( TDMC_UPLOAD_IMAGES_MODULES_PATH, $helper->getConfig('mimetypes'), 
 											    $helper->getConfig('maxuploadsize'), null, null);
@@ -119,27 +130,18 @@ switch ($op)
                 $modulesObj->setVar('mod_image', $_POST['modules_image']);
             }
 		}
-		
+		$moduleOption = Request::getArray('module_option', array());
         //Form module save		
-		$modulesObj->setVars(array('mod_demo_site_url' 		=> Request::getString('mod_demo_site_url', ''), 
-								'mod_demo_site_name' 		=> Request::getString('mod_demo_site_name', ''), 
-								'mod_support_url' 			=> Request::getString('mod_support_url', ''), 
-								'mod_support_name' 			=> Request::getString('mod_support_name', ''), 
-								'mod_website_url' 			=> Request::getString('mod_website_url', ''), 
-								'mod_website_name' 			=> Request::getString('mod_website_name', ''), 
-								'mod_release' 				=> strtotime(Request::getString('mod_release', '')), 
-								'mod_status' 				=> Request::getString('mod_status', ''),
-								'mod_isextension' 			=> Request::getInt('mod_isextension', 0),
-								'mod_admin' 				=> Request::getInt('mod_admin', 0), 
-								'mod_user' 					=> Request::getInt('mod_user', 0), 
-								'mod_submenu' 				=> Request::getInt('mod_submenu', 0), 
-								'mod_search' 				=> Request::getInt('mod_search', 0), 
-								'mod_comments' 				=> Request::getInt('mod_comments', 0), 
-								'mod_notifications' 		=> Request::getInt('mod_notifications', 0),
-								'mod_permissions' 			=> Request::getInt('mod_permissions', 0),
-								'mod_paypal' 				=> Request::getString('mod_paypal', ''), 
-								'mod_subversion' 			=> Request::getString('mod_subversion', ''), 
-								'mod_inroot_copy' 			=> Request::getString('mod_inroot_copy', '')));
+		$modulesObj->setVars(array(	'mod_isextension' 	 => in_array('extension', $moduleOption),
+									'mod_admin' 		 => in_array('admin', $moduleOption),
+									'mod_user' 			 => in_array('user', $moduleOption),
+									'mod_blocks' 		 => in_array('blocks', $moduleOption),
+									'mod_submenu' 		 => in_array('submenu', $moduleOption), 
+									'mod_search' 		 => in_array('search', $moduleOption), 
+									'mod_comments' 		 => in_array('comments', $moduleOption), 
+									'mod_notifications'  => in_array('notifications', $moduleOption),
+									'mod_permissions' 	 => in_array('permissions', $moduleOption),
+									'mod_inroot_copy' 	 => in_array('root', $moduleOption)));
 		// Insert Data		
         if ($modulesHandler->insert($modulesObj)) {
             $xoops->redirect('modules.php', 2, XoopsLocale::S_DATA_INSERTED);

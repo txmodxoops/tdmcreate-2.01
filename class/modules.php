@@ -25,6 +25,13 @@ use Xoops\Core\Database\Connection;
 class TDMCreateModules extends XoopsObject
 { 
 	/**
+     * Options
+     */
+	public $options = array(
+        'extension', 'blocks', 'admin', 'user', 'search',
+        'comments', 'notifications', 'permissions', 'root'
+    );
+	/**
      * Constructor
      */
 	public function __construct()
@@ -96,6 +103,42 @@ class TDMCreateModules extends XoopsObject
 	public function toArray()
     {
         $ret = parent::getValues();
+        return $ret;
+    }
+	
+	/**
+     * Get Options
+     */
+	public function getOptions()
+    {
+        $ret = array();
+		if ($this->getVar('table_isextension') == 1) {
+            array_push($ret, 'extension');
+        }
+        if ($this->getVar('mod_blocks') == 1) {
+            array_push($ret, 'blocks');
+        }
+        if ($this->getVar('mod_admin') == 1) {
+            array_push($ret, 'admin');
+        }
+		if ($this->getVar('mod_user') == 1) {
+            array_push($ret, 'user');
+        }       
+        if ($this->getVar('mod_search') == 1) {
+            array_push($ret, 'search');
+        }
+		 if ($this->getVar('mod_comments') == 1) {
+            array_push($ret, 'comments');
+        }
+        if ($this->getVar('mod_notifications') == 1) {
+            array_push($ret, 'notifications');
+        }
+		if ($this->getVar('mod_permissions') == 1) {
+            array_push($ret, 'permissions');
+        }
+        if ($this->getVar('mod_inroot_copy') == 1) {
+            array_push($ret, 'root');
+        }       
         return $ret;
     }
 }

@@ -17,7 +17,7 @@ use Xoops\Core\Kernel\Criteria;
  * @package         tdmcreate
  * @since           2.6.0
  * @author          TDM Xoops (AKA Developers)
- * @version         $Id: fields.php 13061 2015-05-15 12:00:25Z txmodxoops $
+ * @version         $Id: fields.php 11387 2013-04-16 15:19:57Z txmodxoops $
  */	
 defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
 

@@ -113,12 +113,14 @@ switch ($op)
 		$tableOrder 	 = Request::getInt('table_order', 0);
 		$tableFieldname  = Request::getString('table_fieldname', '');
 		//Form tables		
-		$tablesObj->setVars(array('table_mid' 		=> $tableMid, 
-								'table_name' 		=> Request::getString('table_name', ''),
-								'table_solename' 	=> Request::getString('table_solename', ''), 
-								'table_fieldname' 	=> $tableFieldname,
-								'table_nbfields' 	=> $tableNumbFields,
-								'table_order' 		=> $tableOrder));
+		$tablesObj->setVars(array('table_mid' 		  => $tableMid, 
+								'table_name' 		  => Request::getString('table_name', ''),
+								'table_solename' 	  => Request::getString('table_solename', ''), 
+								'table_fieldname' 	  => $tableFieldname,
+								'table_nbfields' 	  => $tableNumbFields,
+								'table_order' 		  => $tableOrder,
+								'table_autoincrement' => Request::getInt('table_autoincrement', 1),
+								'table_category'      => Request::getInt('table_category', 0)));
 		//Form table_image
 	    $uploaddir  = ( is_dir(XOOPS_ICONS32_PATH) && XoopsLoad::fileExists(XOOPS_ICONS32_PATH) ) ? XOOPS_ICONS32_PATH : TDMC_UPLOAD_IMAGES_TABLES_PATH;	
         $uploader   = new XoopsMediaUploader( $uploaddir, $xoops->getModuleConfig('mimetypes'), 
@@ -139,27 +141,27 @@ switch ($op)
             } else {
                 $tablesObj->setVar('table_image', $_POST['tables_image']);
             }
-		}		
+		}	
+		$tableOption = Request::getArray('table_option', array());
 		//Form tables
-		$tablesObj->setVars(array('table_autoincrement' => Request::getInt('table_autoincrement', 0),
-								'table_category'    	=> Request::getInt('table_category', 0),
-								'table_blocks'    		=> Request::getInt('table_blocks', 0),
-								'table_admin' 			=> Request::getInt('table_admin', 0), 
-								'table_user' 			=> Request::getInt('table_user', 0), 
-								'table_submenu' 		=> Request::getInt('table_submenu', 0),
-								'table_submit' 			=> Request::getInt('table_submit', 0),
-								'table_search' 			=> Request::getInt('table_search', 0), 
-								'table_comments' 		=> Request::getInt('table_comments', 0), 
-								'table_notifications' 	=> Request::getInt('table_notifications', 0), 
-								'table_permissions' 	=> Request::getInt('table_permissions', 0), 
-								'table_rate' 			=> Request::getInt('table_rate', 0), 
-								'table_tag' 			=> Request::getInt('table_tag', 0),
-								'table_broken' 			=> Request::getInt('table_broken', 0),
-								'table_print' 			=> Request::getInt('table_print', 0), 
-								'table_pdf' 			=> Request::getInt('table_pdf', 0), 
-								'table_rss' 			=> Request::getInt('table_rss', 0), 
-								'table_single' 			=> Request::getInt('table_single', 0), 
-								'table_visit' 			=> Request::getInt('table_visit', 0)));
+		$tablesObj->setVars(array(
+								'table_blocks'    		=> in_array('blocks', $tableOption),
+								'table_admin' 			=> in_array('admin', $tableOption), 
+								'table_user' 			=> in_array('user', $tableOption), 
+								'table_submenu' 		=> in_array('submenu', $tableOption),
+								'table_submit' 			=> in_array('submit', $tableOption),
+								'table_search' 			=> in_array('search', $tableOption), 
+								'table_comments' 		=> in_array('comments', $tableOption), 
+								'table_notifications' 	=> in_array('notifications', $tableOption), 
+								'table_permissions' 	=> in_array('permissions', $tableOption), 
+								'table_rate' 			=> in_array('rate', $tableOption), 
+								'table_tag' 			=> in_array('tag', $tableOption),
+								'table_broken' 			=> in_array('broken', $tableOption),
+								'table_print' 			=> in_array('print', $tableOption), 
+								'table_pdf' 			=> in_array('pdf', $tableOption), 
+								'table_rss' 			=> in_array('rss', $tableOption), 
+								'table_single' 			=> in_array('single', $tableOption), 
+								'table_visit' 			=> in_array('visit', $tableOption)));
 				
         if( $tablesHandler->insert($tablesObj) ) {	 
 			if( $tablesObj->isNew() ) {

@@ -17,7 +17,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Team Developement Modules Xoops (AKA TDM)
- * @version         $Id: modules.php 13061 2015-05-15 12:00:25Z txmodxoops $
+ * @version         $Id: modules.php 13060 2015-05-12 19:29:44Z timgno $
  */
 defined('XOOPS_ROOT_PATH') or die("XOOPS root path not defined");
 
@@ -86,45 +86,16 @@ class TDMCreateModulesForm extends Xoops\Form\ThemeForm
 		$optionTray = new Xoops\Form\ElementTray(TDMCreateLocale::C_OPTIONS, '<br />');
 			$moduleCheckboxAll = new Xoops\Form\CheckBox('', "modulebox", 1);
 			$moduleCheckboxAll->addOption('allbox', TDMCreateLocale::C_CHECK_ALL);
-			$moduleCheckboxAll->setExtra(" onclick='xoopsCheckAll(\"form\", \"modulebox\");' ");
+			$moduleCheckboxAll->setExtra(" onclick='xoopsCheckGroup(\"form\", \"modulebox\" , \"module_option[]\");' ");
 			$moduleCheckboxAll->setClass('xo-checkall');
 		$optionTray->addElement($moduleCheckboxAll);
-			$isExtension = $obj->isNew() ? $xoops->getModuleConfig('isextension') : $obj->getVar('mod_isextension');
-			$isExtensionCheck = new Xoops\Form\CheckBox(' ', 'isextension', $isExtension);
-			$isExtensionCheck->addOption(1, TDMCreateLocale::QC_ISEXTENSION);
-		$optionTray->addElement($isExtensionCheck);
-			$displayAdmin      = $obj->isNew() ? $xoops->getModuleConfig('display_admin') : $obj->getVar('mod_admin');
-			$displayAdminCheck = new Xoops\Form\CheckBox(' ', 'mod_admin', $displayAdmin);
-			$displayAdminCheck->addOption(1, TDMCreateLocale::C_ADMIN);
-		$optionTray->addElement($displayAdminCheck);
-			$displayUser 	  = $obj->isNew() ? $xoops->getModuleConfig('display_user') : $obj->getVar('mod_user');
-			$displayUserCheck = new Xoops\Form\CheckBox(' ', 'mod_user', $displayUser);
-			$displayUserCheck->addOption(1, TDMCreateLocale::C_USER);
-		$optionTray->addElement($displayUserCheck);			
-			$displayBlocks 	    = $obj->isNew() ? $xoops->getModuleConfig('active_blocks') : $obj->getVar('mod_blocks');
-			$displayBlocksCheck = new Xoops\Form\CheckBox(' ', 'mod_blocks', $displayBlocks);
-			$displayBlocksCheck->addOption(1, TDMCreateLocale::C_BLOCKS);
-		$optionTray->addElement($displayBlocksCheck);
-			$activeSearch 	   = $obj->isNew() ? $xoops->getModuleConfig('active_search') : $obj->getVar('mod_search');
-			$activeSearchCheck = new Xoops\Form\CheckBox(' ', 'mod_search', $activeSearch);
-			$activeSearchCheck->addOption(1, TDMCreateLocale::C_SEARCH);
-		$optionTray->addElement($activeSearchCheck);
-			$activeComments 	 = $obj->isNew() ? $xoops->getModuleConfig('active_comments') : $obj->getVar('mod_comments');
-			$activeCommentsCheck = new Xoops\Form\CheckBox(' ', 'mod_comments', $activeComments);
-			$activeCommentsCheck->addOption(1, TDMCreateLocale::C_COMMENTS);
-		$optionTray->addElement($activeCommentsCheck);
-			$activePermissions 		= $obj->isNew() ? $xoops->getModuleConfig('active_permissions') : $obj->getVar('mod_permissions');
-			$activePermissionsCheck = new Xoops\Form\CheckBox(' ', 'mod_permissions', $activePermissions);
-			$activePermissionsCheck->addOption(1, TDMCreateLocale::C_PERMISSIONS);
-		$optionTray->addElement($activePermissionsCheck);
-			$activeNotifications 	  = $obj->isNew() ? $xoops->getModuleConfig('active_notifications') : $obj->getVar('mod_notifications');
-			$activeNotificationsCheck = new Xoops\Form\CheckBox(' ', 'mod_notifications', $activeNotifications);
-			$activeNotificationsCheck->addOption(1, TDMCreateLocale::C_NOTIFICATIONS);
-		$optionTray->addElement($activeNotificationsCheck);			
-			$activeInRoot 	   = $obj->isNew() ? $xoops->getModuleConfig('inroot_copy') : $obj->getVar('mod_inroot_copy');
-			$activeInRootCheck = new Xoops\Form\CheckBox(' ', 'mod_inroot_copy', $activeInRoot);
-			$activeInRootCheck->addOption(1, TDMCreateLocale::C_IN_ROOT);
-		$optionTray->addElement($activeInRootCheck);
+		$moduleOption = $obj->getOptions();
+        $checkbox 	  = new Xoops\Form\Checkbox('<hr />', 'module_option', $moduleOption, false);
+        $checkbox->setDescription(TDMCreateLocale::MODULE_OPTIONS_DESC);
+        foreach ($obj->options as $option) {
+            $checkbox->addOption($option, Xoops_Locale::translate('O_MODULE_' . strtoupper($option), 'tdmcreate'));
+        }
+		$optionTray->addElement($checkbox);
 		$tab3->addElement($optionTray);
 		$tabtray->addElement($tab3);
         /**
