@@ -1,4 +1,4 @@
-tdmcreate v 2.01 for xoops 2.6.0
+tdmcreate v 2.01 for xoops 2.6.0 <img src="https://travis-ci.org/txmodxoops/tdmcreate-2.01.svg" alt="" />
 ====================================
 
 Pre alpha no test in 29/06/2014
