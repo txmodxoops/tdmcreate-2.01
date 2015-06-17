@@ -12,9 +12,7 @@ install:
   - composer --working-dir=htdocs/xoops_lib/ install
 
 before_script:
-  - mysql -e 'create database'
-  - php console/console.php ci-bootstrap
-  - php console/console.php ci-install
+  - mysql -e 'create table'
 
 script:
   - 
