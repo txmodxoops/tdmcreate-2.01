@@ -1,6 +1,8 @@
 tdmcreate v 2.01 for xoops 2.6.0
 ====================================
 
+https://travis-ci.org/txmodxoops/tdmcreate-2.01.svg
+
 Pre alpha no test in 29/06/2014
 
 Init for new version with composer libraries 02/05/2015
