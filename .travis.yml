@@ -5,5 +5,10 @@ php:
   - 5.4
   - 5.5
 
+env:
+  - DB=mysql 
+
 before_script:
   - mysql -e 'create table tdmcreate_modules'
+  - mysql -e 'create table tdmcreate_tables'
+  - mysql -e 'create table tdmcreate_fields'
