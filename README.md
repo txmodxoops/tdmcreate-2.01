@@ -12,3 +12,5 @@ Pre alpha no test in 29/06/2014
 Init for new version with composer libraries 02/05/2015
 
 Alpha test in 05/11/2015 (Europe 11/05/2015)
+
+[![Stories in Ready](https://badge.waffle.io/txmodxoops/tdmcreate-2.01.svg?label=ready&title=Ready)](http://waffle.io/txmodxoops/tdmcreate-2.01)
