@@ -99,10 +99,10 @@ class TDMCreateTablesForm extends Xoops\Form\ThemeForm
 			$tableCheckboxAll->setClass('xo-checkall');
 		$optionTray->addElement($tableCheckboxAll);
 		
-		$tableOption  = $obj->getOptions();
+		$tableOption  = $obj->getTablesOptions();
         $checkbox 	  = new Xoops\Form\Checkbox('<hr />', 'table_option', $tableOption, false);
         $checkbox->setDescription(TDMCreateLocale::TABLE_OPTIONS_DESC);
-        foreach ($obj->options as $option) {
+        foreach ($obj->optionsTables as $option) {
             $checkbox->addOption($option, Xoops_Locale::translate('O_TABLE_' . strtoupper($option), 'tdmcreate'));
         }
 		$optionTray->addElement($checkbox);

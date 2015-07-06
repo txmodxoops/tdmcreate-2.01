@@ -64,13 +64,14 @@ class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
 	const A_LIST_TABLES = "List of Tables";
 	
     const ADMIN_MENU1 = "Dashboard";
-	const ADMIN_MENU2 = "Modules";
-	const ADMIN_MENU3 = "Tables";
-	const ADMIN_MENU4 = "Fields";
-	const ADMIN_MENU5 = "Locale";
-	const ADMIN_MENU6 = "Import";
-	const ADMIN_MENU7 = "Building";
-	const ADMIN_MENU8 = "Information";
+	const ADMIN_MENU2 = "Settings";
+	const ADMIN_MENU3 = "Modules";
+	const ADMIN_MENU4 = "Tables";
+	const ADMIN_MENU5 = "Fields";
+	const ADMIN_MENU6 = "Locale";
+	const ADMIN_MENU7 = "Import";
+	const ADMIN_MENU8 = "Building";
+	const ADMIN_MENU9 = "Information";
 	
 	const BUILD_EXTENSION  = "Build Extension";
 	const BUILD_MODULE  = "Build Module";

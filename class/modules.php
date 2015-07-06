@@ -27,9 +27,9 @@ class TDMCreateModules extends XoopsObject
 	/**
      * Options
      */
-	public $options = array(
-        'extension', 'blocks', 'admin', 'user', 'search',
-        'comments', 'notifications', 'permissions', 'root'
+	public $optionsModules = array(
+        'isextension', 'blocks', 'admin', 'user', 'search',
+        'comments', 'notifications', 'permissions', 'inroot_copy'
     );
 	/**
      * Constructor
@@ -109,37 +109,16 @@ class TDMCreateModules extends XoopsObject
 	/**
      * Get Options
      */
-	public function getOptions()
+	public function getModulesOptions()
     {
-        $ret = array();
-		if ($this->getVar('table_isextension') == 1) {
-            array_push($ret, 'extension');
+        $retModules = array();
+        foreach ($this->optionsModules as $optionModule) {
+            if ($this->getVar('mod_'.$optionModule) == 1) {
+                array_push($retModules, $optionModule);
+            }
         }
-        if ($this->getVar('mod_blocks') == 1) {
-            array_push($ret, 'blocks');
-        }
-        if ($this->getVar('mod_admin') == 1) {
-            array_push($ret, 'admin');
-        }
-		if ($this->getVar('mod_user') == 1) {
-            array_push($ret, 'user');
-        }       
-        if ($this->getVar('mod_search') == 1) {
-            array_push($ret, 'search');
-        }
-		 if ($this->getVar('mod_comments') == 1) {
-            array_push($ret, 'comments');
-        }
-        if ($this->getVar('mod_notifications') == 1) {
-            array_push($ret, 'notifications');
-        }
-		if ($this->getVar('mod_permissions') == 1) {
-            array_push($ret, 'permissions');
-        }
-        if ($this->getVar('mod_inroot_copy') == 1) {
-            array_push($ret, 'root');
-        }       
-        return $ret;
+
+        return $retModules;
     }
 }
 /**

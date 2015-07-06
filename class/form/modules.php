@@ -89,10 +89,10 @@ class TDMCreateModulesForm extends Xoops\Form\ThemeForm
 			$moduleCheckboxAll->setExtra(" onclick='xoopsCheckGroup(\"form\", \"modulebox\" , \"module_option[]\");' ");
 			$moduleCheckboxAll->setClass('xo-checkall');
 		$optionTray->addElement($moduleCheckboxAll);
-		$moduleOption = $obj->getOptions();
+		$moduleOption = $obj->getModulesOptions();
         $checkbox 	  = new Xoops\Form\Checkbox('<hr />', 'module_option', $moduleOption, false);
         $checkbox->setDescription(TDMCreateLocale::MODULE_OPTIONS_DESC);
-        foreach ($obj->options as $option) {
+        foreach ($obj->optionsModules as $option) {
             $checkbox->addOption($option, Xoops_Locale::translate('O_MODULE_' . strtoupper($option), 'tdmcreate'));
         }
 		$optionTray->addElement($checkbox);
