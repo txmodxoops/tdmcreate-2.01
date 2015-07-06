@@ -1,4 +1,5 @@
 <?php
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -8,21 +9,22 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-/**
- * tdmcreate module
- *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         tdmcreate
- * @since           2.6.0
- * @author          TXMod Xoops (aka Timgno)
- * @version         $Id: helper.php 10665 2012-12-27 10:14:15Z timgno $
- */
-
+ /**
+  * tdmcreate module.
+  *
+  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+  *
+  * @since           2.6.0
+  *
+  * @author          TXMod Xoops (aka Timgno)
+  *
+  * @version         $Id: helper.php 10665 2012-12-27 10:14:15Z timgno $
+  */
  class TDMCreate extends Xoops\Module\Helper\HelperAbstract
-{
-    /**
-     * Init the module
+ {
+     /**
+     * Init the module.
      *
      * @return null|void
      */
@@ -34,7 +36,7 @@
     /**
      * @return TDMCreate
      */
-    static function getInstance()
+    public static function getInstance()
     {
         return parent::getInstance();
     }
@@ -61,9 +63,9 @@
     public function getFieldsHandler()
     {
         return $this->getHandler('fields');
-    }   
-	
-	/**
+    }
+
+    /**
      * @return TDMCreateTDMCreate_localesHandler
      */
     public function getLocalesHandler()
@@ -71,51 +73,51 @@
         return $this->getHandler('locales');
     }
 
-	/**
+    /**
      * @return TDMCreateTDMCreate_importsHandler
      */
     public function getImportsHandler()
     {
         return $this->getHandler('imports');
     }
-	
-	/**
+
+    /**
      * @return TDMCreateTDMCreate_fieldtypeHandler
      */
     public function getFieldTypeHandler()
     {
         return $this->getHandler('fieldtype');
-    }   
-	
-	/**
+    }
+
+    /**
      * @return TDMCreateTDMCreate_fieldattributesHandler
      */
     public function getFieldAttributesHandler()
     {
         return $this->getHandler('fieldattributes');
-    }   
-	
-	/**
+    }
+
+    /**
      * @return TDMCreateTDMCreate_fieldnullHandler
      */
     public function getFieldNullHandler()
     {
         return $this->getHandler('fieldnull');
-    }   
-	
-	/**
+    }
+
+    /**
      * @return TDMCreateTDMCreate_fieldkeyHandler
      */
     public function getFieldKeyHandler()
     {
         return $this->getHandler('fieldkey');
-    }   
-	
-	/**
+    }
+
+    /**
      * @return TDMCreateTDMCreate_fieldelementsHandler
      */
     public function getFieldElementsHandler()
     {
         return $this->getHandler('fieldelements');
-    } 	
-}
+    }
+ }

@@ -1,4 +1,5 @@
-<?php   
+<?php
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -9,38 +10,41 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 use Xoops\Core\Database\Connection;
+
 /**
- * tdmcreate module
+ * tdmcreate module.
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         tdmcreate
+ *
  * @since           2.6.0
+ *
  * @author          TDM Xoops (AKA Developers)
+ *
  * @version         $Id: modules.php 10665 2012-12-27 10:14:15Z timgno $
  */
 /**
- * Class TDMCreateModules
+ * Class TDMCreateModules.
  */
 class TDMCreateModules extends XoopsObject
-{ 
-	/**
-     * Options
+{
+    /**
+     * Options.
      */
-	public $optionsModules = array(
+    public $optionsModules = array(
         'isextension', 'blocks', 'admin', 'user', 'search',
-        'comments', 'notifications', 'permissions', 'inroot_copy'
+        'comments', 'notifications', 'permissions', 'inroot_copy',
     );
-	/**
-     * Constructor
+    /**
+     * Constructor.
      */
-	public function __construct()
-	{	
-	    $helper = Xoops\Module\Helper::getHelper('tdmcreate');	
-		
-		$this->initVar('mod_id', XOBJ_DTYPE_INT);
+    public function __construct()
+    {
+        $helper = Xoops\Module\Helper::getHelper('tdmcreate');
+
+        $this->initVar('mod_id', XOBJ_DTYPE_INT);
         $this->initVar('mod_name', XOBJ_DTYPE_TXTBOX, $helper->getConfig('name'));
-		$this->initVar('mod_isextension', XOBJ_DTYPE_INT, $helper->getConfig('isextension'));
+        $this->initVar('mod_isextension', XOBJ_DTYPE_INT, $helper->getConfig('isextension'));
         $this->initVar('mod_dirname', XOBJ_DTYPE_TXTBOX, $helper->getConfig('dirname'));
         $this->initVar('mod_version', XOBJ_DTYPE_TXTBOX, $helper->getConfig('version'));
         $this->initVar('mod_since', XOBJ_DTYPE_TXTBOX, $helper->getConfig('since'));
@@ -78,38 +82,40 @@ class TDMCreateModules extends XoopsObject
         $this->initVar('mod_inroot_copy', XOBJ_DTYPE_INT, $helper->getConfig('inroot_copy'));
         $this->initVar('mod_donations', XOBJ_DTYPE_TXTBOX, $helper->getConfig('donations'));
         $this->initVar('mod_subversion', XOBJ_DTYPE_TXTBOX, $helper->getConfig('subversion'));
-	}
+    }
 
-	public function getValues($keys = null, $format = null, $maxDepth = null)
+    public function getValues($keys = null, $format = null, $maxDepth = null)
     {
-        $tdmcreate 				= TDMCreate::getInstance();
-        $ret 					= parent::getValues($keys, $format, $maxDepth);
-        $ret['id']	 			= $this->getVar('mod_id');
-		$ret['name']	 		= $this->getVar('mod_name');
-        $ret['version'] 		= number_format($this->getVar('mod_version'), 2);
-        $ret['image'] 			= TDMC_UPLOAD_IMAGES_MODULES_URL .'/'. $this->getVar('mod_image');
-        $ret['release'] 		= XoopsLocale::formatTimestamp($this->getVar('mod_release'), $tdmcreate->getConfig('release_date'));
-        $ret['status'] 			= $this->getVar('mod_status');
-        $ret['admin'] 			= $this->getVar('mod_admin');
-		$ret['user'] 			= $this->getVar('mod_user');
-		$ret['blocks'] 			= $this->getVar('mod_blocks');
-		$ret['search'] 			= $this->getVar('mod_search');
-		$ret['comments'] 		= $this->getVar('mod_comments');
-		$ret['notifications'] 	= $this->getVar('mod_notifications');
-		$ret['permissions'] 	= $this->getVar('mod_permissions');
+        $tdmcreate = TDMCreate::getInstance();
+        $ret = parent::getValues($keys, $format, $maxDepth);
+        $ret['id'] = $this->getVar('mod_id');
+        $ret['name'] = $this->getVar('mod_name');
+        $ret['version'] = number_format($this->getVar('mod_version'), 2);
+        $ret['image'] = TDMC_UPLOAD_IMAGES_MODULES_URL.'/'.$this->getVar('mod_image');
+        $ret['release'] = XoopsLocale::formatTimestamp($this->getVar('mod_release'), $tdmcreate->getConfig('release_date'));
+        $ret['status'] = $this->getVar('mod_status');
+        $ret['admin'] = $this->getVar('mod_admin');
+        $ret['user'] = $this->getVar('mod_user');
+        $ret['blocks'] = $this->getVar('mod_blocks');
+        $ret['search'] = $this->getVar('mod_search');
+        $ret['comments'] = $this->getVar('mod_comments');
+        $ret['notifications'] = $this->getVar('mod_notifications');
+        $ret['permissions'] = $this->getVar('mod_permissions');
+
         return $ret;
     }
-	
-	public function toArray()
+
+    public function toArray()
     {
         $ret = parent::getValues();
+
         return $ret;
     }
-	
-	/**
-     * Get Options
+
+    /**
+     * Get Options.
      */
-	public function getModulesOptions()
+    public function getModulesOptions()
     {
         $retModules = array();
         foreach ($this->optionsModules as $optionModule) {
@@ -122,25 +128,26 @@ class TDMCreateModules extends XoopsObject
     }
 }
 /**
- * Class TDMCreateModulesHandler
+ * Class TDMCreateModulesHandler.
  */
-class TDMCreateModulesHandler extends XoopsPersistableObjectHandler 
+class TDMCreateModulesHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null|Connection $db
      */
-	public function __construct(Connection $db = null)
-	{
-		parent::__construct($db, 'tdmcreate_modules', 'tdmcreatemodules', 'mod_id', 'mod_name');
-	}
-	
-	public function getAllModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
+    public function __construct(Connection $db = null)
+    {
+        parent::__construct($db, 'tdmcreate_modules', 'tdmcreatemodules', 'mod_id', 'mod_name');
+    }
+
+    public function getAllModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
+
         return parent::getAll($criteria);
     }
 
@@ -151,6 +158,7 @@ class TDMCreateModulesHandler extends XoopsPersistableObjectHandler
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
+
         return parent::getCount($criteria);
     }
 }

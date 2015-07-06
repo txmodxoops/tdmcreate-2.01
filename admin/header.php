@@ -1,4 +1,5 @@
 <?php
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -9,16 +10,18 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 /**
- * tdmcreate module
+ * tdmcreate module.
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         tdmcreate
+ *
  * @since           2.6.0
+ *
  * @author          TXMod Xoops (AKA Timgno)
+ *
  * @version         $Id: header.php 10665 2012-12-27 10:14:15Z timgno $
  */
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))).'/include/cp_header.php';
 // Get main instance
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -26,12 +29,12 @@ $system = System::getInstance();
 $helper = Xoops\Module\Helper::getHelper('tdmcreate');
 $xoops = $helper->xoops();
 // Load local libraries
-XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/common.php'));
-XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/functions.php'));
+XoopsLoad::loadFile($xoops->path(dirname(__DIR__).'/include/common.php'));
+XoopsLoad::loadFile($xoops->path(dirname(__DIR__).'/include/functions.php'));
 // Get handler
 $modulesHandler = $helper->getModulesHandler();
-$tablesHandler  = $helper->getTablesHandler();
-$fieldsHandler  = $helper->getFieldsHandler();
+$tablesHandler = $helper->getTablesHandler();
+$fieldsHandler = $helper->getFieldsHandler();
 $localesHandler = $helper->getLocalesHandler();
 $importsHandler = $helper->getImportsHandler();
 // Add Script

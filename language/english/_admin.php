@@ -1,4 +1,5 @@
 <?php
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -9,7 +10,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/**
+/*
  * tdmcreate module
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
@@ -78,15 +79,15 @@
 //define("_AM_TDMCREATE_MODULE_AUTHOR_MAIL", "Author Email");
 //define("_AM_TDMCREATE_MODULE_AUTHOR_WEBSITE_URL", "Author Site Url");
 //define("_AM_TDMCREATE_MODULE_AUTHOR_WEBSITE_NAME", "Author Site Name");
-//define("_AM_TDMCREATE_MODULE_CREDITS", "Credits");	
+//define("_AM_TDMCREATE_MODULE_CREDITS", "Credits");
 //define("_AM_TDMCREATE_MODULE_LICENSE", "License");
-//define("_AM_TDMCREATE_MODULE_RELEASE_INFO", "Release Info");	
+//define("_AM_TDMCREATE_MODULE_RELEASE_INFO", "Release Info");
 //define("_AM_TDMCREATE_MODULE_RELEASE_FILE", "Release File");
-//define("_AM_TDMCREATE_MODULE_MANUAL", "Manual");	
+//define("_AM_TDMCREATE_MODULE_MANUAL", "Manual");
 //define("_AM_TDMCREATE_MODULE_MANUAL_FILE", "Manual File");
 //define("_AM_TDMCREATE_MODULE_IMAGE", "Image");
-//define("_AM_TDMCREATE_MODULE_DEMO_SITE_URL", "Demo Site Url");	
-//define("_AM_TDMCREATE_MODULE_DEMO_SITE_NAME", "Demo Site Name");	
+//define("_AM_TDMCREATE_MODULE_DEMO_SITE_URL", "Demo Site Url");
+//define("_AM_TDMCREATE_MODULE_DEMO_SITE_NAME", "Demo Site Name");
 //define("_AM_TDMCREATE_MODULE_FORUM_SITE_URL", "Forum URL");
 //define("_AM_TDMCREATE_MODULE_FORUM_SITE_NAME", "Forum Name");
 //define("_AM_TDMCREATE_MODULE_WEBSITE_URL", "Module Website URL");
@@ -124,15 +125,15 @@
 //define("_AM_TDMCREATE_EXTENSION_AUTHOR_MAIL", "Author Email");
 //define("_AM_TDMCREATE_EXTENSION_AUTHOR_WEBSITE_URL", "Author Site Url");
 //define("_AM_TDMCREATE_EXTENSION_AUTHOR_WEBSITE_NAME", "Author Site Name");
-//define("_AM_TDMCREATE_EXTENSION_CREDITS", "Credits");	
+//define("_AM_TDMCREATE_EXTENSION_CREDITS", "Credits");
 //define("_AM_TDMCREATE_EXTENSION_LICENSE", "License");
-//define("_AM_TDMCREATE_EXTENSION_RELEASE_INFO", "Release Info");	
+//define("_AM_TDMCREATE_EXTENSION_RELEASE_INFO", "Release Info");
 //define("_AM_TDMCREATE_EXTENSION_RELEASE_FILE", "Release File");
-//define("_AM_TDMCREATE_EXTENSION_MANUAL", "Manual");	
+//define("_AM_TDMCREATE_EXTENSION_MANUAL", "Manual");
 //define("_AM_TDMCREATE_EXTENSION_MANUAL_FILE", "Manual File");
 //define("_AM_TDMCREATE_EXTENSION_IMAGE", "Image");
-//define("_AM_TDMCREATE_EXTENSION_DEMO_SITE_URL", "Demo Site Url");	
-//define("_AM_TDMCREATE_EXTENSION_DEMO_SITE_NAME", "Demo Site Name");	
+//define("_AM_TDMCREATE_EXTENSION_DEMO_SITE_URL", "Demo Site Url");
+//define("_AM_TDMCREATE_EXTENSION_DEMO_SITE_NAME", "Demo Site Name");
 //define("_AM_TDMCREATE_EXTENSION_FORUM_SITE_URL", "Forum URL");
 //define("_AM_TDMCREATE_EXTENSION_FORUM_SITE_NAME", "Forum Name");
 //define("_AM_TDMCREATE_EXTENSION_WEBSITE_URL", "Module Website URL");
@@ -300,9 +301,9 @@
 //define("_AM_TDMCREATE_DELETE", "Delete");
 //define("_AM_TDMCREATE_UPLOADS", "Uploads");
 //define("_AM_TDMCREATE_IMAGE_PATH", "Image Path: %s");
-//define("_AM_TDMCREATE_SUBMENU", "Submenu");  
-//define("_AM_TDMCREATE_SEARCH", "Search");  
-//define("_AM_TDMCREATE_COMMENTS", "Comments");  
+//define("_AM_TDMCREATE_SUBMENU", "Submenu");
+//define("_AM_TDMCREATE_SEARCH", "Search");
+//define("_AM_TDMCREATE_COMMENTS", "Comments");
 //define("_AM_TDMCREATE_NOTIFIES", "Notifies");
 
 //Error NoFrameworks

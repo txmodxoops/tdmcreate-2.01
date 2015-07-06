@@ -1,4 +1,5 @@
 <?php
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,30 +11,32 @@
 */
 
 /**
- * tdmcreate module
+ * tdmcreate module.
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         tdmcreate
+ *
  * @since           2.6.0
+ *
  * @author          Timgno <txmodxoops@gmail.com>
+ *
  * @version         $Id: blocks.php 10665 2012-12-27 10:14:15Z timgno $
  */
-defined('XOOPS_ROOT_PATH') or die("Restricted access");
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class TDMCreateBlocks extends TDMCreateFile
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param TDMCreateFile|null $file
-     * @param string $module
+     * @param string             $module
      */
-	public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
+    public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
     {
         if (isset($file)) {
             $this->create($file, $module);
-			$this->text = $text;
+            $this->text = $text;
         }
     }
 }
