@@ -3,8 +3,7 @@ tdmcreate v 2.01 for xoops 2.6.0
 
 [![Build Status](https://scrutinizer-ci.com/g/txmodxoops/tdmcreate-2.01/badges/build.png?b=master)](https://scrutinizer-ci.com/g/txmodxoops/tdmcreate-2.01/build-status/master)
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](docs/license.txt)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/txmodxoops/tdmcreate-2.01.svg?style=flat)](https://scrutinizer-ci.com/g/txmodxoops/tdmcreate-2.01/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/txmodxoops/tdmcreate-2.01.svg?style=flat)](https://scrutinizer-ci.com/g/txmodxoops/tdmcreate-2.01)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/txmodxoops/tdmcreate-2.01/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/txmodxoops/tdmcreate-2.01/?branch=master)
 [![Latest Version](https://img.shields.io/github/release/txmodxoops/tdmcreate-2.01.svg?style=flat)](https://github.com/txmodxoops/tdmcreate-2.01/releases)
 
 Pre alpha no test in 29/06/2014
