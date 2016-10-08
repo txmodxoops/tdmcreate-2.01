@@ -22,8 +22,11 @@
  *
  * @version         $Id: templates.php 10665 2012-12-27 10:14:15Z timgno $
  */
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
-
+ 
+/**
+ * @since     Class available since Release 2.6.0
+ * @class     TDMCreateTemplates
+ */
 class TDMCreateTemplates extends TDMCreateFile
 {
     /**

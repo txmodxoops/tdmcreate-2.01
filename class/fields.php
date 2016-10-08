@@ -10,7 +10,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 use Xoops\Core\Database\Connection;
-
+use Xoops\Core\Kernel\XoopsObject;
+use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 /**
  * tdmcreate module.
  *
@@ -60,7 +61,7 @@ class TDMCreateFields extends XoopsObject
      */
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
-        $ret = parent::getValues($keys, $format, $maxDepth);
+        $ret = $this->getValues($keys, $format, $maxDepth);
         $ret['id'] = $this->getVar('field_id');
         $ret['name'] = $this->getVar('field_name');
         $ret['parent'] = $this->getVar('field_parent');
@@ -80,7 +81,7 @@ class TDMCreateFields extends XoopsObject
      */
     public function toArray()
     {
-        $ret = parent::getValues();
+        $ret = $this->getValues();
 
         return $ret;
     }

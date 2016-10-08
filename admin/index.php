@@ -59,14 +59,12 @@ $localeColor = $locale == 0 ? $r : $g;
 $importColor = $import == 0 ? $r : $g;
 
 $adminMenu->displayNavigation('index.php');
-
 $adminMenu->addInfoBox(TDMCreateLocale::INDEX_STATISTICS);
 $adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NMTOTAL, '<span class="'.$modulesColor.'">'.$modules.'</span>'));
 $adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NTTOTAL, '<span class="'.$tablesColor.'">'.$tables.'</span>'));
 $adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NFTOTAL, '<span class="'.$fieldsColor.'">'.$fields.'</span>'));
 $adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NLTOTAL, '<span class="'.$localeColor.'">'.$locale.'</span>'));
 $adminMenu->addInfoBoxLine(sprintf(TDMCreateLocale::F_INDEX_NITOTAL, '<span class="'.$importColor.'">'.$import.'</span>'));
-
 // folder path
 $folderPath = array(
                 TDMC_UPLOAD_PATH,
@@ -86,11 +84,8 @@ foreach ($folderPath as $folder) {
 $adminMenu->addConfigBoxLine('thumbnail', 'service');
 // extension
 $extensions = array('xtranslator' => 'extension');
-
 foreach ($extensions as $module => $type) {
     $adminMenu->addConfigBoxLine(array($module, 'warning'), $type);
 }
-
 $adminMenu->displayIndex();
-
 include __DIR__.'/footer.php';
