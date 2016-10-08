@@ -22,15 +22,14 @@
  *
  * @version         $Id: sql.php 10665 2012-12-27 10:14:15Z timgno $
  */
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
-class TDMCreateSql extends TDMCreateFile
+class Sql extends TDMCreateFile
 {
     /**
      * Constructor.
      *
      * @param TDMCreateFile|null $file
-     * @param string             $module
+     * @param $module
      */
     public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
     {

@@ -10,6 +10,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 use Xoops\Core\Database\Connection;
+use Xoops\Core\Kernel\XoopsObject;
+use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
  * tdmcreate module.
@@ -75,7 +77,7 @@ class TDMCreateTables extends XoopsObject
      */
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
-        $ret = parent::getValues($keys, $format, $maxDepth);
+        $ret = $this->getValues($keys, $format, $maxDepth);
         $ret['id'] = $this->getVar('table_id');
         $ret['mid'] = $this->getVar('table_mid');
         $ret['name'] = $this->getVar('table_name');
@@ -102,7 +104,7 @@ class TDMCreateTables extends XoopsObject
      */
     public function toArray()
     {
-        $ret = parent::getValues();
+        $ret = $this->getValues();
 
         return $ret;
     }
@@ -151,7 +153,7 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getAll($criteria);
+        return $this->getAll($criteria);
     }
     /**
      * Get All Tables By Module Id.
@@ -165,7 +167,7 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getAll($criteria);
+        return $this->getAll($criteria);
     }
     /**
      * Get Count Tables.
@@ -178,6 +180,6 @@ class TDMCreateTablesHandler extends XoopsPersistableObjectHandler
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getCount($criteria);
+        return $this->getCount($criteria);
     }
 }

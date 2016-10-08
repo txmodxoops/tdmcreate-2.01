@@ -10,6 +10,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 use Xoops\Core\Database\Connection;
+use Xoops\Core\Kernel\XoopsObject;
+use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
  * tdmcreate module.
@@ -87,7 +89,7 @@ class TDMCreateModules extends XoopsObject
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $tdmcreate = TDMCreate::getInstance();
-        $ret = parent::getValues($keys, $format, $maxDepth);
+        $ret = $this->getValues($keys, $format, $maxDepth);
         $ret['id'] = $this->getVar('mod_id');
         $ret['name'] = $this->getVar('mod_name');
         $ret['version'] = number_format($this->getVar('mod_version'), 2);
@@ -107,7 +109,7 @@ class TDMCreateModules extends XoopsObject
 
     public function toArray()
     {
-        $ret = parent::getValues();
+        $ret = $this->getValues();
 
         return $ret;
     }
@@ -148,7 +150,7 @@ class TDMCreateModulesHandler extends XoopsPersistableObjectHandler
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getAll($criteria);
+        return $this->getAll($criteria);
     }
 
     public function getCountModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
@@ -159,6 +161,6 @@ class TDMCreateModulesHandler extends XoopsPersistableObjectHandler
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getCount($criteria);
+        return $this->getCount($criteria);
     }
 }

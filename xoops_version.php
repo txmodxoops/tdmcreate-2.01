@@ -46,7 +46,7 @@ $modversion['module_website_name'] = 'XOOPS';
 $modversion['module_status'] = 'Alpha';
 $modversion['min_php'] = '5.3';
 $modversion['min_xoops'] = '2.6.0';
-$modversion['min_db'] = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
+$modversion['min_db'] = array('mysql' => '5.1', 'mysqli' => '5.1');
 // paypal
 $modversion['paypal'] = array();
 $modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
@@ -410,7 +410,7 @@ $modversion['config'][$i]['options'] = array(
             date('m.d.y') => date('m.d.y'),
             date('m/d/Y') => date('m/d/Y'),
             date('m-d-Y') => date('m-d-Y'),
-            date('m.d.Y') => date('m.d.Y'), );
+            date('m.d.Y') => date('m.d.Y'));
 ++$i;
 $modversion['config'][$i]['name'] = 'description';
 $modversion['config'][$i]['title'] = TDMCreateLocale::CONF_DESCRIPTION;
